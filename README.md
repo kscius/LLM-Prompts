@@ -82,7 +82,7 @@ An AI-powered workflow engineer that analyzes your codebase and automatically ge
 
 ---
 
-### 🧠 [Cursor Project Analyzer](./Cursor%20Project%20Analizer/)
+### 🧠 [Cursor Project Analyzer](./Cursor%20Project%20Analyzer/)
 
 An intelligent codebase analyst that builds and maintains a persistent, queryable knowledge base of your project. Transforms Cursor AI into a senior software engineer with deep project understanding.
 
@@ -98,7 +98,7 @@ An intelligent codebase analyst that builds and maintains a persistent, queryabl
 
 **Platforms:** Designed for Cursor AI Agent Mode with Memory MCP.
 
-[📖 Read More](./Cursor%20Project%20Analizer/README.md)
+[📖 Read More](./Cursor%20Project%20Analyzer/README.md)
 
 ---
 
@@ -154,7 +154,7 @@ LLM-Prompts/
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for Custom Mode
 │
-└── Cursor Project Analizer/     # Intelligent codebase analyst
+└── Cursor Project Analyzer/     # Intelligent codebase analyst
     ├── README.md               # Setup and usage guide
     └── Prompt.md               # The prompt for Custom Mode
 ```
