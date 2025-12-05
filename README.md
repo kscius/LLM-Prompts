@@ -64,7 +64,7 @@ A comprehensive collection of global rules and best practices for Cursor AI. The
 
 ### 🔧 [Cursor Rules Maker](./Cursor%20Rules%20Maker/)
 
-An AI-powered tool that analyzes your codebase and automatically generates project-specific Cursor Rules (`.mdc` files). Follows a structured 4-phase approach to create comprehensive rule sets.
+An AI-powered workflow engineer that analyzes your codebase and automatically generates project-specific Cursor Rules (`.mdc` files). Follows a structured 5-phase approach to create comprehensive rule sets.
 
 **Features:**
 - Forensic analysis of codebase and dependencies
@@ -72,12 +72,33 @@ An AI-powered tool that analyzes your codebase and automatically generates proje
 - Project-specific rule generation
 - Knowledge framework creation
 - Phased approach with approval checkpoints
+- Uses 5 MCP tools: sequentialthinking, memory, duckduckgo, interactive, time
 
 **Best for:** Teams starting with Cursor AI or projects needing custom rule sets based on their specific architecture and patterns.
 
-**Platforms:** Designed for Cursor AI Custom Modes.
+**Platforms:** Designed for Cursor AI Custom Modes with Agent Mode.
 
 [📖 Read More](./Cursor%20Rules%20Maker/README.md)
+
+---
+
+### 🧠 [Cursor Project Analyzer](./Cursor%20Project%20Analizer/)
+
+An intelligent codebase analyst that builds and maintains a persistent, queryable knowledge base of your project. Transforms Cursor AI into a senior software engineer with deep project understanding.
+
+**Features:**
+- Automatic repository scanning and indexing
+- Persistent knowledge graph with entities and relations
+- Answers architecture and implementation questions
+- Maintains up-to-date context as code evolves
+- Spanish-first interface with structured responses
+- Uses 5 MCP tools: memory, sequentialthinking, duckduckgo, interactive, time
+
+**Best for:** Development teams wanting deep, persistent codebase understanding, architectural guidance, and intelligent code navigation.
+
+**Platforms:** Designed for Cursor AI Agent Mode with Memory MCP.
+
+[📖 Read More](./Cursor%20Project%20Analizer/README.md)
 
 ---
 
@@ -120,16 +141,20 @@ LLM-Prompts/
 │   ├── README.md               # Overview and usage
 │   ├── critical-thinking.md    # Critical analysis framework
 │   ├── development-workflow.md # Development best practices
-│   ├── security-compliance.md # Security standards
-│   ├── code-quality.md        # Code quality standards
+│   ├── security-compliance.md  # Security standards
+│   ├── code-quality.md         # Code quality standards
 │   ├── testing-reliability.md  # Testing requirements
-│   ├── documentation.md      # Documentation standards
-│   ├── ai-tools.md            # AI tools guidelines
-│   ├── stack-specific.md      # Framework-specific rules
-│   ├── workflow-process.md    # Workflow checklists
-│   └── ui-ux-standards.md     # UI/UX guidelines
+│   ├── documentation.md        # Documentation standards
+│   ├── ai-tools.md             # AI tools guidelines
+│   ├── stack-specific.md       # Framework-specific rules
+│   ├── workflow-process.md     # Workflow checklists
+│   └── ui-ux-standards.md      # UI/UX guidelines
 │
-└── Cursor Rules Maker/          # Automated rule generator
+├── Cursor Rules Maker/          # Automated rule generator
+│   ├── README.md               # Setup and usage guide
+│   └── Prompt.md               # The prompt for Custom Mode
+│
+└── Cursor Project Analizer/     # Intelligent codebase analyst
     ├── README.md               # Setup and usage guide
     └── Prompt.md               # The prompt for Custom Mode
 ```
