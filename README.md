@@ -182,6 +182,27 @@ A high-performance Software Development Assistant that transforms LLMs into expe
 
 ---
 
+### ✨ [Prompt Master](./Prompt%20Master/)
+
+An advanced Prompt Engineer specialized in designing detailed, multi-step prompts for OpenAI models and other LLMs. Assists experienced users in creating precise, efficient, and context-aware prompts.
+
+**Features:**
+- 6-phase structured process (Detect Domain, Understand, Define, Craft, Optimize, Iterate)
+- Dual-format delivery (Readable + Copy-Paste versions)
+- Domain-specific optimization (legal, coding, medical, marketing, etc.)
+- Built-in evaluation checklist and quality assurance
+- Safety & integrity guidelines (flags risks, proposes compliant alternatives)
+- Temperature recommendations for different tasks
+- Token efficiency optimization
+
+**Best for:** Prompt engineers, power users, developers, and professionals creating sophisticated prompts for any domain or use case. Ideal for building reusable prompt templates and optimizing existing prompts.
+
+**Platforms:** Works with ChatGPT, Claude, Gemini, Cursor AI, and most LLM platforms.
+
+[📖 Read More](./Prompt%20Master/README.md)
+
+---
+
 ## Quick Start
 
 ### Using a Prompt
@@ -250,9 +271,13 @@ LLM-Prompts/
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for LLMs with tools
 │
-└── Development Assistan/        # Software Development Assistant (full-stack)
+├── Development Assistan/        # Software Development Assistant (full-stack)
+│   ├── README.md               # Setup and usage guide
+│   └── Prompt.md               # The prompt for LLMs with tools
+│
+└── Prompt Master/               # Advanced Prompt Engineering assistant
     ├── README.md               # Setup and usage guide
-    └── Prompt.md               # The prompt for LLMs with tools
+    └── Prompt.md               # The prompt for any LLM
 ```
 
 ## Usage Guidelines
