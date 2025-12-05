@@ -344,7 +344,7 @@ These prompts are the result of extensive testing and refinement. Special thanks
 
 ---
 
-**Last Updated**: 2024
+**Last Updated**: December 5, 2025
 
 **Maintained by**: Community contributions welcome
 
