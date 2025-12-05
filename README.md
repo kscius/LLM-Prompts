@@ -122,6 +122,26 @@ An expert system and application log analyzer that transforms any LLM into a spe
 
 ---
 
+### 🃏 [MTG Judge](./MTG%20Judge/)
+
+An expert Magic: The Gathering rules judge that provides accurate, comprehensive rulings based on official Comprehensive Rules and Oracle card text. Transforms any LLM into a highest-level MTG Judge.
+
+**Features:**
+- Expert knowledge of Comprehensive Rules and Oracle text
+- Card interaction analysis with CR references
+- 4-section structured responses (Summary, Interaction, Step-by-Step, Relevant Rules)
+- All formats supported (Commander, Modern, Legacy, Vintage, Standard, etc.)
+- Tournament policy guidance
+- Covers layers, stack, priority, replacement effects, and complex interactions
+
+**Best for:** Magic: The Gathering players (casual to competitive) needing rules clarifications, tournament judges in training, and players verifying complex card interactions.
+
+**Platforms:** Works with ChatGPT, Claude, Gemini, Cursor AI, and most LLM platforms. Best with internet access for Oracle text lookup.
+
+[📖 Read More](./MTG%20Judge/README.md)
+
+---
+
 ## Quick Start
 
 ### Using a Prompt
@@ -178,7 +198,11 @@ LLM-Prompts/
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for Custom Mode
 │
-└── Log Analyzer/                # System and application log analyzer
+├── Log Analyzer/                # System and application log analyzer
+│   ├── README.md               # Setup and usage guide
+│   └── Prompt.md               # The prompt for any LLM
+│
+└── MTG Judge/                   # Magic: The Gathering rules judge
     ├── README.md               # Setup and usage guide
     └── Prompt.md               # The prompt for any LLM
 ```
