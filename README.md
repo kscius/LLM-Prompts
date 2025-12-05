@@ -102,6 +102,26 @@ An intelligent codebase analyst that builds and maintains a persistent, queryabl
 
 ---
 
+### 📊 [Log Analyzer](./Log%20Analyzer/)
+
+An expert system and application log analyzer that transforms any LLM into a specialized diagnostic tool. Provides comprehensive, structured analysis of logs in JSON and plain-text formats.
+
+**Features:**
+- Multi-format support (JSON and plain-text logs)
+- Automatic structure detection and parsing
+- Error detection and pattern recognition
+- Cross-service event correlation
+- 6-section structured output (Executive Summary, Errors, Traceability, Patterns, Recommendations, Statistics)
+- Evidence-based analysis with actionable insights
+
+**Best for:** Developers and DevOps teams debugging production issues, investigating incidents, analyzing performance, and monitoring distributed systems.
+
+**Platforms:** Works with ChatGPT, Claude, Gemini, Cursor AI, and most LLM platforms.
+
+[📖 Read More](./Log%20Analyzer/README.md)
+
+---
+
 ## Quick Start
 
 ### Using a Prompt
@@ -154,9 +174,13 @@ LLM-Prompts/
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for Custom Mode
 │
-└── Cursor Project Analyzer/     # Intelligent codebase analyst
+├── Cursor Project Analyzer/     # Intelligent codebase analyst
+│   ├── README.md               # Setup and usage guide
+│   └── Prompt.md               # The prompt for Custom Mode
+│
+└── Log Analyzer/                # System and application log analyzer
     ├── README.md               # Setup and usage guide
-    └── Prompt.md               # The prompt for Custom Mode
+    └── Prompt.md               # The prompt for any LLM
 ```
 
 ## Usage Guidelines
