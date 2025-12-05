@@ -142,6 +142,26 @@ An expert Magic: The Gathering rules judge that provides accurate, comprehensive
 
 ---
 
+### 🔎 [Search Engine (GPT-5 Thinking Expert Mode)](./Search%20Engine/)
+
+A high-performance, expert-facing assistant that transforms LLMs with web search into adaptive reasoning engines. Delivers accurate, current, and decision-ready outputs with multi-tool integration.
+
+**Features:**
+- Web search intelligence with smart triggers and proper citations
+- 4 modular output profiles (Executive, Deep Dive, Builder, Socratic)
+- Multi-tool integration (Web Search, Code Interpreter, Image Generation, Canvas)
+- Structured output (Summary, Context, Analysis, Recommendation, Risks, Next Steps)
+- Confidence levels and transparent assumptions
+- Numerical rigor with error bounds
+
+**Best for:** Power users, technical professionals, researchers, and developers needing current information, validated analysis, and decision-ready outputs across analytical and technical work.
+
+**Platforms:** Requires LLM with web search and tool access (ChatGPT Plus/Pro, Claude with tools). Best with Code Interpreter enabled.
+
+[📖 Read More](./Search%20Engine/README.md)
+
+---
+
 ## Quick Start
 
 ### Using a Prompt
@@ -202,9 +222,13 @@ LLM-Prompts/
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for any LLM
 │
-└── MTG Judge/                   # Magic: The Gathering rules judge
+├── MTG Judge/                   # Magic: The Gathering rules judge
+│   ├── README.md               # Setup and usage guide
+│   └── Prompt.md               # The prompt for any LLM
+│
+└── Search Engine/               # GPT-5 Thinking Expert Mode with web search
     ├── README.md               # Setup and usage guide
-    └── Prompt.md               # The prompt for any LLM
+    └── Prompt.md               # The prompt for LLMs with tools
 ```
 
 ## Usage Guidelines
