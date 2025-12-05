@@ -162,6 +162,26 @@ A high-performance, expert-facing assistant that transforms LLMs with web search
 
 ---
 
+### 👨‍💻 [Development Assistant](./Development%20Assistan/)
+
+A high-performance Software Development Assistant that transforms LLMs into expert development partners for full-stack and system-level work. Provides adaptive reasoning, visual aids, and implementation-ready code.
+
+**Features:**
+- Full-stack expertise (Node.js, React, PHP, Python, Java, Go, databases, and more)
+- 9 support types (debugging, optimization, testing, features, code review, API design, architecture, UI/UX, best practices)
+- Multi-tool integration (Web Search, Code Interpreter, Canvas diagrams, DALL·E mockups)
+- 6-section structured responses (Context, Code, Explanation, Alternatives, Best Practices, Visual Aid)
+- Copy-paste-ready code blocks
+- Task-specific guidelines for different development scenarios
+
+**Best for:** Technically proficient developers needing expert guidance, code review, architecture design, performance optimization, and visual system diagrams across any stack.
+
+**Platforms:** Requires LLM with multi-tool access (ChatGPT Plus/Pro with Canvas and DALL·E, Claude with tools). Best with all tools enabled.
+
+[📖 Read More](./Development%20Assistan/README.md)
+
+---
+
 ## Quick Start
 
 ### Using a Prompt
@@ -226,7 +246,11 @@ LLM-Prompts/
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for any LLM
 │
-└── Search Engine/               # GPT-5 Thinking Expert Mode with web search
+├── Search Engine/               # GPT-5 Thinking Expert Mode with web search
+│   ├── README.md               # Setup and usage guide
+│   └── Prompt.md               # The prompt for LLMs with tools
+│
+└── Development Assistan/        # Software Development Assistant (full-stack)
     ├── README.md               # Setup and usage guide
     └── Prompt.md               # The prompt for LLMs with tools
 ```
