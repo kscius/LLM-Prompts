@@ -6,6 +6,9 @@ This folder contains global rules and best practices for Cursor AI that can be s
 
 These rules are designed to be used as global configuration in Cursor AI. They cover:
 
+- **Ultrathink Philosophy** - Vision and mindset for crafting elegant, intuitive solutions
+- **Code Craftsmanship** - Principles for creating beautiful, well-designed code
+- **Tool Mastery** - Guidelines for using tools like a virtuoso
 - **Critical Thinking & Intellectual Rigor** - Framework for analyzing assumptions and maintaining rigorous standards
 - **Development Workflow** - Best practices for monitoring, dependencies, releases, and PR governance
 - **Security & Compliance** - Standards aligned with PCI, GDPR, and OWASP requirements
@@ -37,6 +40,27 @@ These rules are designed to be used as global configuration in Cursor AI. They c
 3. Store project-specific rules in `.cursor/rules/` directory
 
 ## File Structure & Descriptions
+
+### Philosophy & Craftsmanship (Ultrathink)
+
+- **`ultrathink-philosophy.md`** - The vision and mindset for exceptional development:
+  - Think Different: Question assumptions, seek elegant solutions
+  - Reality Distortion Field: Push beyond perceived limitations
+  - The Integration: Technology married with humanities
+  - Making a dent in the universe
+
+- **`craftsmanship.md`** - Principles for code as craft:
+  - Craft, Don't Code: Every function name should sing
+  - Obsess Over Details: Understand the soul of the code
+  - Plan Like Da Vinci: Sketch before implementing
+  - Simplify Ruthlessly: Elegance through subtraction
+  - Iterate Relentlessly: Never settle for "good enough"
+
+- **`tool-mastery.md`** - Using tools like instruments:
+  - Command line and automation mastery
+  - MCP servers and custom commands
+  - Git history as storytelling
+  - Visual resources as inspiration
 
 ### Core Rules
 
@@ -107,9 +131,10 @@ These rules are designed to be used as global configuration in Cursor AI. They c
 
 ## Quick Start
 
-1. **For New Projects**: Start with all core rules (`critical-thinking.md`, `development-workflow.md`, `code-quality.md`, `security-compliance.md`)
-2. **For Existing Projects**: Add rules incrementally, starting with `code-quality.md` and `testing-reliability.md`
-3. **For Teams**: Share this folder and let each team member customize as needed
+1. **For Craftsmen**: Start with the Ultrathink rules (`ultrathink-philosophy.md`, `craftsmanship.md`, `tool-mastery.md`) to set the mindset
+2. **For New Projects**: Add core rules (`critical-thinking.md`, `development-workflow.md`, `code-quality.md`, `security-compliance.md`)
+3. **For Existing Projects**: Add rules incrementally, starting with `code-quality.md` and `testing-reliability.md`
+4. **For Teams**: Share this folder and let each team member customize as needed
 
 ## Best Practices
 
