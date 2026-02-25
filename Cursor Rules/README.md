@@ -2,10 +2,16 @@
 
 This folder contains global rules and best practices for Cursor AI that can be shared across projects and teams. These rules are designed to enforce best practices, standardize patterns, and improve code quality across all development work.
 
+**Source of truth:** The **User Rules** (configured in Cursor, e.g. in the `user_rules` block) are the source of truth. The files in this folder **document and reflect** those User Rules so they can be shared, versioned, or used as reference. In case of conflict, the User Rules prevail.
+
 ## Overview
 
 These rules are designed to be used as global configuration in Cursor AI. They cover:
 
+- **Plan Mode First** - Mandatory plan-before-acting flow, investigate before editing, verify and report
+- **Execution Pack for Executor** - Context Packet, Task Contracts, Agent Routing, Escalation, Model Assignment
+- **Tooling & Delegation** - MCP/Skills/Subagents availability, risk triage, SUBAGENTS POLICY
+- **Cursor Rules Management** - When to add/modify/deprecate rules; `.cursor/rules/` structure
 - **Ultrathink Philosophy** - Vision and mindset for crafting elegant, intuitive solutions
 - **Code Craftsmanship** - Principles for creating beautiful, well-designed code
 - **Tool Mastery** - Guidelines for using tools like a virtuoso
@@ -14,8 +20,8 @@ These rules are designed to be used as global configuration in Cursor AI. They c
 - **Security & Compliance** - Standards aligned with PCI, GDPR, and OWASP requirements
 - **Code Quality** - Principles for modular, maintainable, and well-structured code
 - **Testing & Reliability** - Requirements for comprehensive testing (≥90% coverage) and error handling
-- **Documentation** - Standards for code documentation and communication
-- **AI Tools** - Guidelines for using MCP tools and knowledge management
+- **Documentation** - Standards for code documentation and communication (including the rule: do not create .md unless requested)
+- **AI Tools** - Full list of MCPs, Skills, and Subagents; usage guidelines; reference: **DATOS/Tools.md**
 - **Stack-Specific Rules** - Framework-specific conventions (React, Next.js, NestJS, etc.)
 - **Workflow Process** - Checklists and execution workflows
 - **UI/UX Standards** - Design system guidelines and accessibility requirements
@@ -40,6 +46,16 @@ These rules are designed to be used as global configuration in Cursor AI. They c
 3. Store project-specific rules in `.cursor/rules/` directory
 
 ## File Structure & Descriptions
+
+### Plan Mode & Execution (User Rules 1, 2, 4)
+
+- **`plan-mode.md`** - Plan Mode First (User Rule): Restate task and success, plan (3–7 bullets), investigate before editing, tooling discipline, execute only after investigation, verify and report. Required output headers (Plan Mode / Execution). The plan is not replaced by the Execution Pack.
+
+- **`execution-pack.md`** - Execution Pack for Executor (User Rules 2, 4): Context Packet (0), Tooling & Delegation Policy (0.1), Task Normalization (1), Task Contracts (2), Agent Routing (3), Dependency & Parallelism (4), Execution Order & Checkpoints (5), Escalation Triggers (6). Optional: Model Assignment per task.
+
+- **`tooling-delegation.md`** - Tooling-First Planning and SUBAGENTS POLICY (User Rules 3, 17): Availability check (MCP/Skills/Subagents), risk & domain triage, verification ladder, conditional tool selection, Skills routing, Subagent routing. When to delegate; 1–2 subagents; explain if not delegating. Integrity: do not claim tool use unless actually used.
+
+- **`cursor-rules-management.md`** - Rule Improvement and Cursor Rules Management (User Rule 6): Triggers to add/modify/deprecate rules; structure of rules (`.cursor/rules/`, .mdc format, naming kebab-case, categories). Reference to “do not create .md unless requested” (see documentation.md).
 
 ### Philosophy & Craftsmanship (Ultrathink)
 
@@ -93,6 +109,7 @@ These rules are designed to be used as global configuration in Cursor AI. They c
   - Definition of Done checklist
 
 - **`documentation.md`** - Documentation and communication standards:
+  - **Regla de creación de documentación:** Do not create .md files unless the user explicitly requests it; exception: update existing .md when outdated
   - Code documentation (docstrings, comments)
   - Project documentation (README, architecture docs)
   - Communication guidelines
@@ -101,10 +118,12 @@ These rules are designed to be used as global configuration in Cursor AI. They c
 ### Tools & Process
 
 - **`ai-tools.md`** - AI reasoning tools and knowledge management:
-  - MCP tools usage (sequential thinking, memory, interactive)
-  - Knowledge graph management
-  - Search and time tools
-  - Usage guidelines
+  - **Full list of MCP servers** (cursor-ide-browser, user-Memory, user-Sequential Thinking, user-time, user-github, user-duckduckgo, user-Interactive, user-semgrep, user-context7, etc.)
+  - **Full list of Skills** (Agent Skills) with primary use
+  - **Full list of Subagents** by category (generalPurpose, explore, shell, backend-developer, etc.) for `mcp_task`
+  - Reference: **DATOS/Tools.md** (canonical source for current MCPs, Skills, Subagents)
+  - Usage guidelines and knowledge management
+  - Link to `tooling-delegation.md` for delegation policy
 
 - **`workflow-process.md`** - Complete workflow process:
   - Pre-execution checklist
