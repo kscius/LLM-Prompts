@@ -378,7 +378,7 @@ These prompts are the result of extensive testing and refinement. Special thanks
 
 ---
 
-**Last Updated**: March 24, 2026
+**Last Updated**: March 2026
 
 **Maintained by**: Community contributions welcome
 
