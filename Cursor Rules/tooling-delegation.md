@@ -89,4 +89,4 @@ Every plan must include:
 
 ## Reference
 
-For the full list of MCPs, Skills, and Subagent types, see **ai-tools.md** and **DATOS/Tools.md**.
+For the full list of MCPs, Skills, and Subagent types, see **ai-tools.md** (English) and **tools-inventory-es.md** (Spanish).

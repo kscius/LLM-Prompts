@@ -4,6 +4,20 @@ This folder contains global rules and best practices for Cursor AI that can be s
 
 **Source of truth:** The **User Rules** (configured in Cursor, e.g. in the `user_rules` block) are the source of truth. The files in this folder **document and reflect** those User Rules so they can be shared, versioned, or used as reference. In case of conflict, the User Rules prevail.
 
+## Sibling folders (Cursor ecosystem in this repo)
+
+These live next to `Cursor Rules/` at the repository root:
+
+| Folder | Purpose |
+|--------|---------|
+| [Cursor Skills](../Cursor%20Skills/) | Agent Skills (`SKILL.md`) — how they work and links to the canonical skill list |
+| [Cursor Commands](../Cursor%20Commands/) | Slash-command prompts (e.g. `.cursor/commands` workflow) |
+| [Cursor Hooks](../Cursor%20Hooks/) | `hooks.json` lifecycle hooks |
+| [Cursor Subagents](../Cursor%20Subagents/) | Task / subagent delegation guide |
+| [Cursor Project Analyzer](../Cursor%20Project%20Analyzer/) | Custom Mode for codebase knowledge graph |
+| [Cursor Rules Maker](../Cursor%20Rules%20Maker/) | Custom Mode to generate project `.mdc` rules |
+| [tools-inventory-es.md](./tools-inventory-es.md) | MCP + Skills + Subagents (Spanish) |
+
 ## Overview
 
 These rules are designed to be used as global configuration in Cursor AI. They cover:
@@ -21,7 +35,7 @@ These rules are designed to be used as global configuration in Cursor AI. They c
 - **Code Quality** - Principles for modular, maintainable, and well-structured code
 - **Testing & Reliability** - Requirements for comprehensive testing (≥90% coverage) and error handling
 - **Documentation** - Standards for code documentation and communication (including the rule: do not create .md unless requested)
-- **AI Tools** - Full list of MCPs, Skills, and Subagents; usage guidelines; reference: **DATOS/Tools.md**
+- **AI Tools** - Full list of MCPs, Skills, and Subagents (English); usage guidelines; Spanish: **tools-inventory-es.md**
 - **Stack-Specific Rules** - Framework-specific conventions (React, Next.js, NestJS, etc.)
 - **Workflow Process** - Checklists and execution workflows
 - **UI/UX Standards** - Design system guidelines and accessibility requirements
@@ -117,11 +131,11 @@ These rules are designed to be used as global configuration in Cursor AI. They c
 
 ### Tools & Process
 
-- **`ai-tools.md`** - AI reasoning tools and knowledge management:
+- **`ai-tools.md`** - AI reasoning tools and knowledge management (English tables):
   - **Full list of MCP servers** (cursor-ide-browser, user-Memory, user-Sequential Thinking, user-time, user-github, user-duckduckgo, user-Interactive, user-semgrep, user-context7, etc.)
   - **Full list of Skills** (Agent Skills) with primary use
   - **Full list of Subagents** by category (generalPurpose, explore, shell, backend-developer, etc.) for `mcp_task`
-  - Reference: **DATOS/Tools.md** (canonical source for current MCPs, Skills, Subagents)
+  - Spanish mirror: **`tools-inventory-es.md`**
   - Usage guidelines and knowledge management
   - Link to `tooling-delegation.md` for delegation policy
 

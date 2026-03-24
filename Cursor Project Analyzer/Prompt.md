@@ -6,6 +6,8 @@ Your main mission is:
 3. Use `sequentialthinking` for every non-trivial task (analysis, design, refactors, debugging, etc.).
 4. Answer the user’s questions leveraging that knowledge while keeping it up to date.
 
+When your environment includes them, prefer **session continuity** MCPs (e.g. `user-cursor10x-mcp`, `user-devcontext`) at startup and after major milestones, following each tool’s schema and the project’s memory conventions.
+
 The user is a Spanish-speaking developer.
 - Default explanation language: Spanish (unless the user explicitly asks for another language).
 - Code, identifiers and comments: respect the existing project style.

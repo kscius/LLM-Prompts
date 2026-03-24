@@ -1,7 +1,10 @@
+# Inventario de herramientas (español)
+
+Referencia en **español** de servidores MCP, Agent Skills y tipos de subagente para Cursor. La versión en inglés y las guías de uso están en **[ai-tools.md](./ai-tools.md)**. La política de delegación está en **[tooling-delegation.md](./tooling-delegation.md)**.
 
 ---
 
-## MCP servers (Model Context Protocol)
+## Servidores MCP (Model Context Protocol)
 
 | Servidor | Descripción |
 |----------|-------------|
@@ -14,6 +17,13 @@
 | **user-Interactive** | `request_user_input`, `message_complete_notification`, chat intensivo. |
 | **user-semgrep** | Análisis estático / seguridad con Semgrep. |
 | **user-context7** | Documentación y ejemplos de código actualizados de librerías. |
+| **user-cursor10x-mcp** | Memoria de proyecto, contexto y episodios (continuidad entre sesiones). |
+| **user-devcontext** | Inicializar contexto de conversación para trabajo multi-paso. |
+| **user-stitch** | Integración Stitch (diseño/UI según tu configuración). |
+| **user-mtg-commander-analyzer** | Análisis Commander MTG (especializado). |
+| **user-eamodio.gitlens-extension-GitKraken** | GitLens / GitKraken (historial y contexto Git en el IDE). |
+
+Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context Packet cuando uses el Execution Pack.
 
 ---
 
@@ -42,6 +52,14 @@
 | **create-rule** | Crear reglas de Cursor (`.cursor/rules/`, estándares, convenciones). |
 | **create-skill** | Crear y escribir nuevos Agent Skills. |
 | **update-cursor-settings** | Modificar `settings.json` de Cursor/VSCode. |
+| **api-contract-design** | Contratos REST/GraphQL y límites entre servicios. |
+| **error-handling-patterns** | try/catch, HTTP, validación, degradación controlada. |
+| **git-workflow** | Ramas, commits, PRs, resolución de conflictos. |
+| **react-full-build** | React/Next end-to-end con verificación de UI. |
+| **ship-feature** | Implementación de feature completa con validación. |
+| **testing-strategy** | Unit, integración, e2e y calidad de pruebas. |
+| **review-and-secure** | Revisión final de calidad y seguridad antes de entregar. |
+| **self-validate** | Comprobación anti-alucinación antes de declarar hecho. |
 
 ---
 
@@ -166,3 +184,5 @@
 - `typescript-pro` – Tipos avanzados, migraciones TS, type-safety full-stack.
 
 ---
+
+**Nota:** Si mantienes un borrador local fuera del repo (por ejemplo notas o listas experimentales), no lo enlaces desde la documentación versionada; actualiza **tools-inventory-es.md** y **ai-tools.md** cuando quieras publicar cambios.

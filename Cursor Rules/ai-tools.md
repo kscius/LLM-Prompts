@@ -1,6 +1,6 @@
 # AI Reasoning Tools & Knowledge Management
 
-This document reflects **User Rules** for MCP tools, knowledge management, and tool usage. The canonical reference for the current list of MCPs, Skills, and Subagents is **DATOS/Tools.md**. For delegation policy and when to use subagents, see **tooling-delegation.md**.
+This document reflects **User Rules** for MCP tools, knowledge management, and tool usage. The **English** inventory of MCPs, Skills, and Subagents is below. The **Spanish** mirror is **[tools-inventory-es.md](./tools-inventory-es.md)**. For delegation policy and when to use subagents, see **tooling-delegation.md**.
 
 ---
 
@@ -17,8 +17,13 @@ This document reflects **User Rules** for MCP tools, knowledge management, and t
 | **user-Interactive** | `request_user_input`, `message_complete_notification`, intensive chat. |
 | **user-semgrep** | Static analysis / security with Semgrep. |
 | **user-context7** | Up-to-date documentation and code examples for libraries. |
+| **user-cursor10x-mcp** | Project memory, context, and episodic continuity across sessions. |
+| **user-devcontext** | Initialize conversation context for multi-step work. |
+| **user-stitch** | Stitch integration (design/UI per your setup). |
+| **user-mtg-commander-analyzer** | MTG Commander analysis (specialized). |
+| **user-eamodio.gitlens-extension-GitKraken** | GitLens / GitKraken IDE integration. |
 
-Additional MCPs may be present in your environment (e.g. user-mtg-commander-analyzer). List available MCPs in the Context Packet when using the Execution Pack.
+Additional MCPs may be present in your environment. List available MCPs in the Context Packet when using the Execution Pack.
 
 ---
 
@@ -47,6 +52,14 @@ Additional MCPs may be present in your environment (e.g. user-mtg-commander-anal
 | **create-rule** | Create Cursor rules (`.cursor/rules/`, standards, conventions). |
 | **create-skill** | Create and write new Agent Skills. |
 | **update-cursor-settings** | Modify Cursor/VSCode `settings.json`. |
+| **api-contract-design** | REST/GraphQL contracts and service boundaries. |
+| **error-handling-patterns** | try/catch, HTTP errors, validation, graceful degradation. |
+| **git-workflow** | Branching, commits, PRs, conflict resolution. |
+| **react-full-build** | React/Next end-to-end with UI verification. |
+| **ship-feature** | End-to-end feature implementation with validation. |
+| **testing-strategy** | Unit, integration, e2e, and test quality. |
+| **review-and-secure** | Final quality and security review before handoff. |
+| **self-validate** | Anti-hallucination gate before declaring done. |
 
 ---
 

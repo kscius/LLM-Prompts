@@ -13,13 +13,31 @@ Cursor Project Analyzer creates a living, persistent knowledge graph of your ent
 
 ### MCP Tools Used
 
-This prompt leverages the following MCP servers for enhanced capabilities:
+This prompt leverages MCP servers for enhanced capabilities. **Core (recommended):**
 
-- **`memory`** - Core knowledge graph for storing project structure, modules, endpoints, data models, and conventions
-- **`sequentialthinking`** - Multi-step planning for analysis, design, refactors, and debugging
-- **`duckduckgo`** - External research for unknown libraries, frameworks, and best practices
-- **`interactive`** - User clarification and intensive debugging/refactoring sessions
-- **`time`** - Timestamps for tracking indexing milestones and important changes
+- **`memory`** (or equivalent knowledge-graph MCP) — project structure, modules, endpoints, data models, conventions
+- **`sequentialthinking`** — multi-step planning for analysis, design, refactors, and debugging
+- **`duckduckgo`** — external research for unknown libraries, frameworks, and best practices
+- **`interactive`** — clarification and intensive debugging/refactoring sessions
+- **`time`** — timestamps for indexing milestones and important changes
+
+**Optional (continuity and docs):**
+
+- **`user-cursor10x-mcp`** — persistent project memory and episodic context across sessions
+- **`user-devcontext`** — structured conversation context for multi-step work
+- **`user-context7`** — up-to-date library documentation and examples
+- **`user-github`** — repository/PR context when relevant
+- **`user-semgrep`** — security-oriented static analysis when touching sensitive surfaces
+
+Enable only what you have installed; missing tools should not block baseline indexing if `memory` + `sequentialthinking` are available.
+
+### Related material in this repository
+
+- **[Cursor Skills](../Cursor%20Skills/)** — Agent Skills reference and how they complement Custom Modes
+- **[Cursor Commands](../Cursor%20Commands/)** — slash-command templates (e.g. orchestrator)
+- **[Cursor Hooks](../Cursor%20Hooks/)** — lifecycle hooks (`hooks.json`)
+- **[Cursor Subagents](../Cursor%20Subagents/)** — Task / subagent delegation patterns
+- **[tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md)** — MCP / Skills / Subagents (Spanish)
 
 ## How to Set Up
 
@@ -247,11 +265,13 @@ For long debugging or refactoring sessions:
 ## Requirements
 
 ### MCP Servers
-- ✅ **Memory MCP** (required)
-- ✅ **Sequential Thinking MCP** (required)
-- ⚠️ **DuckDuckGo MCP** (recommended)
-- ⚠️ **Interactive MCP** (recommended)
-- ⚠️ **Time MCP** (optional)
+- ✅ **Memory MCP** (or equivalent graph memory) — required for the knowledge-base workflow
+- ✅ **Sequential Thinking MCP** — strongly recommended for non-trivial work
+- ⚠️ **DuckDuckGo MCP** — recommended for unknown dependencies
+- ⚠️ **Interactive MCP** — recommended for clarification and long sessions
+- ⚠️ **Time MCP** — optional
+- ⚠️ **cursor10x-mcp / devcontext** — optional, for cross-session continuity
+- ⚠️ **context7 / github / semgrep** — optional, as needed
 
 ### Cursor Configuration
 - **Agent Mode**: Must be enabled
@@ -266,7 +286,7 @@ For long debugging or refactoring sessions:
 ## File Structure
 
 ```
-Cursor Project Analizer/
+Cursor Project Analyzer/
 ├── README.md          # This file - setup and usage guide
 └── Prompt.md          # The complete prompt for Cursor AI Custom Mode
 ```
@@ -329,7 +349,7 @@ This prompt is provided as-is for use with Cursor AI. Feel free to modify and di
 
 ---
 
-**Last Updated**: 2024
+**Last Updated**: March 2026
 
 **Language**: Responses in Spanish, code in project style
 

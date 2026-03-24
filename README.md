@@ -6,6 +6,7 @@ A curated collection of high-quality AI prompts designed to enhance your workflo
 
 - [Overview](#overview)
 - [Available Prompts](#available-prompts)
+- [Cursor IDE ecosystem](#cursor-ide-ecosystem)
 - [Quick Start](#quick-start)
 - [Repository Structure](#repository-structure)
 - [Usage Guidelines](#usage-guidelines)
@@ -46,13 +47,14 @@ A specialized AI assistant for optimizing CVs/resumes for software engineering r
 A comprehensive collection of global rules and best practices for Cursor AI. These rules enforce coding standards, development workflows, and quality assurance across projects.
 
 **Features:**
+- Plan Mode, Execution Pack, tooling delegation, and Cursor rules management
 - Critical thinking and intellectual rigor framework
-- Development workflow best practices
-- Security and compliance standards (PCI, GDPR, OWASP)
-- Code quality and structure standards
-- Testing and reliability requirements (≥90% coverage)
-- Stack-specific rules (React, Next.js, NestJS, etc.)
-- UI/UX design standards
+- Development workflow, security/compliance (PCI, GDPR, OWASP), code quality
+- Testing and reliability requirements (≥90% coverage where applicable)
+- Stack-specific rules (React, Next.js, NestJS, etc.) and UI/UX standards
+- **ai-tools.md** (English) and **tools-inventory-es.md** (Spanish) for MCPs, Skills, and Subagents
+
+**Companion folders:** [Cursor Skills](./Cursor%20Skills/), [Cursor Commands](./Cursor%20Commands/), [Cursor Hooks](./Cursor%20Hooks/), [Cursor Subagents](./Cursor%20Subagents/) — skills, slash commands, hooks, and subagent guidance.
 
 **Best for:** Development teams using Cursor AI who want to standardize practices and improve code quality.
 
@@ -99,6 +101,20 @@ An intelligent codebase analyst that builds and maintains a persistent, queryabl
 **Platforms:** Designed for Cursor AI Agent Mode with Memory MCP.
 
 [📖 Read More](./Cursor%20Project%20Analyzer/README.md)
+
+---
+
+### Cursor IDE ecosystem
+
+Shared reference and templates for Cursor beyond single prompts:
+
+| Folder | Description |
+|--------|-------------|
+| [Cursor Skills](./Cursor%20Skills/) | How Agent Skills work; links to the canonical skill inventory |
+| [Cursor Commands](./Cursor%20Commands/) | Slash-command workflow; includes **orquestador** orchestrator template |
+| [Cursor Hooks](./Cursor%20Hooks/) | `hooks.json` lifecycle hooks (project or global) |
+| [Cursor Subagents](./Cursor%20Subagents/) | Task / subagent delegation and handoff patterns |
+| [Cursor Rules / tools-inventory-es](./Cursor%20Rules/tools-inventory-es.md) | MCP, Skills, Subagents (Spanish); pairs with **ai-tools.md** |
 
 ---
 
@@ -162,7 +178,7 @@ A high-performance, expert-facing assistant that transforms LLMs with web search
 
 ---
 
-### 👨‍💻 [Development Assistant](./Development%20Assistan/)
+### 👨‍💻 [Development Assistant](./Development%20Assistant/)
 
 A high-performance Software Development Assistant that transforms LLMs into expert development partners for full-stack and system-level work. Provides adaptive reasoning, visual aids, and implementation-ready code.
 
@@ -178,7 +194,7 @@ A high-performance Software Development Assistant that transforms LLMs into expe
 
 **Platforms:** Requires LLM with multi-tool access (ChatGPT Plus/Pro with Canvas and DALL·E, Claude with tools). Best with all tools enabled.
 
-[📖 Read More](./Development%20Assistan/README.md)
+[📖 Read More](./Development%20Assistant/README.md)
 
 ---
 
@@ -238,18 +254,24 @@ LLM-Prompts/
 │   ├── README.md               # Usage instructions
 │   └── Prompt.md               # The prompt content
 │
-├── Cursor Rules/                # Global Cursor AI rules
-│   ├── README.md               # Overview and usage
-│   ├── critical-thinking.md    # Critical analysis framework
-│   ├── development-workflow.md # Development best practices
-│   ├── security-compliance.md  # Security standards
-│   ├── code-quality.md         # Code quality standards
-│   ├── testing-reliability.md  # Testing requirements
-│   ├── documentation.md        # Documentation standards
-│   ├── ai-tools.md             # AI tools guidelines
-│   ├── stack-specific.md       # Framework-specific rules
-│   ├── workflow-process.md     # Workflow checklists
-│   └── ui-ux-standards.md      # UI/UX guidelines
+├── Cursor Rules/                # Global Cursor AI rules (many .md topics; see README)
+│   ├── README.md               # Index: plan-mode, execution-pack, ai-tools, etc.
+│   ├── ai-tools.md             # MCP, Skills, Subagents (English)
+│   └── tools-inventory-es.md   # Same inventory (Spanish)
+│
+├── Cursor Skills/               # Agent Skills reference
+│   └── README.md
+│
+├── Cursor Commands/             # Slash-command templates (.cursor/commands)
+│   ├── README.md
+│   └── orquestador.md          # End-to-end orchestrator prompt
+│
+├── Cursor Hooks/                # hooks.json documentation + example
+│   ├── README.md
+│   └── hooks.example.json
+│
+├── Cursor Subagents/            # Task / subagent delegation guide
+│   └── README.md
 │
 ├── Cursor Rules Maker/          # Automated rule generator
 │   ├── README.md               # Setup and usage guide
@@ -271,7 +293,7 @@ LLM-Prompts/
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for LLMs with tools
 │
-├── Development Assistan/        # Software Development Assistant (full-stack)
+├── Development Assistant/       # Software Development Assistant (full-stack)
 │   ├── README.md               # Setup and usage guide
 │   └── Prompt.md               # The prompt for LLMs with tools
 │
@@ -344,7 +366,7 @@ These prompts are the result of extensive testing and refinement. Special thanks
 
 ---
 
-**Last Updated**: December 5, 2025
+**Last Updated**: March 24, 2026
 
 **Maintained by**: Community contributions welcome
 
