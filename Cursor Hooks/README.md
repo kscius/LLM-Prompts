@@ -41,9 +41,17 @@ Examples from Cursor’s hook surface (verify against current docs for your vers
 
 Tab / inline completion hooks may include `beforeTabFileRead`, `afterTabFileEdit`.
 
-## Example in this repo
+## Exported environment (this repo)
 
-See [hooks.example.json](./hooks.example.json) for a commented template (remove comments before use — JSON does not allow `//` in standard parsers; the example uses a `.md` note instead).
+A snapshot of the maintainer’s global hooks lives under **[user-export/](./user-export/)**:
+
+- [user-export/hooks.json](./user-export/hooks.json)
+- [user-export/hooks/](./user-export/hooks/) — scripts (`session-context`, `audit-log`, `block-dangerous-shell`, etc.)
+- [user-export/README.md](./user-export/README.md) — how to restore on another PC
+
+## Minimal example
+
+See [hooks.example.json](./hooks.example.json) for a tiny template.
 
 **Important:** Make scripts executable on Unix (`chmod +x`). On Windows, use commands Cursor can launch (e.g. `pwsh`, `node`, full paths).
 
@@ -59,4 +67,4 @@ Cursor can integrate additional hook sources (e.g. Claude Code–style settings)
 
 ---
 
-**Last updated:** March 2025
+**Last updated:** March 2026

@@ -10,13 +10,16 @@ These live next to `Cursor Rules/` at the repository root:
 
 | Folder | Purpose |
 |--------|---------|
-| [Cursor Skills](../Cursor%20Skills/) | Agent Skills (`SKILL.md`) — how they work and links to the canonical skill list |
-| [Cursor Commands](../Cursor%20Commands/) | Slash-command prompts (e.g. `.cursor/commands` workflow) |
-| [Cursor Hooks](../Cursor%20Hooks/) | `hooks.json` lifecycle hooks |
-| [Cursor Subagents](../Cursor%20Subagents/) | Task / subagent delegation guide |
-| [Cursor Project Analyzer](../Cursor%20Project%20Analyzer/) | Custom Mode for codebase knowledge graph |
-| [Cursor Rules Maker](../Cursor%20Rules%20Maker/) | Custom Mode to generate project `.mdc` rules |
-| [tools-inventory-es.md](./tools-inventory-es.md) | MCP + Skills + Subagents (Spanish) |
+| [Cursor Skills](../Cursor%20Skills/) | Agent Skills — referencia + copias exportadas (`exported-*-skills`, manifest) |
+| [Cursor Commands](../Cursor%20Commands/) | Comandos slash exportados desde `.cursor/commands` |
+| [Cursor Hooks](../Cursor%20Hooks/) | Documentación + ejemplo + **`user-export/`** (copia de hooks globales) |
+| [Cursor Subagents](../Cursor%20Subagents/) | Delegación Task / subagentes |
+| [Cursor MCPs](../Cursor%20MCPs/) | Inventario MCP sin secretos + `mcp.config.example.json` |
+| [Cursor User Rules](../Cursor%20User%20Rules/) | Cómo respaldar User Rules de Cursor (no versionar el JSON real con secretos) |
+| [Cursor Requestable Rules](../Cursor%20Requestable%20Rules/) | Reglas solicitables del entorno (p. ej. `cursor10x-mcp.mdc`) |
+| [Cursor Project Analyzer](../Cursor%20Project%20Analyzer/) | Custom Mode para knowledge graph del repo |
+| [Cursor Rules Maker](../Cursor%20Rules%20Maker/) | Custom Mode para generar `.mdc` de proyecto |
+| [tools-inventory-es.md](./tools-inventory-es.md) | MCP + Skills + Subagents (español) |
 
 ## Overview
 

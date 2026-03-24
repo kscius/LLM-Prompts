@@ -8,8 +8,9 @@ This repository maintains the full categorized list in:
 
 - **English:** [Cursor Rules / ai-tools.md](../Cursor%20Rules/ai-tools.md) — section “Subagents”
 - **Spanish:** [Cursor Rules / tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md) — section “Subagents”
+- **Task tool dump (long):** [task-subagent-types.md](./task-subagent-types.md) — tipos tal como aparecen en la herramienta Task (incluye `best-of-n-runner`, etc.)
 
-Update those documents when your environment adds new `subagent_type` values.
+Update **ai-tools.md** and **tools-inventory-es.md** when añadas valores nuevos de `subagent_type`; opcionalmente alinea **task-subagent-types.md** si quieres paridad literal con Cursor.
 
 ## When to delegate
 
@@ -43,4 +44,4 @@ Subagent lifecycle may be observable via hooks such as `subagentStart` / `subage
 
 ---
 
-**Last updated:** March 2025
+**Last updated:** March 2026

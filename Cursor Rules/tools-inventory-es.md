@@ -68,7 +68,8 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 **General & exploration**  
 - `generalPurpose` – Tareas generales, investigación, búsqueda de código.  
 - `explore` – Exploración rápida del codebase (quick / medium / very thorough).  
-- `shell` – Comandos bash, git, terminal.
+- `shell` – Comandos bash, git, terminal.  
+- `best-of-n-runner` – Ejecutar una tarea en worktrees git aislados (intentos paralelos o experimentos).
 
 **Agents & organization**  
 - `agent-installer` – Descubrir/instalar agentes desde awesome-claude-code-subagents.  

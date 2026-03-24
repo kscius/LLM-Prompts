@@ -10,12 +10,22 @@ Reference and setup guide for **Agent Skills** in Cursor: reusable `SKILL.md` pa
 
 ## Repository layout
 
-This repo does **not** duplicate your personal skill files. It documents how to use them and points to the shared inventory:
+### Exported copies (from this Cursor environment)
+
+| Path | Contents |
+|------|-----------|
+| [exported-cursor-skills/](./exported-cursor-skills/) | Copy of `%USERPROFILE%\.cursor\skills\` (each skill folder with `SKILL.md`, etc.). |
+| [exported-agents-skills/](./exported-agents-skills/) | Copy of `%USERPROFILE%\.agents\skills\` (additional skills). |
+| [cursor-managed-skills-manifest.json](./cursor-managed-skills-manifest.json) | Builtin skill ids from `%USERPROFILE%\.cursor\skills-cursor\.cursor-managed-skills-manifest.json`. |
+
+### Reference tables (keep in sync when you add skills)
+
+The repo also documents skills at a high level in:
 
 - **English:** [Cursor Rules / ai-tools.md](../Cursor%20Rules/ai-tools.md) (Skills table)
 - **Spanish:** [Cursor Rules / tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md) (tabla Skills)
 
-Keep **ai-tools.md** and **tools-inventory-es.md** in sync when you add or rename skills in your environment.
+Keep **ai-tools.md** and **tools-inventory-es.md** in sync when you add or rename skills in your environment. After big changes, re-copy `exported-cursor-skills/` and `exported-agents-skills/` from your machine if you want the repo to stay a faithful mirror.
 
 ## Skill anatomy (typical)
 
@@ -46,4 +56,4 @@ Use the **create-skill** skill in Cursor (see `create-skill` in [tools-inventory
 
 ---
 
-**Last updated:** March 2025
+**Last updated:** March 2026

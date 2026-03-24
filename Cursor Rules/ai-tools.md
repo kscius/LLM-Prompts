@@ -72,6 +72,7 @@ Use the **subagent_type** parameter when delegating. See **tooling-delegation.md
 - `generalPurpose` — General tasks, research, code search.
 - `explore` — Fast codebase exploration (quick / medium / very thorough).
 - `shell` — Bash commands, git, terminal.
+- `best-of-n-runner` — Run a task in isolated git worktrees for parallel attempts or experiments.
 
 ### Agents & organization
 

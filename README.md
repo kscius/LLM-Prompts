@@ -54,7 +54,7 @@ A comprehensive collection of global rules and best practices for Cursor AI. The
 - Stack-specific rules (React, Next.js, NestJS, etc.) and UI/UX standards
 - **ai-tools.md** (English) and **tools-inventory-es.md** (Spanish) for MCPs, Skills, and Subagents
 
-**Companion folders:** [Cursor Skills](./Cursor%20Skills/), [Cursor Commands](./Cursor%20Commands/), [Cursor Hooks](./Cursor%20Hooks/), [Cursor Subagents](./Cursor%20Subagents/) — skills, slash commands, hooks, and subagent guidance.
+**Companion folders:** [Cursor Skills](./Cursor%20Skills/) (incl. skills exportados), [Cursor Commands](./Cursor%20Commands/) (comandos slash), [Cursor Hooks](./Cursor%20Hooks/) (incl. `user-export/`), [Cursor Subagents](./Cursor%20Subagents/), [Cursor MCPs](./Cursor%20MCPs/), [Cursor User Rules](./Cursor%20User%20Rules/), [Cursor Requestable Rules](./Cursor%20Requestable%20Rules/).
 
 **Best for:** Development teams using Cursor AI who want to standardize practices and improve code quality.
 
@@ -110,11 +110,14 @@ Shared reference and templates for Cursor beyond single prompts:
 
 | Folder | Description |
 |--------|-------------|
-| [Cursor Skills](./Cursor%20Skills/) | How Agent Skills work; links to the canonical skill inventory |
-| [Cursor Commands](./Cursor%20Commands/) | Slash-command workflow; includes **orquestador** orchestrator template |
-| [Cursor Hooks](./Cursor%20Hooks/) | `hooks.json` lifecycle hooks (project or global) |
-| [Cursor Subagents](./Cursor%20Subagents/) | Task / subagent delegation and handoff patterns |
-| [Cursor Rules / tools-inventory-es](./Cursor%20Rules/tools-inventory-es.md) | MCP, Skills, Subagents (Spanish); pairs with **ai-tools.md** |
+| [Cursor Skills](./Cursor%20Skills/) | Skills: guía + carpetas **exported-cursor-skills** / **exported-agents-skills** + manifest |
+| [Cursor Commands](./Cursor%20Commands/) | Comandos slash (18 prompts), p. ej. **orquestador**, scout, plan, build-full |
+| [Cursor Hooks](./Cursor%20Hooks/) | Documentación + ejemplo + **user-export/** (copia de hooks globales) |
+| [Cursor Subagents](./Cursor%20Subagents/) | Delegación Task; lista de tipos en **task-subagent-types.md** |
+| [Cursor MCPs](./Cursor%20MCPs/) | Inventario de servidores MCP sin secretos + plantilla **mcp.config.example.json** |
+| [Cursor User Rules](./Cursor%20User%20Rules/) | Cómo respaldar User Rules (no subir JSON con datos sensibles) |
+| [Cursor Requestable Rules](./Cursor%20Requestable%20Rules/) | Reglas solicitables del entorno (p. ej. cursor10x-mcp) |
+| [Cursor Rules / tools-inventory-es](./Cursor%20Rules/tools-inventory-es.md) | MCP, Skills, Subagents (español); par con **ai-tools.md** |
 
 ---
 
@@ -259,18 +262,27 @@ LLM-Prompts/
 │   ├── ai-tools.md             # MCP, Skills, Subagents (English)
 │   └── tools-inventory-es.md   # Same inventory (Spanish)
 │
-├── Cursor Skills/               # Agent Skills reference
+├── Cursor Skills/               # Skills: README + exported-cursor-skills/, exported-agents-skills/
 │   └── README.md
 │
-├── Cursor Commands/             # Slash-command templates (.cursor/commands)
+├── Cursor Commands/             # Slash commands (mirror of ~/.cursor/commands)
 │   ├── README.md
-│   └── orquestador.md          # End-to-end orchestrator prompt
+│   └── *.md                     # orquestador, scout, plan, build-full, etc.
 │
-├── Cursor Hooks/                # hooks.json documentation + example
+├── Cursor Hooks/                # hooks docs + user-export/ (global hooks snapshot)
 │   ├── README.md
 │   └── hooks.example.json
 │
-├── Cursor Subagents/            # Task / subagent delegation guide
+├── Cursor Subagents/            # Delegation + task-subagent-types.md
+│   └── README.md
+│
+├── Cursor MCPs/                 # MCP inventory (no secrets) + mcp.config.example.json
+│   └── README.md
+│
+├── Cursor User Rules/           # How to backup Cursor User Rules
+│   └── README.md
+│
+├── Cursor Requestable Rules/    # Requestable .mdc rules from environment
 │   └── README.md
 │
 ├── Cursor Rules Maker/          # Automated rule generator

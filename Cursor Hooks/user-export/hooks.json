@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "node ./hooks/session-context.js",
+        "timeout": 10
+      },
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "node ./hooks/block-dangerous-shell.js",
+        "timeout": 10
+      },
+      {
+        "command": "node ./hooks/protect-branch.js",
+        "matcher": "git"
+      },
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      },
+      {
+        "type": "prompt",
+        "prompt": "Is this shell command safe? Only allow if it is a read-only operation, a build/test/lint command, or a standard development operation. Block if it could delete data, push to production, or modify system files. Command: $ARGUMENTS",
+        "timeout": 10
+      }
+    ],
+    "afterShellExecution": [
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "beforeReadFile": [
+      {
+        "command": "node ./hooks/block-secret-reads.js",
+        "timeout": 5,
+        "failClosed": true
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node ./hooks/post-edit-quality.js",
+        "timeout": 10
+      },
+      {
+        "command": "node ./hooks/auto-format.js",
+        "timeout": 15
+      },
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "beforeMCPExecution": [
+      {
+        "command": "node ./hooks/validate-mcp.js",
+        "timeout": 10,
+        "failClosed": true
+      },
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "afterMCPExecution": [
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5,
+        "matcher": "Shell|Write|Delete"
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "subagentStart": [
+      {
+        "command": "node ./hooks/subagent-guard.js",
+        "timeout": 5
+      }
+    ],
+    "subagentStop": [
+      {
+        "command": "node ./hooks/subagent-complete.js",
+        "timeout": 5
+      }
+    ],
+    "stop": [
+      {
+        "command": "node ./hooks/stop-summary.js",
+        "timeout": 10,
+        "loop_limit": 5
+      },
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
+    "preCompact": [
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ]
+  }
+}

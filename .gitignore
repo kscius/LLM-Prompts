@@ -1,2 +1,5 @@
 # Local-only drafts (not versioned). Public inventory: Cursor Rules/ai-tools.md + tools-inventory-es.md
 DATOS/
+
+# Optional: local MCP override with real keys (never commit)
+Cursor MCPs/mcp.config.local.json

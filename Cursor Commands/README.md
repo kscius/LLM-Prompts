@@ -13,11 +13,28 @@ Exact UI and paths may vary slightly by Cursor version; prefer **Cursor Settings
 
 ## Files in this folder
 
-| File | Purpose |
-|------|---------|
-| [orquestador.md](./orquestador.md) | End-to-end workflow orchestrator (scout → plan → build → validate) |
+These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed.
 
-Copy or adapt these into your project’s `.cursor/commands/` as needed.
+| File | Typical use |
+|------|----------------|
+| [orquestador.md](./orquestador.md) | Orquestador end-to-end (scout → plan → build → validate). |
+| [scout.md](./scout.md) | Fase de descubrimiento / reconocimiento. |
+| [plan.md](./plan.md) | Planificación antes de implementar. |
+| [build-full.md](./build-full.md) | Implementación completa según plan. |
+| [fix-loop.md](./fix-loop.md) | Reparar fallos de validación de forma iterativa. |
+| [verify.md](./verify.md) | Comprobaciones finales. |
+| [commit-changes.md](./commit-changes.md) | Preparar commit coherente. |
+| [pr-ready.md](./pr-ready.md) | Checklist antes de abrir PR. |
+| [code-review.md](./code-review.md) | Revisión de código. |
+| [security-review.md](./security-review.md) | Revisión orientada a seguridad. |
+| [write-unit-tests.md](./write-unit-tests.md) | Añadir o ampliar tests unitarios. |
+| [run-all-tests-and-fix.md](./run-all-tests-and-fix.md) | Suite de tests + corrección. |
+| [lint-suite.md](./lint-suite.md) | Lint / calidad estática. |
+| [refactor.md](./refactor.md) | Refactor guiado. |
+| [debug-issue.md](./debug-issue.md) | Depuración estructurada. |
+| [performance-check.md](./performance-check.md) | Rendimiento y cuellos de botella. |
+| [database-migration.md](./database-migration.md) | Migraciones de base de datos. |
+| [harness-audit.md](./harness-audit.md) | Auditoría de harness / tooling de pruebas. |
 
 ## Related resources
 
@@ -27,4 +44,4 @@ Copy or adapt these into your project’s `.cursor/commands/` as needed.
 
 ---
 
-**Last updated:** March 2025
+**Last updated:** March 2026
