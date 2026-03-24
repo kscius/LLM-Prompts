@@ -113,7 +113,7 @@ Shared reference and templates for Cursor beyond single prompts:
 | [Cursor Skills](./Cursor%20Skills/) | Skills: guía + carpetas **exported-cursor-skills** / **exported-agents-skills** + manifest |
 | [Cursor Commands](./Cursor%20Commands/) | Comandos slash (18 prompts), p. ej. **orquestador**, scout, plan, build-full |
 | [Cursor Hooks](./Cursor%20Hooks/) | Documentación + ejemplo + **user-export/** (copia de hooks globales) |
-| [Cursor Subagents](./Cursor%20Subagents/) | Delegación Task; lista de tipos en **task-subagent-types.md** |
+| [Cursor Subagents](./Cursor%20Subagents/) | Delegación Task; prompts por tipo en **agents/*.md**; enum en **task-subagent-types.md** |
 | [Cursor MCPs](./Cursor%20MCPs/) | Inventario de servidores MCP sin secretos + plantilla **mcp.config.example.json** |
 | [Cursor User Rules](./Cursor%20User%20Rules/) | Cómo respaldar User Rules (no subir JSON con datos sensibles) |
 | [Cursor Requestable Rules](./Cursor%20Requestable%20Rules/) | Reglas solicitables del entorno (p. ej. cursor10x-mcp) |
@@ -273,8 +273,10 @@ LLM-Prompts/
 │   ├── README.md
 │   └── hooks.example.json
 │
-├── Cursor Subagents/            # Delegation + task-subagent-types.md
-│   └── README.md
+├── Cursor Subagents/            # Delegation: README + task-subagent-types.md + agents/*.md
+│   ├── README.md
+│   ├── task-subagent-types.md
+│   └── agents/                  # <subagent_type>.md (full prompts; see agents/README.md)
 │
 ├── Cursor MCPs/                 # MCP inventory (no secrets) + mcp.config.example.json
 │   └── README.md

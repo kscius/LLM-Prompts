@@ -39,6 +39,7 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 ## Related resources
 
 - [Cursor Skills](../Cursor%20Skills/) — Agent Skills (`SKILL.md`)
+- [Cursor Subagents / agents](../Cursor%20Subagents/agents/README.md) — Task `subagent_type` prompt files (`*.md`)
 - [Cursor Hooks](../Cursor%20Hooks/) — Lifecycle automation
 - [Cursor Rules](../Cursor%20Rules/) — Global and project rules (`.mdc`)
 

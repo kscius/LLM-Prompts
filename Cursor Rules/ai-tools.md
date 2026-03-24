@@ -67,6 +67,12 @@ Additional MCPs may be present in your environment. List available MCPs in the C
 
 Use the **subagent_type** parameter when delegating. See **tooling-delegation.md** for when to delegate.
 
+### Agent prompt files (this repository)
+
+The folder **[Cursor Subagents/agents/](../Cursor%20Subagents/agents/README.md)** contains **87** Markdown definitions: each file is named `<subagent_type>.md` and holds YAML frontmatter (`name`, `description`, optional `tools` / `model`) plus the full agent instructions. Use that directory when you need the complete prompt text; the subsections below are abbreviated routing summaries.
+
+Task-tool types that **do not** have a matching file there (still valid where exposed by the product): `generalPurpose`, `explore`, `shell`, `best-of-n-runner`, `nodejs-developer`.
+
 ### General & exploration
 
 - `generalPurpose` — General tasks, research, code search.

@@ -13,7 +13,7 @@ These live next to `Cursor Rules/` at the repository root:
 | [Cursor Skills](../Cursor%20Skills/) | Agent Skills — referencia + copias exportadas (`exported-*-skills`, manifest) |
 | [Cursor Commands](../Cursor%20Commands/) | Comandos slash exportados desde `.cursor/commands` |
 | [Cursor Hooks](../Cursor%20Hooks/) | Documentación + ejemplo + **`user-export/`** (copia de hooks globales) |
-| [Cursor Subagents](../Cursor%20Subagents/) | Delegación Task / subagentes |
+| [Cursor Subagents](../Cursor%20Subagents/) | Delegación Task / subagentes; definiciones largas en **[agents/](../Cursor%20Subagents/agents/README.md)** |
 | [Cursor MCPs](../Cursor%20MCPs/) | Inventario MCP sin secretos + `mcp.config.example.json` |
 | [Cursor User Rules](../Cursor%20User%20Rules/) | Cómo respaldar User Rules de Cursor (no versionar el JSON real con secretos) |
 | [Cursor Requestable Rules](../Cursor%20Requestable%20Rules/) | Reglas solicitables del entorno (p. ej. `cursor10x-mcp.mdc`) |

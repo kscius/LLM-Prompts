@@ -4,13 +4,13 @@
 
 ## Canonical list
 
-This repository maintains the full categorized list in:
+1. **Full prompts (this repo):** **[agents/](./agents/README.md)** — one `<subagent_type>.md` per shipped type (YAML frontmatter + long body). This is the source to copy, cite, or sync into projects.
+2. **Short descriptions by category:**
+   - **English:** [Cursor Rules / ai-tools.md](../Cursor%20Rules/ai-tools.md) — section “Subagents”
+   - **Spanish:** [Cursor Rules / tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md) — section “Subagents”
+3. **Flat enum:** [task-subagent-types.md](./task-subagent-types.md) — valores tal como en la herramienta Task (incluye `best-of-n-runner`, etc.)
 
-- **English:** [Cursor Rules / ai-tools.md](../Cursor%20Rules/ai-tools.md) — section “Subagents”
-- **Spanish:** [Cursor Rules / tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md) — section “Subagents”
-- **Task tool dump (long):** [task-subagent-types.md](./task-subagent-types.md) — tipos tal como aparecen en la herramienta Task (incluye `best-of-n-runner`, etc.)
-
-Update **ai-tools.md** and **tools-inventory-es.md** when añadas valores nuevos de `subagent_type`; opcionalmente alinea **task-subagent-types.md** si quieres paridad literal con Cursor.
+When Cursor adds or renames `subagent_type` values, update **ai-tools.md**, **tools-inventory-es.md**, and **task-subagent-types.md**; add or rename files under **agents/** when you maintain prompts for those types.
 
 ## When to delegate
 

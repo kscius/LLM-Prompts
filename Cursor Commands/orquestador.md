@@ -76,6 +76,8 @@ Preferred subagent routing:
 - Legacy change surface: `legacy-modernizer`
 - Docs updates: `documentation-engineer`
 
+Subagent prompt files in this repository (optional reference for handoffs or custom setups): [Cursor Subagents/agents/README.md](../Cursor%20Subagents/agents/README.md) — one `<subagent_type>.md` per shipped type.
+
 Preferred MCPs:
 - Base: `user-cursor10x-mcp`, `user-devcontext`, `user-Sequentialthinking`, `user-context7`, `user-github`
 - Conditional: `cursor-ide-browser`, `user-semgrep`, `user-eamodio.gitlens-extension-GitKraken`, `user-duckduckgo`, `user-time`, `user-memory`

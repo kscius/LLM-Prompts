@@ -65,6 +65,10 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 
 ## Subagents (tipos para `mcp_task`)
 
+**Definiciones completas en este repositorio:** la carpeta **[Cursor Subagents/agents/](../Cursor%20Subagents/agents/README.md)** incluye **87** archivos `<subagent_type>.md` (frontmatter YAML + cuerpo del agente). Ahí está el texto largo; las listas siguientes son resúmenes para enrutamiento.
+
+**Tipos del Task tool sin archivo local aquí** (válidos donde Cursor los exponga): `generalPurpose`, `explore`, `shell`, `best-of-n-runner`, `nodejs-developer`.
+
 **General & exploration**  
 - `generalPurpose` – Tareas generales, investigación, búsqueda de código.  
 - `explore` – Exploración rápida del codebase (quick / medium / very thorough).  
