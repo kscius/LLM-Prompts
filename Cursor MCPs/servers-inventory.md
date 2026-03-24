@@ -1,6 +1,27 @@
 # MCP servers — inventory (from user `mcp.json`)
 
-Servers defined in **`%USERPROFILE%\.cursor\mcp.json`** (logical names → transport). Cursor may also attach **additional MCPs** from extensions (e.g. IDE browser, GitLens); those show up under the project `mcps` folder with `user-*` ids.
+Servers defined in **`%USERPROFILE%\.cursor\mcp.json`** (logical names → transport). Cursor may also attach **additional MCPs** from extensions (IDE browser, GitLens, etc.); those show up under the project `mcps` folder.
+
+## Cursor project folder ids ↔ `mcp.json` (LLM-Prompts)
+
+| Folder under `…/mcps/` | `mcp.json` key (if any) | Origin |
+|------------------------|-------------------------|--------|
+| `cursor-ide-browser` | — | Cursor IDE |
+| `user-Memory` | Memory | User config |
+| `user-Sequential_Thinking` | Sequential Thinking | User config (note: space in key → underscore in folder) |
+| `user-Interactive` | Interactive | User config |
+| `user-duckduckgo` | duckduckgo | User config |
+| `user-time` | time | User config |
+| `user-mtg-commander-analyzer` | mtg-commander-analyzer | User config |
+| `user-context7` | context7 | User config |
+| `user-semgrep` | semgrep | User config |
+| `user-github` | github | User config |
+| `user-cursor10x-mcp` | cursor10x-mcp | User config |
+| `user-devcontext` | devcontext | User config |
+| `user-stitch` | stitch | User config |
+| `user-eamodio.gitlens-extension-GitKraken` | — | GitLens / GitKraken extension |
+
+## Transport and notes (`mcp.json` entries)
 
 | Server key (mcp.json) | Transport | Notes |
 |------------------------|-----------|--------|
@@ -16,8 +37,6 @@ Servers defined in **`%USERPROFILE%\.cursor\mcp.json`** (logical names → trans
 | cursor10x-mcp | `npx cursor10x-mcp` | Turso env vars |
 | devcontext | `npx devcontext@latest` | Turso env vars |
 | stitch | HTTPS Stitch + API key header | |
-
-**Typical extension / project `mcps` ids (example):** `cursor-ide-browser`, `user-Memory`, `user-Sequential_Thinking`, `user-github`, `user-context7`, `user-semgrep`, `user-duckduckgo`, `user-Interactive`, `user-time`, `user-cursor10x-mcp`, `user-devcontext`, `user-stitch`, `user-mtg-commander-analyzer`, `user-eamodio.gitlens-extension-GitKraken`.
 
 ---
 
