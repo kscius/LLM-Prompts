@@ -15,4 +15,4 @@ Do **not** commit **`hooks/logs/`** or audit trails from your local machine.
 
 ---
 
-**Last updated:** 2026-03-29 (`hooks.json` alineado con `~/.cursor/hooks.json`: `subagentStart` prompt con `matcher`; `beforeReadFile` sin `failClosed`, rutas portables `./hooks/…`)
+**Last updated:** 2026-03-30 (`hooks.json` alineado con `%USERPROFILE%\.cursor\hooks.json`: `afterFileEdit` incluye `edit-tracker`, `comment-checker`; `stop` incluye `verifier`, `boulder-check`; `preCompact` incluye `precompact-preserve`; rutas portables `./hooks/…`)

@@ -66,8 +66,16 @@
     ],
     "afterFileEdit": [
       {
+        "command": "node ./hooks/edit-tracker.js",
+        "timeout": 5
+      },
+      {
         "command": "node ./hooks/post-edit-quality.js",
         "timeout": 10
+      },
+      {
+        "command": "node ./hooks/comment-checker.js",
+        "timeout": 8
       },
       {
         "command": "node ./hooks/auto-format.js",
@@ -139,11 +147,23 @@
         "loop_limit": 5
       },
       {
+        "command": "node ./hooks/verifier.js",
+        "timeout": 360
+      },
+      {
+        "command": "node ./hooks/boulder-check.js",
+        "timeout": 15
+      },
+      {
         "command": "node ./hooks/audit-log.js",
         "timeout": 5
       }
     ],
     "preCompact": [
+      {
+        "command": "node ./hooks/precompact-preserve.js",
+        "timeout": 15
+      },
       {
         "command": "node ./hooks/audit-log.js",
         "timeout": 5

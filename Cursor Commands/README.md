@@ -13,7 +13,7 @@ Exact UI and paths may vary slightly by Cursor version; prefer **Cursor Settings
 
 ## Files in this folder
 
-These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **30** command files (plus this `README.md`).
+These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **32** command files (plus this `README.md`).
 
 | File | Typical use |
 |------|----------------|
@@ -33,6 +33,7 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 | [review-team.md](./review-team.md) | Equipo revisión (CR + seguridad + docs). |
 | [debug-team.md](./debug-team.md) | Equipo depuración (debugger + repro + fix). |
 | [retrospective.md](./retrospective.md) | Retrospectiva estructurada post‑entrega o post‑incidente. |
+| [retro-to-rule.md](./retro-to-rule.md) | Convertir aprendizajes de retrospectiva en reglas `.mdc` o skills. |
 | [security-review.md](./security-review.md) | Revisión orientada a seguridad. |
 | [write-unit-tests.md](./write-unit-tests.md) | Añadir o ampliar tests unitarios. |
 | [run-all-tests-and-fix.md](./run-all-tests-and-fix.md) | Suite de tests + corrección. |
@@ -42,6 +43,7 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 | [performance-check.md](./performance-check.md) | Rendimiento y cuellos de botella. |
 | [database-migration.md](./database-migration.md) | Migraciones de base de datos. |
 | [harness-audit.md](./harness-audit.md) | Auditoría de harness / tooling de pruebas. |
+| [cli-batch.md](./cli-batch.md) | Cursor CLI en modo batch / headless sobre muchos archivos (`cursor agent -p`, globs). |
 | [ci-watch.md](./ci-watch.md) | Vigilar CI / pipelines y fallos recurrentes. |
 | [department-report.md](./department-report.md) | Informe tipo “departamento” (roles SDLC / estado). |
 | [knowledge-consolidate.md](./knowledge-consolidate.md) | Consolidar conocimiento / memoria de proyecto. |
@@ -57,4 +59,4 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 
 ---
 
-**Last updated:** 2026-03-29 (full sync from maintainer `%USERPROFILE%\.cursor\commands`)
+**Last updated:** 2026-03-30 (sync desde `%USERPROFILE%\.cursor\commands`: +`cli-batch`, +`retro-to-rule`)
