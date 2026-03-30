@@ -61,8 +61,7 @@
     "beforeReadFile": [
       {
         "command": "node ./hooks/block-secret-reads.js",
-        "timeout": 5,
-        "failClosed": true
+        "timeout": 5
       }
     ],
     "afterFileEdit": [
@@ -123,7 +122,8 @@
       {
         "type": "prompt",
         "prompt": "Review this subagent delegation. Is the task well-scoped with clear boundaries? Is delegation justified (specialized expertise, parallelizable, or high-risk)? Does it avoid redundant work the parent could do directly? Delegation: $ARGUMENTS",
-        "timeout": 10
+        "timeout": 10,
+        "matcher": "auth|security|migration|schema|payment|database"
       }
     ],
     "subagentStop": [

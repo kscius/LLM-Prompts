@@ -13,7 +13,7 @@ Exact UI and paths may vary slightly by Cursor version; prefer **Cursor Settings
 
 ## Files in this folder
 
-These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **25** command files (plus this `README.md`).
+These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **30** command files (plus this `README.md`).
 
 | File | Typical use |
 |------|----------------|
@@ -42,6 +42,11 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 | [performance-check.md](./performance-check.md) | Rendimiento y cuellos de botella. |
 | [database-migration.md](./database-migration.md) | Migraciones de base de datos. |
 | [harness-audit.md](./harness-audit.md) | Auditoría de harness / tooling de pruebas. |
+| [ci-watch.md](./ci-watch.md) | Vigilar CI / pipelines y fallos recurrentes. |
+| [department-report.md](./department-report.md) | Informe tipo “departamento” (roles SDLC / estado). |
+| [knowledge-consolidate.md](./knowledge-consolidate.md) | Consolidar conocimiento / memoria de proyecto. |
+| [stats.md](./stats.md) | Métricas o resúmenes de actividad (según tu plantilla). |
+| [project-init.md](./project-init.md) | Inicialización de proyecto / bootstrap en Cursor. |
 
 ## Related resources
 
@@ -52,4 +57,4 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 
 ---
 
-**Last updated:** 2026-03-29 (synced from maintainer `~/.cursor/commands`)
+**Last updated:** 2026-03-29 (full sync from maintainer `%USERPROFILE%\.cursor\commands`)

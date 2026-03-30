@@ -54,6 +54,8 @@ After devcontext init (and after brainstorming if it ran):
 
 ## PHASE 1 — RECONNAISSANCE
 
+At the start of Phase 1, read and apply the **`repo-discovery`** skill (`~/.cursor/skills/repo-discovery/SKILL.md`) so discovery steps stay consistent with `/orquestador` and standalone recon use.
+
 OPERATING RULES
 1. Inspect the repo before making any recommendation.
 2. Use the minimum effective set of Rules, Skills, Subagents, and MCPs.
@@ -161,6 +163,39 @@ This helps BUILD phase understand blast radius accurately.
 
 ---
 
+## MANDATORY SCOUT ARTIFACT (disk)
+
+After Phase 1 reconnaissance is complete (and after Phase 0.1–0.3 and brainstorming if they ran), you **must** persist a canonical scout artifact for handoff and resume—**in addition to** the chat report.
+
+**Path:** `<workspace-root>/.cursor/plans/scout-YYYY-MM-DD-<slug>.md`
+
+- Use **today’s date** (UTC or local, be consistent) in `YYYY-MM-DD`.
+- **Slug:** kebab-case from the TASK (short, ≤~48 chars), no path characters.
+- Create `.cursor/plans/` if it does not exist (when the workspace is a writable project repo).
+
+**YAML front-matter (required at top of file):**
+
+```yaml
+---
+date: YYYY-MM-DD
+task: <same slug as filename without date prefix>
+classification: SIMPLE|STANDARD|COMPLEX
+confidence: HIGH|MEDIUM|LOW
+workflow_type: feature|bugfix|refactor|security|migration|docs|performance|infrastructure|research|custom
+next_command: /orquestador|/plan|/intake|/build-full
+---
+```
+
+**Body:** Use the same sections as **SCOUT REPORT FORMAT** below (stack, workflow type, files, validation commands, memory findings, routing, classification, confidence, SequentialThinking, flags, risks, parallelization). Optionally include the structured plan sections if `--plan` / plan mode was requested (see OUTPUT MODE).
+
+**Exceptions (no file write):**
+
+- Workspace is **not** a project repo (e.g. only user dotfiles) **or** plans directory is not writable: state in chat **“Scout artifact: not written — reason: …”** and paste the full front-matter + body in chat so `/orquestador` can still proceed from context.
+
+**Integration:** `/orquestador` and **phase-handoff** skill expect this file for gate **SCOUT → PLAN**. Keep `next_command` aligned with classification (e.g. SIMPLE → `/orquestador` or `/build-full`; COMPLEX → `/orquestador`).
+
+---
+
 ## PHASE 2 — SequentialThinking protocol (mandatory when triggered)
 
 Use the **Sequential Thinking** MCP (`sequentialthinking`) when **any** trigger applies:
@@ -179,14 +214,15 @@ If **no** trigger applies, state **SequentialThinking: skipped** with one line e
 
 ## OUTPUT MODE — default vs Cursor Plan
 
-**Default**: emit the **Scout report** using the format below.
+**Default**: emit the **Scout report** using the format below in chat **and** the **MANDATORY SCOUT ARTIFACT** file (unless an exception applies).
 
 **Cursor Plan output mode** — use when the user asks for a plan, e.g. task or args include any of: `plan`, `--plan`, `as plan`, `cursor plan`, `plan output`, `export plan`.
 
 When Plan mode is requested:
 
 1. Still complete Phases 0–2 and the same reconnaissance.
-2. Produce a **structured plan document** (Markdown) with at minimum:
+2. **Still write** `scout-YYYY-MM-DD-<slug>.md` with front-matter; embed or append the structured plan sections in that file (and in chat).
+3. Produce a **structured plan document** (Markdown) with at minimum:
    - **Title** — short, action-oriented
    - **Objective** — what success looks like
    - **Context** — stack, workflow type, classification, confidence
@@ -198,11 +234,11 @@ When Plan mode is requested:
    - **Risks and constraints**
    - **Handoff** — recommended next command (`/orquestador`, Plan Mode in editor, or BUILD) and skill/subagent routing
 
-3. **Deliver the plan** by:
+4. **Deliver the plan** by:
    - Pasting the full Markdown in the chat **and**
-   - If the workspace is a project repo (not only dotfiles), **offer** to write it to `<workspace>/.cursor/plans/scout-<short-slug>.plan.md` (kebab-case slug from the task). Only write that file if the user confirms or if they explicitly asked for a saved plan file.
+   - The mandatory `scout-YYYY-MM-DD-<slug>.md` already satisfies persistence; optionally **also** write `<workspace>/.cursor/plans/scout-<short-slug>.plan.md` if the user explicitly asked for a separate `.plan.md` file.
 
-4. If the product UI supports opening **Plan mode** with this content, you may tell the user to paste the plan there or continue in Plan mode for refinement.
+5. If the product UI supports opening **Plan mode** with this content, you may tell the user to paste the plan there or continue in Plan mode for refinement.
 
 ---
 

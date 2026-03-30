@@ -15,4 +15,4 @@ Do **not** commit **`hooks/logs/`** or audit trails from your local machine.
 
 ---
 
-**Last updated:** 2026-03-29 (includes `after-agent-response.js`, prompts en `afterFileEdit` / `subagentStart`)
+**Last updated:** 2026-03-29 (`hooks.json` alineado con `~/.cursor/hooks.json`: `subagentStart` prompt con `matcher`; `beforeReadFile` sin `failClosed`, rutas portables `./hooks/…`)

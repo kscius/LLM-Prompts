@@ -108,6 +108,11 @@ Use these headings:
 
 ---
 
+## See also
+
+- **`/department-report`** — roll up many sessions/plans over a date range (department activity, not a single session).
+- **`/stats`** — aggregate hook logs and plan counts for operational metrics.
+
 ## Quality bar
 
 - Prefer **specific** references (paths, PRs, ticket IDs) over vague “we improved things.”

@@ -56,4 +56,4 @@ Use the **create-skill** skill in Cursor (see `create-skill` in [tools-inventory
 
 ---
 
-**Last updated:** 2026-03-29 (exported-cursor-skills y manifest sincronizados desde el entorno del mantenedor)
+**Last updated:** 2026-03-29 (`exported-cursor-skills`: **30** skills con `SKILL.md` desde `%USERPROFILE%\.cursor\skills\`; manifest igual que `%USERPROFILE%\.cursor\skills-cursor\.cursor-managed-skills-manifest.json`)

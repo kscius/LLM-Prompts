@@ -4,7 +4,7 @@ These are the **`subagent_type`** values exposed by the Cursor Task tool (as of 
 
 **Also listed (English/Spanish):** [ai-tools.md](../Cursor%20Rules/ai-tools.md), [tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md).
 
-**Full prompt bodies (this repo):** for each shipped type, see **[agents/](./agents/README.md)** (`<subagent_type>.md`). Types without a file there: `generalPurpose`, `explore`, `shell`, `best-of-n-runner`, `nodejs-developer`.
+**Full prompt bodies (this repo):** for each shipped type, see **[agents/](./agents/README.md)** (`<subagent_type>.md`). Types without a file there (built-in / generic): `generalPurpose`, `explore`, `shell`, `best-of-n-runner`.
 
 ## Full enum (representative)
 
@@ -17,4 +17,4 @@ These are the **`subagent_type`** values exposed by the Cursor Task tool (as of 
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29 (aligned with current Task tool enum in Cursor)

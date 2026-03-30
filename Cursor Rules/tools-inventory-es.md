@@ -63,6 +63,8 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 | **tech-lead-review** | Revisión tipo staff: calidad, encaje arquitectónico, superficies sensibles de seguridad. |
 | **review-and-secure** | Revisión final de calidad y seguridad antes de entregar. |
 | **self-validate** | Comprobación anti-alucinación antes de declarar hecho. |
+| **phase-handoff** | Artefactos y checklists normalizados entre fases del SDLC (orquestador, execution packs, reanudar). |
+| **repo-discovery** | Reconocimiento solo lectura del repo: stack, archivos, comandos de validación, riesgos (scout / pre-plan). |
 
 ---
 
@@ -70,7 +72,7 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 
 **Definiciones completas en este repositorio:** la carpeta **[Cursor Subagents/agents/](../Cursor%20Subagents/agents/README.md)** incluye **87** archivos `<subagent_type>.md` (frontmatter YAML + cuerpo del agente). Ahí está el texto largo; las listas siguientes son resúmenes para enrutamiento.
 
-**Tipos del Task tool sin archivo local aquí** (válidos donde Cursor los exponga): `generalPurpose`, `explore`, `shell`, `best-of-n-runner`, `nodejs-developer`.
+**Tipos del Task tool sin archivo local aquí** (integrados / genéricos): `generalPurpose`, `explore`, `shell`, `best-of-n-runner`.
 
 **General & exploration**  
 - `generalPurpose` – Tareas generales, investigación, búsqueda de código.  
@@ -100,8 +102,7 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 - `django-developer` – Django 4+, DRF, async, multi-tenant.  
 - `rails-expert` – Rails 8+, Hotwire, rendimiento.  
 - `php-pro` – PHP 8.3+, Laravel/Symfony, tipos estrictos.  
-- `python-pro` – Python type-safe, FastAPI, async.  
-- `nodejs-developer` – (si está en tu lista local) Node/TS backends.
+- `python-pro` – Python type-safe, FastAPI, async.
 
 **Frontend & mobile**  
 - `frontend-developer` – Apps completas en React, Vue, Angular.  

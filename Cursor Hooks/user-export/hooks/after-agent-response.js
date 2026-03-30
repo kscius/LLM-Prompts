@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 /**
  * afterAgentResponse: lightweight post-response checks (heuristics only).
- * Official hook schema: input includes `text` plus common fields; no documented output fields.
- * We log findings to response-quality.jsonl for review; stdout is always {}.
+ * Logs to response-quality.jsonl; emits followup_message when flags fire so the
+ * conversation can self-correct (Cursor may surface followup_message to the user).
+ *
+ * Threshold review (2026-03-29, ASD gap report): Broadening CLAIM_RE / EVIDENCE_RE
+ * (e.g. flagging every "verified" without output) was **not** applied — high false-positive
+ * risk when assistants cite repo inspection. Absent `response-quality.jsonl` means no
+ * flags fired, not a broken hook. Revisit only with sampled false-negative evidence.
  */
 const fs = require("fs");
 const path = require("path");
@@ -87,7 +92,36 @@ async function main() {
     fs.appendFileSync(QUALITY_LOG, JSON.stringify(entry) + "\n");
   }
 
-  process.stdout.write("{}\n");
+  const followup = buildFollowupMessage(flags);
+  if (followup) {
+    process.stdout.write(
+      JSON.stringify({ followup_message: followup }) + "\n"
+    );
+  } else {
+    process.stdout.write("{}\n");
+  }
+}
+
+/** @param {string[]} flags */
+function buildFollowupMessage(flags) {
+  if (!flags.length) return "";
+  const parts = [];
+  if (flags.includes("strong_claim_without_obvious_command_output")) {
+    parts.push(
+      "Quality check: response claims tests/lint/typecheck/build success without obvious command output in the same message. Re-run validations and paste actual output, or soften the claim."
+    );
+  }
+  if (flags.includes("placeholder_or_todo_language")) {
+    parts.push(
+      "Quality check: placeholder or TODO-style wording detected—replace with real content or mark explicitly as temporary."
+    );
+  }
+  if (flags.includes("possible_secret_in_assistant_text")) {
+    parts.push(
+      "Security check: assistant text may resemble a token or secret—verify nothing sensitive was echoed; rotate credentials if exposed."
+    );
+  }
+  return parts.join(" ");
 }
 
 main().catch(() => {

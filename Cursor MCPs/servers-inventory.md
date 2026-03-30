@@ -23,23 +23,25 @@ Servers defined in **`%USERPROFILE%\.cursor\mcp.json`** (logical names → trans
 
 ## Transport and notes (`mcp.json` entries)
 
-| Server key (mcp.json) | Transport | Notes |
-|------------------------|-----------|--------|
-| Memory | Docker `mcp/memory` | Host volume for `memory.json` |
-| Sequential Thinking | Docker `mcp/sequentialthinking` | Often `enabled: false` if unused |
-| Interactive | `npx interactive-mcp` | timeout 300s |
-| duckduckgo | `npx duckduckgo-mcp-server` | |
-| time | Docker `mcp/time` | timezone via `-e`; may be `enabled: false` |
-| mtg-commander-analyzer | local `npm run mcp` | path-specific; may be `enabled: false` |
-| context7 | HTTPS + `CONTEXT7_API_KEY` header | |
-| semgrep | Docker `semgrep/semgrep … mcp` | |
-| github | HTTPS GitHub Copilot MCP + Bearer | use scoped token; never commit tokens |
-| cursor10x-mcp | `npx cursor10x-mcp` **or** `node` + path to installed package | Turso env vars; some setups use a local `node` entry instead of `npx` |
-| devcontext | `npx devcontext@latest` | Turso env vars |
-| stitch | HTTPS Stitch + API key header | may be `enabled: false` |
+Snapshot reflects a typical maintainer setup (keys **omitted**; use env vars locally). **`enabled`** is the default in that `mcp.json` when the field is present.
+
+| Server key (mcp.json) | Transport | Default `enabled` | Notes |
+|------------------------|-----------|-------------------|--------|
+| Memory | Docker `mcp/memory` | (on) | Host volume for `memory.json` |
+| Sequential Thinking | Docker `mcp/sequentialthinking` | `true` | Can be turned off if unused |
+| Interactive | `npx interactive-mcp` | (on) | `timeout` 300s |
+| duckduckgo | `npx duckduckgo-mcp-server` | (on) | |
+| time | Docker `mcp/time` | `false` | Timezone via `-e` |
+| mtg-commander-analyzer | local `npm run mcp` | `false` | Path-specific cwd |
+| context7 | HTTPS + `CONTEXT7_API_KEY` header | (on) | Prefer env substitution in real config |
+| semgrep | Docker `semgrep/semgrep … mcp` | (on) | |
+| github | HTTPS GitHub Copilot MCP + Bearer | (on) | Scoped token; never commit |
+| cursor10x-mcp | `node` + path to installed package **or** `npx cursor10x-mcp` | `true` | Turso env vars |
+| devcontext | `npx devcontext@latest` | `true` | Turso env vars |
+| stitch | HTTPS Stitch + API key header | `false` | |
 
 **Security:** do not commit real `%USERPROFILE%\.cursor\mcp.json`. Use **[mcp.config.example.json](./mcp.config.example.json)** with placeholders / env vars only.
 
 ---
 
-**Last updated:** 2026-03-29
+**Last updated:** 2026-03-29 (synced from maintainer `mcp.json` shape; no secrets)

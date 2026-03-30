@@ -63,6 +63,8 @@ Additional MCPs may be present in your environment. List available MCPs in the C
 | **tech-lead-review** | Staff-level review: quality, architecture fit, security-sensitive surfaces. |
 | **review-and-secure** | Final quality and security review before handoff. |
 | **self-validate** | Anti-hallucination gate before declaring done. |
+| **phase-handoff** | Normalized artifacts and checklists between SDLC phases (orquestador, execution packs, resume). |
+| **repo-discovery** | Read-only repo recon: stack, files, validation commands, risks (scout / pre-plan). |
 
 ---
 
@@ -74,7 +76,7 @@ Use the **subagent_type** parameter when delegating. See **tooling-delegation.md
 
 The folder **[Cursor Subagents/agents/](../Cursor%20Subagents/agents/README.md)** contains **87** Markdown definitions: each file is named `<subagent_type>.md` and holds YAML frontmatter (`name`, `description`, optional `tools` / `model`) plus the full agent instructions. Use that directory when you need the complete prompt text; the subsections below are abbreviated routing summaries.
 
-Task-tool types that **do not** have a matching file there (still valid where exposed by the product): `generalPurpose`, `explore`, `shell`, `best-of-n-runner`, `nodejs-developer`.
+Task-tool types that **do not** have a matching file there (built-in / generic): `generalPurpose`, `explore`, `shell`, `best-of-n-runner`.
 
 ### General & exploration
 
@@ -109,7 +111,6 @@ Task-tool types that **do not** have a matching file there (still valid where ex
 - `rails-expert` — Rails 8+, Hotwire, performance.
 - `php-pro` — PHP 8.3+, Laravel/Symfony, strict types.
 - `python-pro` — Type-safe Python, FastAPI, async.
-- `nodejs-developer` — Node/TS backends (if in your local list).
 
 ### Frontend & mobile
 

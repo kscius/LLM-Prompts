@@ -12,7 +12,7 @@ This directory holds **portable subagent prompts**: one Markdown file per Task-t
 ## Coverage in this repo
 
 - **Shipped here:** 87 definitions (every `.md` in this folder except this `README.md`).
-- **Task enum entries without a matching file here:** `generalPurpose`, `explore`, `shell`, `best-of-n-runner`, and `nodejs-developer` — these are still valid `subagent_type` values where Cursor exposes them; they are not duplicated as standalone prompts in this folder.
+- **Task enum entries without a matching file here:** `generalPurpose`, `explore`, `shell`, `best-of-n-runner` — built-in / generic types; not duplicated as standalone prompts in this folder.
 
 ## How to use
 
@@ -29,4 +29,4 @@ This directory holds **portable subagent prompts**: one Markdown file per Task-t
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29
