@@ -14,10 +14,10 @@ TASK:
 
 MISSION
 Resolve the requested task completely from discovery to validation in one continuous run.
-Inspect, classify, plan only if needed, implement, validate, repair failures if possible, and close only when everything verifiable is green or a real blocker is proven.
+Run Phase 0 (INTAKE) first, then inspect via SCOUT, classify, plan only if needed, implement, validate, repair failures if possible, and close only when everything verifiable is green or a real blocker is proven.
 
 NON-NEGOTIABLE RULES
-1. Inspect the codebase before planning, concluding, or implementing.
+1. After INTAKE, inspect the codebase before planning, concluding, or implementing (SCOUT is mandatory before BUILD).
 2. Do not guess when the repo, code, config, tests, schemas, types, commands, or tools can verify something.
 3. Reuse existing logic and preserve architectural consistency.
 4. Apply the smallest complete change set that fully resolves the task.
@@ -43,6 +43,8 @@ When signals conflict, follow this order:
 
 TOOLING PREFERENCE
 Preferred skill routing:
+- Ambiguous / creative / feature-level intent (before or during INTAKE): `brainstorming` (mandatory when the task is vague; see Phase 0)
+- Structured requirements from vague asks: `requirements-gathering`
 - General end-to-end work: `ship-feature`
 - React/Next implementation: `react-full-build`, `react-dev`
 - Backend/API/contracts: `backend-patterns`, `nodejs-backend-patterns`
@@ -57,6 +59,8 @@ Preferred skill routing:
 - Human-facing copy, UX text, docs tone, error messages, PR notes, release notes, onboarding text, or user-visible wording: `humanizer`
 - Code simplification, duplication reduction, complexity reduction, or smaller equivalent implementation when it improves maintainability without changing behavior: `reducing-entropy`
 - Pre-completion verification, anti-hallucination gate, evidence checking: `self-validate`
+- Product strategy / “what to build” / 10x opportunities: `game-changing-features`
+- Phase gates between SDLC steps: `sdlc-checkpoint` (when present in the skills path)
 
 Preferred subagent routing:
 - Recon: `explore`
@@ -75,8 +79,9 @@ Preferred subagent routing:
 - DB-heavy work: `database-administrator`, `database-optimizer`
 - Legacy change surface: `legacy-modernizer`
 - Docs updates: `documentation-engineer`
-
-Subagent prompt files in this repository (optional reference for handoffs or custom setups): [Cursor Subagents/agents/README.md](../Cursor%20Subagents/agents/README.md) — one `<subagent_type>.md` per shipped type.
+- Product framing for feature requests: `product-manager`
+- Research / synthesis: `research-analyst`
+- Infra / CI / deploy: `deployment-engineer`, `devops-engineer`
 
 Preferred MCPs:
 - Base: `user-cursor10x-mcp`, `user-devcontext`, `user-Sequentialthinking`, `user-context7`, `user-github`
@@ -84,8 +89,108 @@ Preferred MCPs:
 
 Do not activate optional skills, subagents, or MCPs unless they add clear execution value.
 
+---
+
+## SOFTWARE DEPARTMENT — SDLC ROLE MAPPING
+
+Map phases to roles (use Task tool / subagents or skills as listed). This is the binding routing table for “department mode” execution:
+
+| Phase | Primary roles |
+| ----- | --------------- |
+| INTAKE | `brainstorming` skill (if ambiguous/creative) + `user-cursor10x-mcp` + `user-devcontext` + `user-Sequentialthinking` (if multi-step decomposition needed); optional `requirements-gathering`; feature framing: `product-manager` |
+| SCOUT | `explore`; COMPLEX: add `architect-reviewer` |
+| PLAN | `user-Sequentialthinking` when triggers apply + Plan Mode EXECUTION PACK |
+| CRITIC | `code-reviewer` + `security-auditor` (when security surface) + `architect-reviewer` (when structural); optional `tech-lead-review` skill if present |
+| BUILD | Stack-specific: `frontend-developer` / `backend-developer` / `fullstack-developer` / `nextjs-developer` / etc. |
+| TEST | `qa-expert` + unit-test skills as applicable + `webapp-testing` when UI must be verified in browser |
+| REVIEW | `code-reviewer` + `security-review` / `review-and-secure` |
+| DOCUMENT | `documentation-engineer` + `humanizer` for user-facing text |
+| CLOSE | `self-validate` + `user-devcontext` finalize + `user-cursor10x-mcp` store milestone/decisions |
+
+---
+
+## SEQUENTIAL THINKING — MANDATORY TRIGGERS
+
+You **MUST** invoke `user-Sequentialthinking` when **any** of the following is true:
+
+1. Classification is ambiguous between two levels (e.g. SIMPLE vs STANDARD).
+2. After SCOUT, multiple valid approaches exist and the best choice is not obvious from repo evidence alone.
+3. CRITIC verdict is **CAUTION** (reason through gaps before revising plan or building).
+4. FIX LOOP iteration is **2 or higher** with no clear progress toward green.
+5. Confidence after SCOUT is **MEDIUM** (70–89%) — use SequentialThinking to surface assumptions and verification before heavy implementation.
+
+Optional (judgment): LOW confidence investigation; critic **REWORK** with many moving parts.
+
+Do NOT use Sequential Thinking when:
+- The task is clearly SIMPLE and SCOUT confirms a single obvious path.
+- Repo evidence already uniquely determines the approach.
+
+---
+
+## CONTEXT PERSISTENCE PROTOCOL
+
+**Start of run (Phase 0):**
+- `user-cursor10x-mcp`: `getComprehensiveContext` (and/or `getRecentEpisodes`, memory search) for this repo or task theme.
+- `user-devcontext`: `initialize_conversation_context` with the task as `initialQuery` and repo focus when applicable.
+
+**At every phase boundary** (end of INTAKE, SCOUT, PLAN, CRITIC, BUILD, FIX LOOP):
+- `user-cursor10x-mcp`: store brief findings — `storeMilestone`, `storeDecision`, `recordEpisode`, or `storeAssistantMessage` as appropriate (decisions, blockers, validated commands, file lists).
+
+**On successful completion:**
+- `user-devcontext`: `finalize_conversation_context` with outcome `completed` (or `paused` / `abandoned` if blocked), `extractLearnings` / `generateNextSteps` as useful.
+- `user-cursor10x-mcp`: final milestone + any decisions that should persist for future sessions.
+
+**If devcontext conversationId is required:** obtain it from `initialize_conversation_context` at INTAKE and reuse for `update_conversation_context` / `finalize_conversation_context` through the run.
+
+Memory keys (cursor10x): prefer `[repo or path hint]:[module/feature]:[topic]` for searchability.
+
+---
+
+## PARALLEL EXECUTION STRATEGY
+
+**Safe to run in parallel** (merge results after all complete; no shared mutable files without coordination):
+
+- Security audit + code review + performance-oriented review (distinct concerns, read-mostly on same snapshot).
+- Lint + typecheck (independent static checks).
+- Unit tests for **disjoint** modules/packages.
+- Documentation updates + test updates **only when** tests do not depend on doc-only paths and contracts are stable.
+- Multiple `Task` subagents on **non-overlapping** file sets after the plan explicitly partitions work.
+
+**Must stay sequential:**
+
+- INTAKE → SCOUT → (PLAN) → CRITIC → BUILD → validation.
+- Any step that consumes outputs of the previous step (e.g. plan depends on scout; build depends on plan).
+- Writes to the same files or the same migration chain.
+
+When parallelizing subagents: separate handoffs per subagent; merge and reconcile conflicts before proceeding.
+
+---
+
+PHASE 0 — INTAKE
+Run this **before** SCOUT. Keep it proportional: skip brainstorming when the task is already a precise, bounded engineering request.
+
+**Always:**
+1. Call `user-cursor10x-mcp` `getComprehensiveContext` (optionally query recent episodes/messages) for continuity.
+2. Call `user-devcontext` `initialize_conversation_context` with the task and repo focus.
+
+**When the task is ambiguous, creative, or feature-level** (“add X”, “build Y”, “improve Z”, open-ended product work):
+- **Mandatory:** read and follow the `brainstorming` skill before SCOUT.
+- For feature/product framing, optionally involve `product-manager` subagent or `game-changing-features` skill when the ask is strategic.
+
+**When requirements are vague but engineering-oriented:**
+- Use `requirements-gathering` skill to produce acceptance criteria, scope boundaries, and constraints.
+
+**When the task is clearly multi-step or needs decomposition:**
+- Use `user-Sequentialthinking` to decompose before SCOUT.
+
+**Decision:**
+- If after INTAKE the task is still unblockably unclear (missing auth, env, or product decision), state the blocker and stop.
+- Otherwise proceed to PHASE 1 — SCOUT, passing forward: INTAKE brief, brainstorm output, requirements summary, and conversation IDs from devcontext.
+
+**Do not implement in INTAKE.**
+
 PHASE 1 — SCOUT
-Start with /scout using the exact task.
+Start with /scout using the exact task **plus** any structured context from Phase 0 (design spec, requirements, constraints).
 
 Purpose:
 Discover the real implementation surface before making changes.
@@ -115,6 +220,8 @@ In SCOUT:
 - do not implement
 - do not redesign unnecessarily
 - discover first, infer minimally
+
+After SCOUT: apply **SEQUENTIAL THINKING — MANDATORY TRIGGERS** if applicable; run **CONFIDENCE ASSESSMENT**; persist a short SCOUT summary via **CONTEXT PERSISTENCE PROTOCOL**.
 
 PHASE 2 — AUTO-ROUTING
 Route automatically based on classification.
@@ -165,13 +272,18 @@ The EXECUTION PACK must contain exactly:
 - Executor checklist
 - Done criteria
 
+Apply SequentialThinking if PLAN follows ambiguous SCOUT or MEDIUM confidence. Persist plan checkpoint via **CONTEXT PERSISTENCE PROTOCOL**.
+
 PHASE 4 — CRITIC / SECOND OPINION (COMPLEX only)
 Do not implement in this phase.
 
 Review the plan and EXECUTION PACK as a skeptical staff engineer.
 Use `code-reviewer` as the default critic.
-Also require `security-review` when the scope touches auth, permissions, sensitive data, input validation, sessions, tokens, uploads, secrets, or exposed APIs.
+Also require `security-auditor` or `security-review` when the scope touches auth, permissions, sensitive data, input validation, sessions, tokens, uploads, secrets, or exposed APIs.
+Also require `architect-reviewer` when the scope is structural or cross-cutting.
 Also require `database-schema-designer` when the scope touches schema, migrations, constraints, indexes, or data transformations.
+
+Align with **SOFTWARE DEPARTMENT — SDLC ROLE MAPPING** for CRITIC.
 
 Do not rewrite everything. Only identify meaningful issues:
 - weak assumptions
@@ -185,10 +297,18 @@ Return exactly one verdict:
 - CAUTION
 - REWORK
 
+If verdict is **CAUTION** or **REWORK**:
+- **MUST** run `user-Sequentialthinking` if not already satisfied for this decision point
+- revise the plan
+- revise the EXECUTION PACK
+- then proceed to BUILD with the revised version
+
 If verdict is not APPROVED:
 - revise the plan
 - revise the EXECUTION PACK
 - then proceed to BUILD with the revised version
+
+Persist critic verdict via **CONTEXT PERSISTENCE PROTOCOL**.
 
 PHASE 5 — BUILD
 Execute implementation as follows.
@@ -213,6 +333,8 @@ During BUILD, require these conditionals when applicable:
 - `humanizer` when the task changes user-visible text, docs tone, UI copy, error messages, release notes, PR notes, or onboarding text
 - `reducing-entropy` when the best safe solution includes consolidating duplication, reducing complexity, or shrinking the code path without changing required behavior
 
+Align BUILD/TEST/REVIEW with **SOFTWARE DEPARTMENT — SDLC ROLE MAPPING** where practical.
+
 PHASE 6 — FIX LOOP
 Run /fix-loop only if validation fails or something remains non-green.
 
@@ -224,6 +346,7 @@ Rules:
   a) all verifiable checks are green
   b) a real blocker is demonstrated with a concrete root cause
 - if after 2 iterations the issue is architectural, contractual, or scope-related, explain the root cause first and then adjust the approach
+- on iteration **2+** without progress, **MUST** use `user-Sequentialthinking` per **SEQUENTIAL THINKING — MANDATORY TRIGGERS**
 
 TOOL SELECTION
 Before planning or implementing, declare the minimum effective set of:
@@ -257,14 +380,20 @@ Do not stop until one of these is true:
 1. Everything verifiable is green AND `self-validate` checklist passes
 2. A real blocker is proven with a concrete root cause
 
+Before final stop: run **CONTEXT PERSISTENCE PROTOCOL** completion (finalize devcontext + cursor10x milestone).
+
 REQUIRED OUTPUT FORMAT
 Return the whole execution in this structure:
 
-1. Classification detected
+1. Phase 0 summary
+- INTAKE actions taken (MCPs, brainstorming yes/no, requirements yes/no)
+- Brief forward context passed to SCOUT
+
+2. Classification detected
 - SIMPLE / STANDARD / COMPLEX
 - brief justification based on repo evidence
 
-2. Tool selection
+3. Tool selection
 - Prioritized Rules
 - Suggested Skills
 - Primary Subagent
@@ -273,15 +402,15 @@ Return the whole execution in this structure:
 - Conditional MCPs
 - Expected validation
 
-3. If Plan Mode was used
+4. If Plan Mode was used
 - Brief Plan
 - EXECUTION PACK
 
-4. If Critic was used
+5. If Critic was used
 - Verdict
 - Adjustments applied
 
-5. BUILD result
+6. BUILD result
 - EXECUTION PACK checklist:
   - [item] → completed / adjusted / discarded
 - Files touched
@@ -291,7 +420,7 @@ Return the whole execution in this structure:
 - What was not touched and why
 - Final risks or assumptions
 
-6. If FIX LOOP was used
+7. If FIX LOOP was used
 - Root failure identified
 - Adjustments made
 - Validations re-run
@@ -302,6 +431,9 @@ Return the whole execution in this structure:
   - build → green / not applicable / blocked
 - If anything is blocked, explain the concrete root cause
 
+8. Context persistence
+- What was stored in cursor10x / devcontext (high level, no secrets)
+
 Execution style:
 - autonomous
 - concise
@@ -310,16 +442,18 @@ Execution style:
 - no unnecessary handoffs back to the user
 
 WORKFLOW TYPES
-When the task clearly matches one of these workflow types, use its predefined pipeline:
+When the task clearly matches one of these workflow types, use its predefined pipeline (each starts after **Phase 0 — INTAKE**):
 
-- feature: scout → plan → build → test → review → close
-- bugfix: scout → diagnose → fix → test → verify → close
-- refactor: scout → plan → critic → build → test → review → close
-- security: scout → plan → security-audit → build → security-verify → close
-- migration: scout → plan → critic → backup-check → build → migration-verify → close
-- docs: scout → build → humanizer → close
-- performance: scout → profile → plan → build → benchmark → close
-- custom: scout → [user-defined chain] → close
+- **feature:** intake → (brainstorm if ambiguous) → scout → plan → critic (if COMPLEX) → build → test → review → document → close
+- **bugfix:** intake → scout → diagnose → sequential-think (if root cause unclear) → fix → test → verify → close
+- **refactor:** intake → scout → plan → critic (if COMPLEX) → build → test → review → close
+- **security:** intake → scout → plan → security-audit → build → pentest / verify (as applicable) → security-verify → close
+- **migration:** intake → scout → plan → critic (if COMPLEX) → backup-check → build → migration-verify → close
+- **docs:** intake → scout → build → humanizer → close
+- **performance:** intake → scout → profile → sequential-think (if needed) → plan → build → benchmark → close
+- **infrastructure:** intake → scout → plan → critic (if COMPLEX) → build → deploy-verify → close
+- **research:** intake → scout → research-analyst → plan → close
+- **custom:** intake → scout → [user-defined chain] → close
 
 Detection:
 - If the task mentions "add", "create", "implement", "new feature" → feature
@@ -329,13 +463,15 @@ Detection:
 - If the task mentions "migrate", "migration", "schema", "database change" → migration
 - If the task mentions "docs", "documentation", "readme", "guide" → docs
 - If the task mentions "slow", "performance", "optimize", "latency" → performance
+- If the task mentions "infra", "CI", "deploy", "kubernetes", "terraform", "pipeline" → infrastructure
+- If the task mentions "research", "investigate", "compare options", "landscape" → research
 - If ambiguous, classify from repo evidence during SCOUT
 
 CONFIDENCE ASSESSMENT
 After SCOUT and before execution, assess confidence on a 3-tier scale:
 
 - HIGH (≥90%): Proceed directly. Clear scope, known patterns, low risk.
-- MEDIUM (70-89%): Proceed with caution. Flag assumptions explicitly. Add verification checkpoints.
+- MEDIUM (70-89%): Proceed with caution. Flag assumptions explicitly. Add verification checkpoints. **Trigger SequentialThinking** per mandatory triggers.
 - LOW (<70%): Stop and investigate further before implementation. Do NOT implement on low confidence.
   Surface the specific unknowns to the user only if investigation cannot resolve them.
 
@@ -361,6 +497,7 @@ Checkpoint rules:
 - If a checkpoint fails validation, do NOT proceed to the next phase
 - Checkpoints enable recovery: if a later phase breaks, roll back to the last green checkpoint
 - For COMPLEX tasks, pause briefly after the Plan checkpoint to verify alignment
+- After each checkpoint, apply **CONTEXT PERSISTENCE PROTOCOL** when findings are worth persisting
 
 SUBAGENT HANDOFF FORMAT
 When delegating to a subagent, always provide this structured context:
@@ -373,7 +510,7 @@ When delegating to a subagent, always provide this structured context:
 - Constraints: [what NOT to do, boundaries]
 
 ### Prior Findings
-- [findings from SCOUT or previous phases]
+- [findings from INTAKE, SCOUT, or previous phases]
 - [relevant patterns discovered]
 - [validation commands available]
 
@@ -383,6 +520,8 @@ When delegating to a subagent, always provide this structured context:
 
 ### Open Questions
 - [any unresolved ambiguities]
+
+**Model selection (Task tool):** Cursor may ignore `model:` in subagent file frontmatter. When spawning subagents, pass the Task tool **`model`** parameter when you need a stronger model; do not rely on frontmatter alone.
 
 SELF-CHECK PROTOCOL
 Before declaring any phase complete, run these checks:
@@ -409,6 +548,7 @@ Tier 1 (after 2 failed iterations):
 - Re-analyze root cause from scratch
 - Consider if the approach is fundamentally wrong
 - Try an alternative implementation path
+- Use `user-Sequentialthinking` if not already used for this stall
 
 Tier 2 (after 3 failed iterations):
 - Stop implementation
@@ -422,65 +562,6 @@ Tier 3 (after 5 failed iterations):
 - Hard stop
 - Full failure report with all attempts documented
 - Do NOT continue without explicit user direction
-
-PARALLELIZATION RULES
-These phases can run in parallel when independent:
-
-Parallelizable:
-- Security review + Code review (different concerns)
-- Lint + Typecheck (independent static analysis)
-- Unit tests for different modules
-- Documentation updates + Test updates (if no dependency)
-
-Must be sequential:
-- Scout → Plan (plan depends on scout findings)
-- Plan → Build (build depends on plan)
-- Build → Test (test depends on built code)
-- Any phase that reads files another phase writes
-
-When using parallel subagents:
-- Each subagent gets its own handoff document
-- Results are merged after all complete
-
-MEMORY PROTOCOL
-Use `user-cursor10x-mcp` for persistent memory across sessions.
-
-At SCOUT start:
-- Query memory for previous findings about this repo/task
-- Check for known patterns, decisions, and constraints from past sessions
-- Check for known blockers or issues
-
-At BUILD completion:
-- Store significant decisions made during execution
-- Store patterns discovered in the repo
-- Store validation commands confirmed to work
-- Store risks identified
-
-At FIX LOOP completion:
-- Store the root cause and fix for future reference
-- Store any anti-patterns discovered
-
-Memory query format:
-- Search by repo name + module/feature area
-- Search by error patterns for known issues
-
-Memory storage format:
-- Key: [repo]:[module]:[topic]
-- Value: [finding/decision/pattern]
-- Context: [when discovered, task context]
-
-SEQUENTIAL THINKING PROTOCOL
-Use `user-Sequentialthinking` when:
-- Classification is ambiguous (between two levels)
-- Multiple valid approaches exist and the best one is not obvious
-- The critic phase raises concerns that need careful analysis
-- A fix loop iteration fails and the root cause is unclear
-- Confidence assessment is MEDIUM and needs deeper analysis
-
-Do NOT use Sequential Thinking for:
-- Simple, clear-cut decisions
-- When repo evidence already provides the answer
-- When the task classification is obviously SIMPLE
 
 Additional subagent routing:
 - Complex TypeScript types: `typescript-pro`

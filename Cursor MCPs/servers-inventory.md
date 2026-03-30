@@ -26,18 +26,20 @@ Servers defined in **`%USERPROFILE%\.cursor\mcp.json`** (logical names → trans
 | Server key (mcp.json) | Transport | Notes |
 |------------------------|-----------|--------|
 | Memory | Docker `mcp/memory` | Host volume for `memory.json` |
-| Sequential Thinking | Docker `mcp/sequentialthinking` | |
+| Sequential Thinking | Docker `mcp/sequentialthinking` | Often `enabled: false` if unused |
 | Interactive | `npx interactive-mcp` | timeout 300s |
 | duckduckgo | `npx duckduckgo-mcp-server` | |
-| time | Docker `mcp/time` | timezone via `-e` |
-| mtg-commander-analyzer | local `npm run mcp` | path-specific |
+| time | Docker `mcp/time` | timezone via `-e`; may be `enabled: false` |
+| mtg-commander-analyzer | local `npm run mcp` | path-specific; may be `enabled: false` |
 | context7 | HTTPS + `CONTEXT7_API_KEY` header | |
 | semgrep | Docker `semgrep/semgrep … mcp` | |
-| github | HTTPS GitHub Copilot MCP + Bearer | use scoped token |
-| cursor10x-mcp | `npx cursor10x-mcp` | Turso env vars |
+| github | HTTPS GitHub Copilot MCP + Bearer | use scoped token; never commit tokens |
+| cursor10x-mcp | `npx cursor10x-mcp` **or** `node` + path to installed package | Turso env vars; some setups use a local `node` entry instead of `npx` |
 | devcontext | `npx devcontext@latest` | Turso env vars |
-| stitch | HTTPS Stitch + API key header | |
+| stitch | HTTPS Stitch + API key header | may be `enabled: false` |
+
+**Security:** do not commit real `%USERPROFILE%\.cursor\mcp.json`. Use **[mcp.config.example.json](./mcp.config.example.json)** with placeholders / env vars only.
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29

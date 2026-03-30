@@ -9,10 +9,10 @@ Mirror of **`%USERPROFILE%\.cursor\hooks.json`** and **`%USERPROFILE%\.cursor\ho
 
 1. Copy **`hooks.json`** to **`%USERPROFILE%\.cursor\hooks.json`**.
 2. Copy every **`.js`** file from **`hooks/`** into **`%USERPROFILE%\.cursor\hooks\`** (same filenames).
-3. Ensure **Node.js** is on `PATH` (hooks invoke `node ./hooks/...` relative to `%USERPROFILE%\.cursor\` when using global hooks — confirm with [Cursor Hooks docs](https://cursor.com/docs/hooks)).
+3. Ensure **Node.js** is on `PATH`. This repo’s [hooks.json](./hooks.json) uses **`node ./hooks/…`** paths: place `hooks.json` in **`%USERPROFILE%\.cursor\`** and the scripts in **`%USERPROFILE%\.cursor\hooks\`** (same layout as here). If your live config uses absolute `node C:/…/hooks/…` paths, either keep that on your machine or switch to relative `./hooks/…` for portability.
 
 Do **not** commit **`hooks/logs/`** or audit trails from your local machine.
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29 (includes `after-agent-response.js`, prompts en `afterFileEdit` / `subagentStart`)

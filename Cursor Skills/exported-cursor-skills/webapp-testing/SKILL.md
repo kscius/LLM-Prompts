@@ -6,6 +6,8 @@ license: Complete terms in LICENSE.txt
 
 # Web Application Testing
 
+> **On-demand loading**: Use the decision tree to choose an approach, then load `examples/` only when a specific pattern is needed.
+
 To test local web applications, write native Python Playwright scripts.
 
 **Helper Scripts Available**:

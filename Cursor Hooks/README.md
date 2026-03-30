@@ -46,7 +46,7 @@ Tab / inline completion hooks may include `beforeTabFileRead`, `afterTabFileEdit
 A snapshot of the maintainer’s global hooks lives under **[user-export/](./user-export/)**:
 
 - [user-export/hooks.json](./user-export/hooks.json)
-- [user-export/hooks/](./user-export/hooks/) — scripts (`session-context`, `audit-log`, `block-dangerous-shell`, etc.)
+- [user-export/hooks/](./user-export/hooks/) — scripts (`session-context`, `after-agent-response`, `audit-log`, `block-dangerous-shell`, `validate-mcp`, etc.)
 - [user-export/README.md](./user-export/README.md) — how to restore on another PC
 
 ## Minimal example
@@ -67,4 +67,4 @@ Cursor can integrate additional hook sources (e.g. Claude Code–style settings)
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29

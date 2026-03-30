@@ -41,8 +41,10 @@ Additional MCPs may be present in your environment. List available MCPs in the C
 | **react-dev** | React components with TypeScript, hooks, React 18–19, Server Components. |
 | **react-useeffect** | Best practices for `useEffect` and alternatives. |
 | **receiving-code-review** | Before implementing code review feedback; technical verification. |
+| **requirements-gathering** | Structured requirements, acceptance criteria, and scope from vague asks. |
 | **reducing-entropy** | Manual only: reduce total code size (activate on request). |
 | **security-review** | Security review and codebase auditing. |
+| **sdlc-checkpoint** | Phase gates between SDLC steps; PASS / CONDITIONAL / BLOCK verdicts. |
 | **senior-backend** | Scalable backends (Node, Express, Go, Python, Postgres, GraphQL, REST). |
 | **ui-ux-pro-max** | UI/UX: styles, palettes, typography, components, stacks (React, Next, Vue, etc.). |
 | **vercel-react-best-practices** | React/Next.js performance optimization (Vercel). |
@@ -58,6 +60,7 @@ Additional MCPs may be present in your environment. List available MCPs in the C
 | **react-full-build** | React/Next end-to-end with UI verification. |
 | **ship-feature** | End-to-end feature implementation with validation. |
 | **testing-strategy** | Unit, integration, e2e, and test quality. |
+| **tech-lead-review** | Staff-level review: quality, architecture fit, security-sensitive surfaces. |
 | **review-and-secure** | Final quality and security review before handoff. |
 | **self-validate** | Anti-hallucination gate before declaring done. |
 

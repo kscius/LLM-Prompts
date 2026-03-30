@@ -41,8 +41,10 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 | **react-dev** | Componentes React con TypeScript, hooks, React 18–19, Server Components. |
 | **react-useeffect** | Buenas prácticas de `useEffect` y alternativas. |
 | **receiving-code-review** | Antes de implementar feedback de code review; verificación técnica. |
+| **requirements-gathering** | Requisitos estructurados, criterios de aceptación y alcance desde pedidos vagos. |
 | **reducing-entropy** | Solo manual: reducir tamaño total del código (activar bajo petición). |
 | **security-review** | Revisión de seguridad y auditoría de código. |
+| **sdlc-checkpoint** | Gates entre fases del SDLC; veredictos PASS / CONDITIONAL / BLOCK. |
 | **senior-backend** | Backends escalables (Node, Express, Go, Python, Postgres, GraphQL, REST). |
 | **ui-ux-pro-max** | UI/UX: estilos, paletas, tipografía, componentes, stacks (React, Next, Vue, etc.). |
 | **vercel-react-best-practices** | Optimización de rendimiento en React/Next.js (Vercel). |
@@ -58,6 +60,7 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 | **react-full-build** | React/Next end-to-end con verificación de UI. |
 | **ship-feature** | Implementación de feature completa con validación. |
 | **testing-strategy** | Unit, integración, e2e y calidad de pruebas. |
+| **tech-lead-review** | Revisión tipo staff: calidad, encaje arquitectónico, superficies sensibles de seguridad. |
 | **review-and-secure** | Revisión final de calidad y seguridad antes de entregar. |
 | **self-validate** | Comprobación anti-alucinación antes de declarar hecho. |
 

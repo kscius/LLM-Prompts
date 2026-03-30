@@ -1,7 +1,7 @@
 ---
 description: Cuándo y cómo usar el MCP cursor10x-mcp para memoria de proyecto, contexto y episodios
-globs: 
-alwaysApply: false
+globs:
+alwaysApply: true
 ---
 
 # Cursor10x-mcp — Memoria y contexto

@@ -13,12 +13,13 @@ Exact UI and paths may vary slightly by Cursor version; prefer **Cursor Settings
 
 ## Files in this folder
 
-These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed.
+These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **25** command files (plus this `README.md`).
 
 | File | Typical use |
 |------|----------------|
 | [orquestador.md](./orquestador.md) | Orquestador end-to-end (scout → plan → build → validate). |
 | [scout.md](./scout.md) | Fase de descubrimiento / reconocimiento. |
+| [intake.md](./intake.md) | Fase 0 de intake (continuidad MCP, devcontext, brainstorming condicional). |
 | [plan.md](./plan.md) | Planificación antes de implementar. |
 | [build-full.md](./build-full.md) | Implementación completa según plan. |
 | [fix-loop.md](./fix-loop.md) | Reparar fallos de validación de forma iterativa. |
@@ -26,6 +27,12 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 | [commit-changes.md](./commit-changes.md) | Preparar commit coherente. |
 | [pr-ready.md](./pr-ready.md) | Checklist antes de abrir PR. |
 | [code-review.md](./code-review.md) | Revisión de código. |
+| [audit-quality.md](./audit-quality.md) | Auditoría de calidad (código, tests, seguridad, docs). |
+| [tech-lead.md](./tech-lead.md) | Rol tech lead / staff (arquitectura, riesgos, plan de ejecución). |
+| [feature-team.md](./feature-team.md) | Equipo feature (PM + TL + implementación). |
+| [review-team.md](./review-team.md) | Equipo revisión (CR + seguridad + docs). |
+| [debug-team.md](./debug-team.md) | Equipo depuración (debugger + repro + fix). |
+| [retrospective.md](./retrospective.md) | Retrospectiva estructurada post‑entrega o post‑incidente. |
 | [security-review.md](./security-review.md) | Revisión orientada a seguridad. |
 | [write-unit-tests.md](./write-unit-tests.md) | Añadir o ampliar tests unitarios. |
 | [run-all-tests-and-fix.md](./run-all-tests-and-fix.md) | Suite de tests + corrección. |
@@ -45,4 +52,4 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29 (synced from maintainer `~/.cursor/commands`)

@@ -6,7 +6,10 @@ Files here are meant to be used as **Agent-requestable** or scoped rules in a re
 
 | File | Purpose |
 |------|---------|
-| [cursor10x-mcp.mdc](./cursor10x-mcp.mdc) | When and how to use **cursor10x-mcp** (memory, context, episodes). Copied from the user environment (`C:\.cursor\rules\`). |
+| [cursor10x-mcp.mdc](./cursor10x-mcp.mdc) | Cuándo y cómo usar **cursor10x-mcp** (memoria, contexto, episodios). Copia del entorno del mantenedor (`%USERPROFILE%\.cursor\rules\`). |
+| [devcontext-mcp.mdc](./devcontext-mcp.mdc) | Uso de **devcontext** (contexto de conversación multi‑paso). |
+| [orchestration-protocol.mdc](./orchestration-protocol.mdc) | Protocolo de orquestación del agente (fases, handoffs). |
+| [sdlc-workflow.mdc](./sdlc-workflow.mdc) | Flujo SDLC y gates con subagentes / herramientas. |
 
 ## Usage
 
@@ -15,4 +18,4 @@ Files here are meant to be used as **Agent-requestable** or scoped rules in a re
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29

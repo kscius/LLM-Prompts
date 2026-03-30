@@ -1,0 +1,137 @@
+---
+description: SDLC workflow types (feature, bugfix, refactor, security, etc.) and canonical phase sequences for scout, intake, and orchestrator
+globs:
+alwaysApply: true
+---
+
+# SDLC workflow types and phase sequences
+
+Canonical reference for **`/intake`**, **`/scout`**, and **`/orquestador`**. Pick **one** workflow type per run (or the closest match); adjust phases proportionally for trivial tasks.
+
+**Phase names** are logical gates, not rigid ceremonies. Skip or merge steps when repo evidence and risk clearly allow it (see orchestration-protocol for brainstorming, Sequential Thinking, and context MCP timing).
+
+---
+
+## Phase glossary (shared vocabulary)
+
+| Phase | Meaning |
+| ----- | ------- |
+| **INTAKE** | Recover context (cursor10x, devcontext), clarify intent; brainstorming / requirements when vague |
+| **SCOUT** | Read-only reconnaissance; classification SIMPLE / STANDARD / COMPLEX |
+| **PLAN** | Plan Mode or execution pack; explicit approach, touchpoints, validation |
+| **CRITIC** | Pre-build or pre-merge review — code-reviewer, security-auditor, architect-reviewer / tech-lead as needed |
+| **BUILD** | Implementation edits |
+| **TEST** | Targeted tests, lint, typecheck, repro verification |
+| **REVIEW** | Post-build review (may overlap CRITIC if run twice) |
+| **DOCUMENT** | User-facing or engineering docs updates when contracts or ops change |
+| **CLOSE** | self-validate, memory store, devcontext finalize, retrospective when useful |
+| **DIAGNOSE** | Debugger / error analysis; narrow root cause |
+| **SEQUENTIAL-THINK** | `user-Sequentialthinking` when classification or approach is ambiguous (per orchestration-protocol) |
+| **FIX** | Apply minimal corrective changes after diagnose |
+| **VERIFY** | Confirm fix against repro / regression checks |
+| **SECURITY-AUDIT** | security-auditor / compliance-oriented pass |
+| **PENTEST** | penetration-tester or authorized offensive validation when applicable |
+| **SECURITY-VERIFY** | Re-scan or checklist closure after remediations |
+| **BACKUP-CHECK** | Confirm backups / rollback path before destructive schema or data moves |
+| **MIGRATION-VERIFY** | Apply migration + verify data integrity and app health |
+| **PROFILE** | Measure baseline; find hotspot |
+| **BENCHMARK** | Before/after performance evidence |
+| **DEPLOY-VERIFY** | Post-deploy smoke, health, rollback readiness |
+| **HUMANIZER** | humanizer skill on user-facing prose when tone/quality matters |
+| **RESEARCH** | research-analyst (or equivalent) for synthesis-heavy discovery |
+
+---
+
+## Workflow types (ordered phases)
+
+Phases are **defaults**. Reorder only when dependencies require it (e.g. cannot TEST before BUILD).
+
+### `feature`
+
+**INTAKE** → **SCOUT** → **PLAN** → **CRITIC** → **BUILD** → **TEST** → **REVIEW** → **DOCUMENT** → **CLOSE**
+
+- **INTAKE** should include **brainstorming** (or **requirements-gathering**) when the feature is vague or creative.
+- **CRITIC** before large **BUILD** for STANDARD/COMPLEX; SIMPLE may fold CRITIC into a light pre-flight.
+
+### `bugfix`
+
+**INTAKE** → **SCOUT** → **DIAGNOSE** → **SEQUENTIAL-THINK** *(if ambiguous)* → **FIX** → **TEST** → **VERIFY** → **CLOSE**
+
+- Prefer **DIAGNOSE** before speculative **FIX**.
+- Use **SEQUENTIAL-THINK** when root cause or blast radius is unclear.
+
+### `refactor`
+
+**INTAKE** → **SCOUT** → **PLAN** → **CRITIC** → **BUILD** → **TEST** → **REVIEW** → **CLOSE**
+
+- **DOCUMENT** only if public API, migration notes, or team conventions require it.
+
+### `security`
+
+**INTAKE** → **SCOUT** → **PLAN** → **SECURITY-AUDIT** → **BUILD** *(remediations)* → **PENTEST** *(when authorized and in scope)* → **SECURITY-VERIFY** → **CLOSE**
+
+- Do not perform offensive testing without explicit authorization.
+
+### `migration`
+
+**INTAKE** → **SCOUT** → **PLAN** → **CRITIC** → **BACKUP-CHECK** → **BUILD** → **MIGRATION-VERIFY** → **CLOSE**
+
+- Treat **BACKUP-CHECK** as mandatory for production-risk schema/data changes.
+
+### `docs`
+
+**INTAKE** → **SCOUT** → **BUILD** *(author docs)* → **HUMANIZER** *(user-facing copy)* → **CLOSE**
+
+### `performance`
+
+**INTAKE** → **SCOUT** → **PROFILE** → **SEQUENTIAL-THINK** *(if tradeoffs unclear)* → **PLAN** → **BUILD** → **BENCHMARK** → **CLOSE**
+
+### `infrastructure`
+
+**INTAKE** → **SCOUT** → **PLAN** → **CRITIC** → **BUILD** → **DEPLOY-VERIFY** → **CLOSE**
+
+- Maps to IaC, CI/CD, environments, and operational change with validation in a target environment.
+
+### `research`
+
+**INTAKE** → **SCOUT** → **RESEARCH** → **PLAN** → **CLOSE**
+
+- Outcome is usually a decision doc, spike notes, or recommendations rather than shipped product code.
+
+---
+
+## Choosing a workflow type (quick triggers)
+
+| If the primary goal is… | Workflow |
+| ----------------------- | -------- |
+| New user-visible capability | `feature` |
+| Correct incorrect behavior / defect | `bugfix` |
+| Structure/maintainability without changing behavior | `refactor` |
+| Reduce risk findings, harden boundaries | `security` |
+| Schema/data move with downtime or rollback concerns | `migration` |
+| Documentation or content only | `docs` |
+| Latency, throughput, resource usage | `performance` |
+| Pipelines, infra, deploy paths | `infrastructure` |
+| Understanding, comparison, strategy before build | `research` |
+
+When **two types apply**, pick the one with the **higher-risk** default path (e.g. migration + feature → follow `migration` for data safety, then feature phases for the product change).
+
+---
+
+## Parallel execution (safe defaults)
+
+These may run **in parallel** when they do not contend for the same files and the repo allows it:
+
+- **Code review** + **security-auditor** + **performance** smoke (different focus, shared diff)
+- **Unit tests** for disjoint modules
+- **Documentation** + **tests** when doc changes do not depend on unmerged code
+
+Do **not** parallelize: conflicting edits to the same module, migration apply + unrelated schema edits, or two agents applying mutually unknown assumptions to the same contract.
+
+---
+
+## Relationship to other rules
+
+- **orchestration-protocol.mdc** — *when* to brainstorm, call Sequential Thinking, use context MCPs, Task `model` workaround.
+- **sdlc-checkpoint** skill — optional gate checklist at phase boundaries.
+- Stack- and project-specific rules still override generic phase names for tooling commands (derive scripts from repo evidence).

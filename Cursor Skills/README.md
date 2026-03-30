@@ -16,7 +16,7 @@ Reference and setup guide for **Agent Skills** in Cursor: reusable `SKILL.md` pa
 |------|-----------|
 | [exported-cursor-skills/](./exported-cursor-skills/) | Copy of `%USERPROFILE%\.cursor\skills\` (each skill folder with `SKILL.md`, etc.). |
 | [exported-agents-skills/](./exported-agents-skills/) | Copy of `%USERPROFILE%\.agents\skills\` (additional skills). |
-| [cursor-managed-skills-manifest.json](./cursor-managed-skills-manifest.json) | Builtin skill ids from `%USERPROFILE%\.cursor\skills-cursor\.cursor-managed-skills-manifest.json`. |
+| [cursor-managed-skills-manifest.json](./cursor-managed-skills-manifest.json) | Copia de `%USERPROFILE%\.cursor\skills-cursor\.cursor-managed-skills-manifest.json` (`builtinSkillIds` + `managedSkillIds`, p. ej. **canvas**, **cursor-blame**). |
 
 ### Reference tables (keep in sync when you add skills)
 
@@ -56,4 +56,4 @@ Use the **create-skill** skill in Cursor (see `create-skill` in [tools-inventory
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29 (exported-cursor-skills y manifest sincronizados desde el entorno del mantenedor)

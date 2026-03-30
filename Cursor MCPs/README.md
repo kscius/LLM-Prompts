@@ -51,4 +51,4 @@ Cross-references: [Cursor Rules / ai-tools.md](../Cursor%20Rules/ai-tools.md), [
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29

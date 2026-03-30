@@ -7,5 +7,8 @@
     "shell",
     "update-cursor-settings"
   ],
-  "managedSkillIds": []
+  "managedSkillIds": [
+    "canvas",
+    "cursor-blame"
+  ]
 }

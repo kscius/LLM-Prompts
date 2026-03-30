@@ -9,6 +9,51 @@ MISSION
 Discover the real implementation surface quickly and accurately so later phases can route correctly.
 Do not edit files. Do not redesign the solution. Do not over-speculate.
 
+---
+
+## PHASE 0 — PRE-SCOUT (run before repo inspection)
+
+### 0.1 DevContext initialization (mandatory)
+
+At the **start** of this command, call **devcontext** `initialize_conversation_context`:
+
+- `initialQuery`: use the TASK text (and arg summary) as the query string.
+- `focusHint` (optional): if the user named a file, module, or package, set `{ "type": "file" | "module" | "path", "identifier": "<that path or name>" }`.
+- Prefer `contextDepth`: `"standard"`; use `"comprehensive"` only for COMPLEX-looking tasks.
+- Use defaults for `includeArchitecture`, `includeRecentConversations`, and `tokenBudget` unless the task is trivial (then `contextDepth: "minimal"` is acceptable).
+
+Incorporate any returned context (recent code, architecture snippets, conversation hints) into later reasoning and the final output under **Memory findings**.
+
+### 0.2 Brainstorming gate (conditional)
+
+**Before** deep repo inspection, decide if the task is ambiguous, creative, or feature-shaped.
+
+**Invoke the brainstorming skill** (read and follow `~/.cursor/skills/brainstorming/SKILL.md`) when **any** of these hold:
+
+- Vague goals: “improve”, “make better”, “clean up”, “modernize”, without concrete acceptance criteria.
+- Greenfield or product-shaped: “add X”, “build Y”, “new feature”, “implement Z” without a spec.
+- Open design space: multiple plausible UX/API/architecture choices and no chosen direction.
+- User explicitly asks for options, ideation, or “what should we do”.
+
+**Skip** the brainstorming gate when **all** of these hold:
+
+- Narrow scope: exact files, symbols, or error messages given.
+- Pure reconnaissance: “where is X implemented”, “how does Y work”.
+- Single obvious change: typo, one-line fix, config key rename with clear target.
+
+If brainstorming ran, summarize **Design brief** (goals, constraints, options chosen or still open) in the scout output so `/orquestador` or Plan mode can consume it.
+
+### 0.3 Memory lookup (cursor10x)
+
+After devcontext init (and after brainstorming if it ran):
+
+- Query `user-cursor10x-mcp` for previous findings about this repo (`getComprehensiveContext` with a query derived from TASK).
+- Merge with devcontext results under **Memory findings**.
+
+---
+
+## PHASE 1 — RECONNAISSANCE
+
 OPERATING RULES
 1. Inspect the repo before making any recommendation.
 2. Use the minimum effective set of Rules, Skills, Subagents, and MCPs.
@@ -92,20 +137,6 @@ WHAT TO LOOK FOR
 - Duplication, over-complexity, or opportunities to reduce entropy safely
 - User-visible text surfaces where tone/clarity matters
 
-OUTPUT FORMAT
-- Stack summary
-- Relevant files
-- Validation commands
-- Recommended skill/subagent routing
-- Recommended classification
-- Conditional review flags:
-  - security-review → yes/no + why
-  - database-schema-designer → yes/no + why
-  - write-unit-tests → yes/no + why
-  - humanizer → yes/no + why
-  - reducing-entropy → yes/no + why
-- Risks/constraints
-
 WORKFLOW TYPE DETECTION
 In addition to classification, detect the workflow type:
 
@@ -120,12 +151,6 @@ Based on task language and repo evidence:
 
 Include workflow type in the output.
 
-MEMORY LOOKUP
-At the start of reconnaissance:
-- Query `user-cursor10x-mcp` for previous findings about this repo
-- Include relevant past decisions, patterns, and known issues in the output
-- Flag any known blockers from previous sessions
-
 DEPENDENCY MAPPING
 For each file identified as relevant, also identify:
 - What imports it (who depends on this file)
@@ -134,15 +159,64 @@ For each file identified as relevant, also identify:
 
 This helps BUILD phase understand blast radius accurately.
 
-OUTPUT FORMAT (updated)
+---
+
+## PHASE 2 — SequentialThinking protocol (mandatory when triggered)
+
+Use the **Sequential Thinking** MCP (`sequentialthinking`) when **any** trigger applies:
+
+1. **Classification ambiguity**: you hesitate between two adjacent tiers (SIMPLE vs STANDARD, or STANDARD vs COMPLEX).
+2. **Multiple valid approaches**: two or more credible implementation paths after inspection (e.g. service vs hook, new module vs extend existing).
+3. **Confidence MEDIUM or LOW** on classification or workflow type.
+4. **Conflicting signals**: docs vs code, or multiple stacks claim ownership of the same concern.
+5. **Post-brainstorming**: design brief still leaves open architectural forks worth reasoning step-by-step.
+
+**How to use it**: run enough thoughts to reach a clear recommendation; state the chosen classification, primary approach, and what evidence ruled out alternatives. Summarize **SequentialThinking conclusion** briefly in the scout output (do not dump full chain unless asked).
+
+If **no** trigger applies, state **SequentialThinking: skipped** with one line explaining why.
+
+---
+
+## OUTPUT MODE — default vs Cursor Plan
+
+**Default**: emit the **Scout report** using the format below.
+
+**Cursor Plan output mode** — use when the user asks for a plan, e.g. task or args include any of: `plan`, `--plan`, `as plan`, `cursor plan`, `plan output`, `export plan`.
+
+When Plan mode is requested:
+
+1. Still complete Phases 0–2 and the same reconnaissance.
+2. Produce a **structured plan document** (Markdown) with at minimum:
+   - **Title** — short, action-oriented
+   - **Objective** — what success looks like
+   - **Context** — stack, workflow type, classification, confidence
+   - **Design brief** — only if brainstorming ran; else “N/A”
+   - **SequentialThinking** — conclusion or skip reason
+   - **Relevant files** — with dependency notes
+   - **Proposed approach** — phases or ordered steps
+   - **Validation plan** — commands verified from repo
+   - **Risks and constraints**
+   - **Handoff** — recommended next command (`/orquestador`, Plan Mode in editor, or BUILD) and skill/subagent routing
+
+3. **Deliver the plan** by:
+   - Pasting the full Markdown in the chat **and**
+   - If the workspace is a project repo (not only dotfiles), **offer** to write it to `<workspace>/.cursor/plans/scout-<short-slug>.plan.md` (kebab-case slug from the task). Only write that file if the user confirms or if they explicitly asked for a saved plan file.
+
+4. If the product UI supports opening **Plan mode** with this content, you may tell the user to paste the plan there or continue in Plan mode for refinement.
+
+---
+
+## SCOUT REPORT FORMAT (default output)
+
 - Stack summary
 - Workflow type detected: [feature/bugfix/refactor/security/migration/docs/performance]
 - Relevant files (with dependency direction: imports/imported-by)
 - Validation commands (verified from repo)
-- Memory findings: [previous session context if any]
+- Memory findings: devcontext + cursor10x (+ brainstorming summary if any)
 - Recommended skill/subagent routing
 - Recommended classification: SIMPLE / STANDARD / COMPLEX
 - Confidence: HIGH / MEDIUM / LOW
+- SequentialThinking: conclusion summary, or skipped + reason
 - Conditional review flags:
   - security-review → yes/no + why
   - database-schema-designer → yes/no + why

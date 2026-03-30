@@ -11,6 +11,16 @@
         "timeout": 5
       }
     ],
+    "afterAgentResponse": [
+      {
+        "command": "node ./hooks/after-agent-response.js",
+        "timeout": 8
+      },
+      {
+        "command": "node ./hooks/audit-log.js",
+        "timeout": 5
+      }
+    ],
     "sessionEnd": [
       {
         "command": "node ./hooks/audit-log.js",
@@ -67,6 +77,12 @@
       {
         "command": "node ./hooks/audit-log.js",
         "timeout": 5
+      },
+      {
+        "type": "prompt",
+        "prompt": "A critical file was just edited. Verify: (1) the change is within requested scope, (2) no secrets or credentials were introduced, (3) existing behavior outside the change scope was preserved. Edit: $ARGUMENTS",
+        "timeout": 10,
+        "matcher": "migration|auth|security|config|schema|\\.env"
       }
     ],
     "beforeMCPExecution": [
@@ -103,6 +119,11 @@
       {
         "command": "node ./hooks/subagent-guard.js",
         "timeout": 5
+      },
+      {
+        "type": "prompt",
+        "prompt": "Review this subagent delegation. Is the task well-scoped with clear boundaries? Is delegation justified (specialized expertise, parallelizable, or high-risk)? Does it avoid redundant work the parent could do directly? Delegation: $ARGUMENTS",
+        "timeout": 10
       }
     ],
     "subagentStop": [

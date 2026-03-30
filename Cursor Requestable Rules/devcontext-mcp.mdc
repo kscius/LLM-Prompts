@@ -1,0 +1,111 @@
+---
+description: Cuándo y cómo usar el MCP devcontext para gestión de contexto de conversación, recuperación de contexto relevante y hitos
+globs:
+alwaysApply: true
+---
+
+# Devcontext MCP — Contexto de conversación y recuperación
+
+El MCP **devcontext** gestiona el contexto compartido de la conversación, la recuperación de información relevante y el registro de hitos. Usa estas herramientas para mantener coherencia entre turnos y entre agentes.
+
+## Herramientas disponibles
+
+### 1. initialize_conversation_context
+**Cuándo**: Al iniciar una conversación o tarea que requiere contexto estructurado (varios agentes, sesiones largas, necesidad de recuperar código/docs recientes).
+
+**Parámetros principales**:
+- `initialQuery` (string): Pregunta o tema inicial para orientar la carga de contexto.
+- `focusHint` (opcional): `{ type, identifier }` — enfocar en una entidad (ej. archivo, módulo).
+- `contextDepth`: `"minimal"` | `"standard"` | `"comprehensive"` (default: `"standard"`).
+- `includeArchitecture` (boolean, default: true): Incluir información de arquitectura.
+- `includeRecentConversations` (boolean, default: true): Incluir conversaciones recientes.
+- `maxCodeContextItems` (number, default: 5): Límite de ítems de código.
+- `maxRecentChanges` (number, default: 5): Límite de cambios recientes.
+- `tokenBudget` (number, default: 4000): Presupuesto de tokens para el contexto.
+
+**Regla**: Usar al arrancar una sesión de trabajo compleja o cuando el usuario pida “recuperar contexto” o “recordar lo que hicimos”.
+
+---
+
+### 2. update_conversation_context
+**Cuándo**: Tras nuevos mensajes o cambios de código en la conversación, para que el contexto compartido se mantenga actualizado.
+
+**Parámetros principales**:
+- `conversationId` (string, requerido): ID de la conversación.
+- `newMessages` (array): `[{ role: "user"|"assistant"|"system", content }]` — mensajes nuevos.
+- `codeChanges` (array): `[{ filePath, newContent, languageHint? }]` — cambios de código a incorporar.
+- `preserveContextOnTopicShift` (boolean, default: true): Mantener contexto al cambiar de tema.
+- `contextIntegrationLevel`: `"minimal"` | `"balanced"` | `"aggressive"` (default: `"balanced"`).
+- `trackIntentTransitions` (boolean, default: true): Rastrear cambios de intención.
+- `tokenBudget` (number, default: 4000).
+
+**Regla**: Llamar después de intercambios relevantes o de ediciones de código que afecten decisiones o estado del proyecto.
+
+---
+
+### 3. retrieve_relevant_context
+**Cuándo**: Cuando necesites contexto adicional para una pregunta o tarea concreta (búsqueda por query, filtros por tipo o archivo).
+
+**Parámetros principales**:
+- `conversationId` (string, requerido).
+- `query` (string, requerido): Pregunta o tema para la recuperación.
+- `constraints` (opcional):
+  - `entityTypes`, `filePaths`: restringir a tipos de entidad o archivos.
+  - `includeConversation` (default: true), `crossTopicSearch` (default: false).
+  - `focusOverride`: `{ type, identifier }` para enfocar en una entidad.
+- `contextFilters`: `minRelevanceScore`, `excludeTypes`, `preferredLanguages`, `timeframe`.
+- `weightingStrategy`: `"relevance"` | `"recency"` | `"hierarchy"` | `"balanced"`.
+- `balanceStrategy`: `"proportional"` | `"equal_representation"` | `"priority_based"`.
+- `contextBalance`: `"auto"` | `"code_heavy"` | `"balanced"` | `"documentation_focused"` u objeto `{ code, conversation, documentation, patterns }`.
+- `sourceTypePreferences`: `includeDocumentation`, `includePatterns`, `prioritizeExamples`, `prioritizeTestCases`.
+- `tokenBudget` (default: 4000).
+
+**Regla**: Usar cuando la respuesta dependa de código, docs o conversación previa y no tengas ya ese contexto en turno.
+
+---
+
+### 4. record_milestone_context
+**Cuándo**: Al completar un hito significativo (bug fix, feature, refactor, docs, tests, configuración) para que quede registrado en el contexto.
+
+**Parámetros principales**:
+- `conversationId` (string, requerido).
+- `name` (string, requerido): Nombre del hito.
+- `description` (string, opcional): Descripción de lo hecho.
+- `milestoneCategory`: `"bug_fix"` | `"feature_completion"` | `"refactoring"` | `"documentation"` | `"test"` | `"configuration"` | `"uncategorized"` (default: `"uncategorized"`).
+- `customData` (objeto, opcional): Datos adicionales.
+- `assessImpact` (boolean, default: true): Evaluar impacto del hito.
+
+**Regla**: Llamar al cerrar un bug, terminar una feature, refactor importante o bloque de documentación/tests para que el contexto “recuerde” el avance.
+
+---
+
+### 5. finalize_conversation_context
+**Cuándo**: Al cerrar o pausar una conversación de forma definitiva; extrae aprendizajes, patrones y próximos pasos.
+
+**Parámetros principales**:
+- `conversationId` (string, requerido).
+- `outcome`: `"completed"` | `"abandoned"` | `"paused"` | `"reference_only"` (default: `"completed"`).
+- `extractLearnings` (boolean, default: true).
+- `promotePatterns` (boolean, default: true).
+- `synthesizeRelatedTopics` (boolean, default: true).
+- `generateNextSteps` (boolean, default: true).
+- `clearActiveContext` (boolean, default: false): Limpiar contexto activo al finalizar.
+
+**Regla**: Usar cuando el usuario cierre la sesión, diga “listo por hoy” o cuando la tarea quede completada o abandonada de forma explícita.
+
+---
+
+## Flujo recomendado
+
+1. **Inicio**: `initialize_conversation_context` con `initialQuery` y opcionalmente `focusHint` y `contextDepth`.
+2. **Durante la conversación**: `update_conversation_context` tras mensajes o cambios de código relevantes; `retrieve_relevant_context` cuando necesites más contexto para una pregunta concreta.
+3. **Hitos**: `record_milestone_context` al completar bugs, features, refactors o bloques de docs/tests.
+4. **Cierre**: `finalize_conversation_context` con el `outcome` adecuado.
+
+## Reglas de uso
+
+- Siempre usa el mismo `conversationId` para una misma conversación en todas las llamadas.
+- No llames `update_conversation_context` en cada mensaje; hazlo cuando haya mensajes o cambios que afecten el estado del proyecto o las decisiones.
+- Para preguntas puntuales (“¿dónde está X?”, “¿cómo se hace Y?”), prioriza `retrieve_relevant_context` con un `query` claro.
+- Reserva `finalize_conversation_context` para cierres explícitos; no al final de cada respuesta.
+- `contextDepth` y `tokenBudget` sirven para controlar coste y tamaño del contexto; usa `"minimal"` para tareas simples y `"comprehensive"` para sesiones largas o multi-agente.

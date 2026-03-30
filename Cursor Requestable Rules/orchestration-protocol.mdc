@@ -1,0 +1,105 @@
+---
+description: Binding protocol for orchestration—brainstorming gates, SequentialThinking triggers, context MCP lifecycle, and Task-tool model selection (subagent frontmatter workaround)
+globs:
+alwaysApply: true
+---
+
+# Orchestration protocol
+
+This rule binds how the parent agent uses **skills**, **Task/subagents**, and **MCPs** during multi-phase workflows (`/orquestador`, `/scout`, `/intake`, Plan Mode with an execution pack). It does not replace stack- or project-specific rules; it sequences **when** certain tools must run.
+
+---
+
+## Subagent model bug and workaround (Cursor)
+
+### Bug (documented behavior)
+
+Subagent definitions under `~/.claude/agents/*.md` (and similar) may set **`model:` in YAML frontmatter** (e.g. `sonnet`, `opus`, `haiku`). **Cursor’s Task/subagent runner does not apply that field reliably:** spawned subagents may all use the **same default profile** as the parent flow (often described as everything running as **`fast`** / Composer-style routing), regardless of frontmatter.
+
+**Implications:**
+
+- **Frontmatter `model:` is not a guarantee** of which model actually runs.
+- Treat agent files as **prompt + role + tool routing**, not as **authoritative model selection**.
+- Re-check this if the product changelog says subagent model selection is fixed; until then, assume the bug.
+
+### Workaround (binding)
+
+The **only** mechanism the parent should trust for model tier, when the **Task** tool exposes it, is the **Task call’s own `model` parameter** (or equivalent UI control), not the subagent file’s frontmatter.
+
+**Binding behavior for the parent agent:**
+
+1. When delegating via the **Task** tool, pass **`model` explicitly** whenever the schema offers choices and the work needs a different capability tier (e.g. deeper reasoning, larger context, security-heavy review).
+2. **Do not rely** on `model:` in `~/.claude/agents/*.md` as the sole or primary way to pick a model.
+3. If only one model alias is available (e.g. only `fast`), still use Task for isolation and specialized prompts; accept that model choice is **product-constrained** until more aliases appear or frontmatter is honored.
+4. For **high-risk** work (auth, payments, migrations, security review), prefer an explicit Task `model` toward the **strongest option allowed** rather than assuming the subagent file’s frontmatter applies.
+5. When **reviewing or authoring** subagent markdown, keep `model:` as **documentation of intent** for humans and future fixes, but **orchestration logic** must still set Task `model` when it matters.
+
+---
+
+## Brainstorming — mandatory gate
+
+**Mandatory — read and follow the `brainstorming` skill** before heavy reconnaissance or implementation when **any** of these hold:
+
+- The ask is **vague** (“improve X”, “make it better”, “add something for Y”).
+- The ask is **creative or product-shaped** (new feature direction, UX concept, greenfield behavior without crisp acceptance criteria).
+- The ask is **open-ended** and could be interpreted as multiple different engineering tasks.
+
+**Skip brainstorming** when the task is already a **precise, bounded** engineering request (exact file, exact bug repro, exact API change with stated contract, one-line fix scope).
+
+**Related:** For vague but engineering-oriented asks, use **`requirements-gathering`** after or instead of brainstorming to produce acceptance criteria and scope boundaries. For “what to build” / strategy, route to **`game-changing-features`** or **`product-manager`** when appropriate.
+
+---
+
+## Sequential Thinking MCP — mandatory triggers
+
+Invoke **`user-Sequentialthinking`** when **any** of the following is true:
+
+1. **Classification ambiguity** — e.g. SIMPLE vs STANDARD (or STANDARD vs COMPLEX) is not clear from repo evidence.
+2. **Multiple valid approaches** after SCOUT — no single obvious path from the codebase alone.
+3. **CRITIC verdict is CAUTION** — reason through gaps before revising plan or building.
+4. **Fix loop** — iteration **≥ 2** without clear progress toward green validation.
+5. **Confidence after SCOUT is MEDIUM** (roughly 70–89%) — surface assumptions and verification before large implementation.
+
+**Optional (judgment):** LOW confidence investigation; CRITIC **REWORK** with many moving parts.
+
+**Do not** invoke for: clearly SIMPLE tasks with SCOUT confirming one obvious path, or when repo evidence **uniquely** determines the approach.
+
+---
+
+## Context MCPs — lifecycle (cursor10x + devcontext)
+
+Use **`user-cursor10x-mcp`** and **`user-devcontext`** as **lifecycle-bound** tools, not ad hoc noise.
+
+### Session / run start (e.g. Phase 0 INTAKE)
+
+- **cursor10x:** `getComprehensiveContext` (optional: `query`, recent episodes/messages) for repo or task theme continuity.
+- **devcontext:** `initialize_conversation_context` with the task as `initialQuery` and repo focus when applicable.
+- **Reuse** the same `conversationId` from `initialize_conversation_context` for `update_conversation_context`, `retrieve_relevant_context`, `record_milestone_context`, and `finalize_conversation_context`.
+
+### Phase boundaries
+
+After **INTAKE, SCOUT, PLAN, CRITIC, BUILD, FIX LOOP** (or equivalent milestones), persist brief durable state:
+
+- **cursor10x:** `storeMilestone`, `storeDecision`, `recordEpisode`, or `storeAssistantMessage` as appropriate (decisions, blockers, validated commands, file lists).
+- **devcontext:** `update_conversation_context` when messages or code changes materially shift project state; `retrieve_relevant_context` when a concrete question needs prior context.
+
+### Session / run end
+
+- **devcontext:** `finalize_conversation_context` with appropriate `outcome` (`completed`, `paused`, `abandoned`, `reference_only`).
+- **cursor10x:** final milestone and decisions that should survive for future sessions (`endConversation` is acceptable as a combined close when that matches your flow).
+
+**Proportionality:** For trivial single-file tasks, skip heavy MCP churn; still prefer one lightweight continuity call if the user is mid-project.
+
+**Details:** Parameter-level guidance for each MCP lives in `devcontext-mcp.mdc` and `cursor10x-mcp.mdc`.
+
+---
+
+## Phase gates (optional skill)
+
+When the **`sdlc-checkpoint`** skill is available, use it at **orchestrator phase boundaries** to verify expected artifacts exist before advancing (intake brief, scout classification, execution pack, critic verdict, validation evidence).
+
+---
+
+## Precedence
+
+When this protocol conflicts with **safety or correctness**, safety and correctness win. When it conflicts with **repo-verified fact**, trust the repo. This protocol governs **orchestration timing**, not domain implementation.

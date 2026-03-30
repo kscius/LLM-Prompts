@@ -19,4 +19,10 @@ The markdown files under **`Cursor Rules/`** are a **curated, shareable** rulese
 
 ---
 
-**Last updated:** March 2026
+**Last updated:** 2026-03-29 — *User Rules* siguen viviendo solo en Cursor; este repo no las sincroniza automáticamente. Usa `user-rules-backup.md` si quieres versionar texto (sin secretos).
+
+</think>
+
+
+<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>
+call_mcp_tool

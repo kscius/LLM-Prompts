@@ -13,7 +13,12 @@ function safe(fn) {
 
 function git(cmd, cwd) {
   return safe(() =>
-    execSync(cmd, { cwd, encoding: "utf8", timeout: 5000 }).trim()
+    execSync(cmd, {
+      cwd,
+      encoding: "utf8",
+      timeout: 5000,
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim()
   );
 }
 
@@ -139,11 +144,29 @@ async function main() {
     }
   }
 
-  const output = {};
+  const sessionId = payload.session_id || payload.conversation_id || "";
+  const composerMode = payload.composer_mode || "agent";
+
+  const mcpRecovery = [
+    "**Context recovery (run early if this is project work)**",
+    "Hooks cannot call MCPs directly; you should pull memory yourself when relevant:",
+    "- **cursor10x-mcp**: `getComprehensiveContext` (optional `query` from the user's topic). For a structured session kickoff with banner + context, `initConversation` when you have the user's first message.",
+    "- **devcontext**: `initialize_conversation_context` with `initialQuery` set to the user's goal or task title; use `contextDepth` standard or comprehensive for multi-step work.",
+    "Skip these if the user message is trivial (one-off question, no repo continuity) or MCPs are unavailable.",
+  ].join("\n");
+
+  const parts = [];
   if (ctx.length > 0) {
-    output.additional_context =
-      "Session context:\n" + ctx.map((p) => `- ${p}`).join("\n");
+    parts.push("Session context:\n" + ctx.map((p) => `- ${p}`).join("\n"));
   }
+  parts.push(mcpRecovery);
+  if (sessionId) {
+    parts.push(`Session id: ${sessionId} (composer_mode: ${composerMode})`);
+  }
+
+  const output = {
+    additional_context: parts.join("\n\n"),
+  };
 
   process.stdout.write(JSON.stringify(output) + "\n");
 }

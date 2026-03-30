@@ -111,12 +111,12 @@ Shared reference and templates for Cursor beyond single prompts:
 | Folder | Description |
 |--------|-------------|
 | [Cursor Skills](./Cursor%20Skills/) | Skills: guía + carpetas **exported-cursor-skills** / **exported-agents-skills** + manifest |
-| [Cursor Commands](./Cursor%20Commands/) | Comandos slash (18 prompts), p. ej. **orquestador**, scout, plan, build-full |
+| [Cursor Commands](./Cursor%20Commands/) | Comandos slash (**25** prompts), p. ej. **orquestador**, **intake**, scout, plan, build-full |
 | [Cursor Hooks](./Cursor%20Hooks/) | Documentación + ejemplo + **user-export/** (copia de hooks globales) |
 | [Cursor Subagents](./Cursor%20Subagents/) | Delegación Task; prompts por tipo en **agents/*.md**; enum en **task-subagent-types.md** |
 | [Cursor MCPs](./Cursor%20MCPs/) | Inventario de servidores MCP sin secretos + plantilla **mcp.config.example.json** |
 | [Cursor User Rules](./Cursor%20User%20Rules/) | Cómo respaldar User Rules (no subir JSON con datos sensibles) |
-| [Cursor Requestable Rules](./Cursor%20Requestable%20Rules/) | Reglas solicitables del entorno (p. ej. cursor10x-mcp) |
+| [Cursor Requestable Rules](./Cursor%20Requestable%20Rules/) | Reglas `.mdc` solicitables (cursor10x, devcontext, orquestación, SDLC) |
 | [Cursor Rules / tools-inventory-es](./Cursor%20Rules/tools-inventory-es.md) | MCP, Skills, Subagents (español); par con **ai-tools.md** |
 
 ---
