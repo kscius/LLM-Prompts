@@ -1,5 +1,8 @@
 # Local-only drafts (not versioned). Public inventory: Cursor Rules/ai-tools.md + tools-inventory-es.md
 DATOS/
 
+# Orchestrator / scout plans (local only; do not commit)
+.cursor/plans/
+
 # Optional: local MCP override with real keys (never commit)
 Cursor MCPs/mcp.config.local.json
