@@ -56,4 +56,4 @@ Use the **create-skill** skill in Cursor (see `create-skill` in [tools-inventory
 
 ---
 
-**Last updated:** 2026-03-30 (`exported-cursor-skills`: **30** skills desde `%USERPROFILE%\.cursor\skills\` [robocopy /XO]; `exported-agents-skills`: **15** carpetas desde `%USERPROFILE%\.agents\skills\`; manifest igual que `%USERPROFILE%\.cursor\skills-cursor\.cursor-managed-skills-manifest.json`)
+**Last updated:** 2026-03-30 (`exported-cursor-skills`: **30** skills [robocopy /XO desde `%USERPROFILE%\.cursor\skills\`]; `exported-agents-skills`: **15** carpetas [desde `%USERPROFILE%\.agents\skills\`]; manifest = `%USERPROFILE%\.cursor\skills-cursor\.cursor-managed-skills-manifest.json`)

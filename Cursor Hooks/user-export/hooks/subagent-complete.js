@@ -36,7 +36,13 @@ async function main() {
   fs.mkdirSync(LOG_DIR, { recursive: true });
   fs.appendFileSync(LOG_FILE, JSON.stringify(entry) + "\n");
 
-  process.stdout.write("{}\n");
+  const out = {};
+  const st = String(entry.status || "").toLowerCase();
+  if (st === "error" || st === "failed" || st === "failure") {
+    out.followup_message = `[subagentStop] Subagent "${entry.subagent_type}" ended with status "${entry.status}". Review output, fix root cause or narrow scope, and retry if needed.`;
+  }
+
+  process.stdout.write(JSON.stringify(out) + "\n");
 }
 
 main().catch(() => {

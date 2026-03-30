@@ -44,4 +44,4 @@ Snapshot reflects a typical maintainer setup (keys **omitted**; use env vars loc
 
 ---
 
-**Last updated:** 2026-03-30 (carpetas bajo `…/mcps/` del proyecto verificadas; sin cambios de lista respecto a 2026-03-29; no secretos)
+**Last updated:** 2026-03-30 (carpetas bajo `…/mcps/` del proyecto: 14 entradas; sin cambios de lista; no secretos)

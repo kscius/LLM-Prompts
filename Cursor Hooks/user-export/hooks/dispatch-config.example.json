@@ -1,0 +1,12 @@
+[
+  {
+    "prompt": "Add JSDoc to all exported functions",
+    "files": "src/**/*.ts",
+    "model": "gemini-3-flash"
+  },
+  {
+    "prompt": "Check for missing error boundaries",
+    "files": "src/components/**/*.tsx",
+    "mode": "ask"
+  }
+]

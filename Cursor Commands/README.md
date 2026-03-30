@@ -13,7 +13,7 @@ Exact UI and paths may vary slightly by Cursor version; prefer **Cursor Settings
 
 ## Files in this folder
 
-These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **32** command files (plus this `README.md`).
+These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **33** command files (plus this `README.md`).
 
 | File | Typical use |
 |------|----------------|
@@ -44,6 +44,7 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 | [database-migration.md](./database-migration.md) | Migraciones de base de datos. |
 | [harness-audit.md](./harness-audit.md) | Auditoría de harness / tooling de pruebas. |
 | [cli-batch.md](./cli-batch.md) | Cursor CLI en modo batch / headless sobre muchos archivos (`cursor agent -p`, globs). |
+| [agent-dispatch.md](./agent-dispatch.md) | Runner Node `agent-dispatch.js` para `agent -p` con reintentos, logs JSON y globs (ver también `/orquestador` → Cursor CLI condicional). |
 | [ci-watch.md](./ci-watch.md) | Vigilar CI / pipelines y fallos recurrentes. |
 | [department-report.md](./department-report.md) | Informe tipo “departamento” (roles SDLC / estado). |
 | [knowledge-consolidate.md](./knowledge-consolidate.md) | Consolidar conocimiento / memoria de proyecto. |
@@ -59,4 +60,4 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 
 ---
 
-**Last updated:** 2026-03-30 (sync desde `%USERPROFILE%\.cursor\commands`: +`cli-batch`, +`retro-to-rule`)
+**Last updated:** 2026-03-30 (sync: `robocopy /XO` `*.md` excepto `README.md`; `orquestador.md` = copia byte-a-byte del perfil usuario — reglas **13–14** ejecución autónoma + paralelismo Task/CLI; 33 comandos)

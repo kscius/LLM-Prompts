@@ -32,6 +32,8 @@ NON-NEGOTIABLE RULES
 10. Do not stop at “it looks correct”; validate with real evidence.
 11. If the repo contradicts the task or suggests a safer path, explicitly state that and adapt.
 12. Keep execution concise, operational, and completion-oriented.
+13. **Autonomous execution (mandatory):** You **take the decisions** (which skills, subagents, MCPs, Shell, and—when criteria match—Cursor CLI) **and you execute them via tools**, not the user. **Subagents:** spawn with the **Task** tool (`subagent_type` + prompt)—do not only *name* a subagent in prose. **MCPs:** call the actual MCP tools when routing or hooks require them (cursor10x, devcontext, Sequential Thinking, context7, etc.). **Skills:** **Read** the skill file and **apply** it in this session—do not tell the user to open or run a skill. **Shell:** run repo commands, tests, and **`node …/hooks/agent-dispatch.js`** when **Cursor CLI (condicional)** applies—do not hand off copy-paste terminal steps unless a **USER ESCALATION TRIGGER** fires (e.g. missing credential, destructive action needing confirmation). **Forbidden:** closing a phase with “you should run …” / “next, invoke …” for work you can do with available tools.
+14. **Parallelism when safe:** The pipeline is **phase-sequential** (INTAKE → SCOUT → …), but **within** a phase you **should fan out** when work is independent—**multiple Task subagents** in one turn, parallel Shell for disjoint checks, and (rarely) parallel CLI only under **PARALLEL EXECUTION STRATEGY** + **Cursor CLI — paralelismo**. **Model:** omit the Task tool **`model`** parameter so subagents **inherit** the parent chat model unless you need **`fast`** for cheap parallel shallow tasks or an explicit upgrade for one branch. Do not default to “one subagent at a time” when the EXECUTION PACK already partitions file sets and contracts are stable.
 
 EARLY BAILOUT CONDITIONS (mandatory gate immediately after SCOUT, before AUTO-ROUTING)
 After SCOUT, evaluate once. If one applies, follow it and **do not** run the full pipeline unnecessarily:
@@ -114,7 +116,30 @@ Do not activate optional skills, subagents, or MCPs unless they add clear execut
 
 **DRY — canonical tooling source:** This file (`orquestador.md`) is the **canonical** reference for preferred skills, subagents, and MCPs. When `/scout`, `/build-full`, or `/fix-loop` run **as part of an /orquestador execution**, inherit tooling choices from here unless the repo forces a narrower set. Update lists here first; align auxiliary commands after.
 
-**Supporting commands (`/debug-issue`, `/code-review`, `/security-review`, `/write-unit-tests`, etc.):** Treat these as **best-effort checklists**. When behavior overlaps with skills or subagents above, **prefer** the skills/subagents and tooling table in this file.
+**Supporting commands (`/debug-issue`, `/code-review`, `/security-review`, `/write-unit-tests`, `/agent-dispatch`, `/cli-batch`, etc.):** Treat these as **best-effort checklists**. When behavior overlaps with skills or subagents above, **prefer** the skills/subagents and tooling table in this file.
+
+### Cursor CLI (condicional)
+
+Use the Node runner **`agent-dispatch.js`** and slash command **`/agent-dispatch`** only when the TASK or SCOUT evidence clearly warrants **headless `agent -p`**, not as the default path for every run.
+
+**Disparo (ejemplos — al menos uno debe aplicar):**
+
+- El usuario pide explícitamente headless, CLI, `agent -p`, o batch no interactivo.
+- El TASK es mecánico y amplio: JSDoc masivo, renombres repetitivos, higiene sobre un **glob grande** donde el IDE sería lento o frágil.
+- SCOUT concluye muchos archivos con el mismo patrón de cambio y **bajo riesgo de contrato** (sin auth/pagos/migraciones críticas en el mismo paso).
+
+**Acción (ejecución real, no instrucciones al usuario):** En la misma sesión, vía **Shell**, invocar `node <ruta>/hooks/agent-dispatch.js` según **`commands/agent-dispatch.md`** (ruta portable: `%USERPROFILE%\.cursor\...` en Windows, `$HOME/.cursor/...` en Unix). `--cwd` = raíz del repo objetivo. Leer **stdout/stderr** y, si aplica, **`hooks/logs/agent-runs/*.json`**. No sustituir esto por “ejecuta tú en terminal”.
+
+**Modo por defecto bajo orquestador:** Preferir **`--mode ask`** o **`plan`** para pasadas automáticas. Usar **`--force`** / sin `ask` solo si el usuario pidió **aplicar** cambios en masa vía CLI.
+
+**Anti-patrones:** No sustituir MCPs, memoria, hooks ni revisión fina en superficies sensibles (auth, secretos, esquema) con una sola pasada CLI. No invocar si `agent` no está en PATH — declarar **Blocked** con evidencia. **`SKIP_AGENT=1`** aplica al **hook git** pre-commit, no como atajo para evitar trabajo en orquestador salvo bloqueo real documentado.
+
+**Paralelismo CLI (varios `agent -p` / varios procesos):**
+- **Preferido:** Una sola invocación Shell con **`--config`** apuntando a un JSON de varias tareas (`hooks/dispatch-config.example.json`) cuando quieras varias pasadas headless en batch—el runner las orquesta; revisa un único flujo de logs.
+- **Varios `node …/agent-dispatch.js` en paralelo (múltiples Shell):** solo si **(a)** globs/`--cwd` o paquetes son **disjuntos**, **(b)** riesgo de carrera en disco/git es bajo (idealmente `--mode ask` / `plan` sin writes conflictivos), **(c)** el usuario pidió explícitamente paralelismo CLI o el ahorro de tiempo justifica el riesgo. **No** lanzar en paralelo dos CLIs que mutan los mismos paths o el mismo lockfile/migración.
+- Tras cualquier fan-out CLI: consolidar resultados, resolver conflictos, y correr validación integrada (build/tests) como en subagentes paralelos.
+
+**Referencias canónicas:** `commands/agent-dispatch.md`, `commands/cli-batch.md`, `hooks/agent-dispatch.js`.
 
 ---
 
@@ -297,21 +322,32 @@ Memory keys (cursor10x): prefer `[repo or path hint]:[module/feature]:[topic]` f
 
 ## PARALLEL EXECUTION STRATEGY
 
+**Principle:** **Phases stay ordered**; **work inside a phase** can be **parallel** when dependencies allow. Prefer **multiple Task tool calls in the same assistant turn** (several subagents) over serializing independent work. **Inherited model:** leave Task **`model` unset** so subagents use the parent conversation model; set **`model: fast`** only for narrow parallel recon tasks where cost/latency matters; set a stronger explicit model on **one** branch when that branch alone needs it.
+
 **Fan-out when:** Independent work in **disjoint** layers (e.g. frontend + backend) **and** no shared contract in flux. **Do not fan-out** when: same files/module, same migration chain, or unresolved API contract between streams.
 
 **Safe to run in parallel** (merge results after all complete; no shared mutable files without coordination):
 
+- **Multiple `Task` subagents** with explicit **non-overlapping** `Files` / paths in each handoff (EXECUTION PACK should list partitions).
+- **CRITIC / read-mostly reviews:** `code-reviewer` + `security-auditor` + `architect-reviewer` (or performance-oriented reviewer) on the **same plan snapshot**—fan out, then synthesize one verdict.
+- **SCOUT / investigation:** `explore` on area A + `explore` on area B when directories are disjoint (omit `model` for inherit, or `fast` if policy allows).
 - Security audit + code review + performance-oriented review (distinct concerns, read-mostly on same snapshot).
-- Lint + typecheck (independent static checks).
+- Lint + typecheck (independent static checks)—**Shell** in parallel when the environment supports it.
 - Unit tests for **disjoint** modules/packages.
 - Documentation updates + test updates **only when** tests do not depend on doc-only paths and contracts are stable.
-- Multiple `Task` subagents on **non-overlapping** file sets after the plan explicitly partitions work.
+- **Cursor CLI:** prefer **`--config`** multi-task in **one** Shell; see **Cursor CLI — paralelismo** for multiple processes.
 
 **Must stay sequential:**
 
-- INTAKE → SCOUT → (PLAN) → CRITIC → BUILD → validation.
-- Any step that consumes outputs of the previous step (e.g. plan depends on scout; build depends on plan).
-- Writes to the same files or the same migration chain.
+- INTAKE → SCOUT → (PLAN) → CRITIC → BUILD → validation **as phases** (outputs of prior phase feed the next).
+- Any step that **consumes** outputs of the previous step (e.g. plan depends on scout; build depends on plan).
+- Writes to the **same** files or the **same** migration chain.
+- Two **mutating** CLI runs targeting overlapping paths.
+
+**Orchestration pattern (BUILD with partitions):**
+1. Split EXECUTION PACK into **Stream A / Stream B / …** with disjoint paths.
+2. Spawn **Task** per stream **in one round** (inherit model unless overridden).
+3. Merge: reconcile conflicts, run **integration** build/tests once.
 
 When parallelizing subagents: separate handoffs per subagent; merge and reconcile conflicts before proceeding. **After** parallel streams: run integration validation (build/tests) before declaring done.
 
@@ -436,7 +472,8 @@ Produce:
 EXECUTION PACK
   objective: [one line]
   files_layers: [paths / areas]
-  implementation_order: [numbered steps]
+  parallel_streams: [optional — e.g. none | Stream A: <paths> + <subagent_hint>; Stream B: … when disjoint; drives parallel Task + inherit model]
+  implementation_order: [numbered steps; merge/integration step after any parallel_streams]
   validation_manifest: [paste or reference SCOUT VALIDATION MANIFEST]
   validations_required: [lint | typecheck | tests | build | browser | migration — subset that applies]
   key_risks: [list]
@@ -512,7 +549,7 @@ If a plan exists:
 - before editing, restate the EXECUTION PACK as an active checklist
 - confirm the files/layers to touch
 - confirm whether repo evidence requires any adjustment to the planned approach
-- then execute in order
+- then execute **implementation_order** from the pack; if the pack defines **disjoint streams**, spawn **multiple Task subagents in parallel** (inherit model by default) per **PARALLEL EXECUTION STRATEGY**, then merge + VERIFY
 
 If no plan exists:
 - use /build-full
@@ -735,7 +772,7 @@ When delegating to a subagent, always provide this structured context:
 ### Open Questions
 - [any unresolved ambiguities]
 
-**Model selection (Task tool):** Cursor may ignore `model:` in subagent file frontmatter. When spawning subagents, pass the Task tool **`model`** parameter when you need a stronger model; do not rely on frontmatter alone.
+**Model selection (Task tool):** Cursor may ignore `model:` in subagent file frontmatter. **Default for parallel fan-out:** **omit** `model` so subagents **inherit** the parent chat model. Pass **`model: fast`** for shallow parallel tasks when appropriate. Pass a stronger/explicit `model` only when a **single** branch needs it. Do not rely on frontmatter alone for critical model choice.
 
 SELF-CHECK PROTOCOL
 Before declaring any phase complete, run these checks:

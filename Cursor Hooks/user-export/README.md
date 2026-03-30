@@ -3,7 +3,7 @@
 Mirror of **`%USERPROFILE%\.cursor\hooks.json`** and **`%USERPROFILE%\.cursor\hooks\*.js`**:
 
 - [hooks.json](./hooks.json)
-- [hooks/](./hooks/) — Node scripts
+- [hooks/](./hooks/) — Node scripts (incluye `agent-dispatch.js` para CLI headless y `dispatch-config.example.json` de referencia)
 
 ## Restore on a new machine
 
@@ -15,4 +15,4 @@ Do **not** commit **`hooks/logs/`** or audit trails from your local machine.
 
 ---
 
-**Last updated:** 2026-03-30 (`hooks.json` alineado con `%USERPROFILE%\.cursor\hooks.json`: `afterFileEdit` incluye `edit-tracker`, `comment-checker`; `stop` incluye `verifier`, `boulder-check`; `preCompact` incluye `precompact-preserve`; rutas portables `./hooks/…`)
+**Last updated:** 2026-03-30 (`hooks.json` alineado con `%USERPROFILE%\.cursor\hooks.json`; scripts sincronizados con `robocopy /XO`; +`agent-dispatch.js`, +`dispatch-config.example.json`; rutas portables `./hooks/…`)

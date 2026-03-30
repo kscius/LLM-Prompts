@@ -65,7 +65,7 @@ If **conversationId** is unknown: document **Skipped: devcontext (no conversatio
 Call **user-cursor10x-mcp** as appropriate (idempotent-friendly: prefer distinct titles):
 
 - **`storeMilestone`**: session or epic closure (title + description + importance).
-- **`storeDecision`**: each durable decision (title, content, reasoning, importance).
+- **`storeDecision`**: each durable decision (title, content, reasoning, importance). Prefix **`[retro]`** in the **title** or first line of **content** when the decision comes from this retrospective so `getComprehensiveContext` / search can find it later.
 - **`recordEpisode`**: actor `assistant` or `user`, action e.g. `session_retrospective`, content = one-paragraph summary, `context` = repo or theme.
 - Optionally **`endConversation`** when this retrospective **is** the explicit end of a tracked conversation: pass `content` (final summary for humans), `milestone_title`, `milestone_description`, `importance`—**only** if it matches how you use `initConversation` / `endConversation` elsewhere; otherwise prefer `storeMilestone` + `recordEpisode` to avoid double-counting.
 

@@ -55,7 +55,15 @@ Each rule must cite **only verified** commands and paths. Use `description` in f
 
 ---
 
-## STEP 4 — Intake template (mandatory)
+## STEP 4 — AGENTS.md (mandatory)
+
+1. Copy `~/.cursor/docs/AGENTS-template.md` to `{workspaceRoot}/AGENTS.md` (repo root).
+2. Pre-fill **Purpose**, **Stack**, and **Verified commands** from STEP 2 discovery (no invented scripts).
+3. If `AGENTS.md` already exists, **merge**: add missing sections only; do not wipe user content.
+
+---
+
+## STEP 5 — Intake template (mandatory)
 
 Write:
 
@@ -93,12 +101,12 @@ Pre-fill every section **except** “Task” and “Done when” (use placeholde
 
 ---
 
-## STEP 5 — Output summary (mandatory)
+## STEP 6 — Output summary (mandatory)
 
 In chat, print:
 
-- List of **files created/updated** with paths
-- **Next steps**: e.g. “Fill `.cursor/intake-template.md` then run `/intake` or `/orquestador`”
+- List of **files created/updated** with paths (including `AGENTS.md`)
+- **Next steps**: e.g. “Finish `AGENTS.md`, fill `.cursor/intake-template.md`, then run `/intake` or `/orquestador`”
 - Any **unknowns** left for SCOUT
 
 ---

@@ -46,7 +46,7 @@ Tab / inline completion hooks may include `beforeTabFileRead`, `afterTabFileEdit
 A snapshot of the maintainer’s global hooks lives under **[user-export/](./user-export/)**:
 
 - [user-export/hooks.json](./user-export/hooks.json)
-- [user-export/hooks/](./user-export/hooks/) — scripts (p. ej. `session-context`, `after-agent-response`, `audit-log`, `edit-tracker`, `comment-checker`, `verifier`, `boulder-check`, `precompact-preserve`, `validate-mcp`, …)
+- [user-export/hooks/](./user-export/hooks/) — scripts (p. ej. `session-context`, `after-agent-response`, `audit-log`, `agent-dispatch`, `edit-tracker`, `comment-checker`, `verifier`, `boulder-check`, `precompact-preserve`, `validate-mcp`, …) y [dispatch-config.example.json](./user-export/hooks/dispatch-config.example.json) para el runner CLI
 - [user-export/README.md](./user-export/README.md) — how to restore on another PC
 
 ## Minimal example

@@ -194,4 +194,17 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 
 ---
 
+## Cursor CLI (agent headless)
+
+| Recurso | Uso |
+|---------|-----|
+| Comando **`/cli-batch`** | [cli-batch.md](../Cursor%20Commands/cli-batch.md) — pasadas no interactivas con `cursor agent` / `agent -p` y globs. |
+| Comando **`/agent-dispatch`** | [agent-dispatch.md](../Cursor%20Commands/agent-dispatch.md) — runner Node para `agent -p` con reintentos y logs JSON en `hooks/logs/agent-runs/`. |
+| Script | [agent-dispatch.js](../Cursor%20Hooks/user-export/hooks/agent-dispatch.js) en **`Cursor Hooks/user-export/hooks/`** (copiar a `%USERPROFILE%\.cursor\hooks\` al restaurar). |
+| Config de ejemplo | [dispatch-config.example.json](../Cursor%20Hooks/user-export/hooks/dispatch-config.example.json) — JSON multi-tarea opcional para el runner. |
+
+**Orquestación:** [orquestador.md](../Cursor%20Commands/orquestador.md) indica cuándo el CLI headless es apropiado frente a la ejecución por defecto en el IDE.
+
+---
+
 **Nota:** Si mantienes un borrador local fuera del repo (por ejemplo notas o listas experimentales), no lo enlaces desde la documentación versionada; actualiza **tools-inventory-es.md** y **ai-tools.md** cuando quieras publicar cambios.

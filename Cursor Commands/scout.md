@@ -9,6 +9,8 @@ MISSION
 Discover the real implementation surface quickly and accurately so later phases can route correctly.
 Do not edit files. Do not redesign the solution. Do not over-speculate.
 
+**Autonomous execution:** You **run** the reconnaissance stack yourself—**MCP tools** (devcontext init, cursor10x context, etc.) must be **invoked**, not described as homework for the user. When depth warrants, use the **Task** tool with `explore` or another listed subagent instead of only narrating what a subagent would do. If your conclusion is **`recommended_cli: yes`** (see GOALS / SCOUT REPORT FORMAT), **run Shell** with `node …/hooks/agent-dispatch.js` in this same response flow (typically `--mode ask` and `--cwd` = workspace root), then fold the output into the scout report—do not only tell the user to run the CLI later. Exception: repo/workspace not writable or **USER ESCALATION**-class blockers.
+
 ---
 
 ## PHASE 0 — PRE-SCOUT (run before repo inspection)
@@ -112,6 +114,7 @@ GOALS
    - `write-unit-tests`
    - `humanizer`
    - `reducing-entropy`
+7. **Cursor CLI routing:** If the TASK or file set matches **mechanical batch**, **explicit headless / `agent -p`**, or **very large same-pattern scope** with low contract risk, note that **post-scout** the executor may run **`/agent-dispatch`** or `node <user-profile>/.cursor/hooks/agent-dispatch.js` with **`--cwd`** = workspace root, suggested **`--model`**, and **`--mode ask`** or **`plan`** (unless the user explicitly asked for mutating batch / `--force`). If it does **not** apply, state why. Criteria and guardrails: **`commands/orquestador.md`** → section **Cursor CLI (condicional)**; invocation details: **`commands/agent-dispatch.md`**.
 
 CLASSIFICATION SUPPORT
 Based on repo evidence, provide a routing recommendation:
@@ -186,7 +189,7 @@ next_command: /orquestador|/plan|/intake|/build-full
 ---
 ```
 
-**Body:** Use the same sections as **SCOUT REPORT FORMAT** below (stack, workflow type, files, validation commands, memory findings, routing, classification, confidence, SequentialThinking, flags, risks, parallelization). Optionally include the structured plan sections if `--plan` / plan mode was requested (see OUTPUT MODE).
+**Body:** Use the same sections as **SCOUT REPORT FORMAT** below (stack, workflow type, files, validation commands, memory findings, routing, classification, confidence, SequentialThinking, flags, risks, parallelization, **Cursor CLI routing**). Include a short block: **`recommended_cli: yes | no`** plus **one line of justification**; if `yes`, you **ran** Shell with that shape (`--cwd`, `--mode`, optional `--files`) and summarize stdout/log outcome here. Optionally include the structured plan sections if `--plan` / plan mode was requested (see OUTPUT MODE).
 
 **Exceptions (no file write):**
 
@@ -261,3 +264,4 @@ When Plan mode is requested:
   - reducing-entropy → yes/no + why
 - Risks/constraints
 - Suggested parallelization: [what can run in parallel]
+- **Cursor CLI routing:** `recommended_cli: yes | no` — one-line justification; if **yes**, **run** `node …/hooks/agent-dispatch.js` via **Shell** in this flow (same as **Autonomous execution** above), then document invocation + outcome in the report; `--cwd` = repo root, `--mode ask` or `plan` by default (`--force` only if user requested mutating batch); optional `--files` glob; see `commands/orquestador.md` (Cursor CLI condicional) and `commands/agent-dispatch.md`

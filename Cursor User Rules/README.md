@@ -19,7 +19,7 @@ The markdown files under **`Cursor Rules/`** are a **curated, shareable** rulese
 
 ---
 
-**Last updated:** 2026-03-29 — *User Rules* siguen viviendo solo en Cursor; este repo no las sincroniza automáticamente. Usa `user-rules-backup.md` si quieres versionar texto (sin secretos).
+**Last updated:** 2026-03-30 — *User Rules* siguen solo en Cursor (Settings → Rules); este repo no las importa automáticamente. Para versionar, copia manualmente a `user-rules-backup.md` (sin secretos). **Cursor CLI** (`agent`, `cursor agent`) no sustituye reglas: documentación de comandos en [Cursor Commands](../Cursor%20Commands/README.md) y sección CLI en [ai-tools.md](../Cursor%20Rules/ai-tools.md).
 
 </think>
 

@@ -8,9 +8,14 @@ TASK:
 MISSION
 Complete the task across all affected layers with the smallest complete change set, validate it properly, and finish only when the repo is in a verified good state or a real blocker is demonstrated.
 
+**Autonomous execution:** **You** implement, **you** run validations (**Shell**), **you** call **MCPs** when useful, **you** spawn **Task** subagents when the task matches routing (do not only recommend subagents in text). When **CONDITIONAL SUBROUTINES** require **`agent-dispatch`**, **run** `node …/hooks/agent-dispatch.js` via **Shell** before bulk in-IDE work—never substitute with “the user should run…”. **Read** and follow relevant **skills** in-session. Defer to the user only on real blockers (credentials, product choice, destructive confirmation), per **`commands/orquestador.md`** escalation rules when this run is part of `/orquestador`.
+
+**Parallelism:** When the EXECUTION PACK (or task) partitions **non-overlapping** paths/layers, prefer **several Task calls in one turn** over strict serialization; **omit** Task `model` to **inherit** the parent model unless you need `fast` or an explicit upgrade for one branch. After parallel edits, run **integration** validation. Align with **`commands/orquestador.md`** → **PARALLEL EXECUTION STRATEGY** and **Cursor CLI — paralelismo** for headless batches.
+
 PRE-BUILD VALIDATION
 Before writing any code, verify these prerequisites:
 
+0. **CLI batch (if applicable):** If the TASK or scout handoff calls for headless batch via **`agent -p`**, run **`/agent-dispatch`** (Shell + `node …/agent-dispatch.js`) first per **CONDITIONAL SUBROUTINES**; otherwise skip.
 1. Branch check: confirm you are NOT on main/master unless explicitly instructed
 2. Repo state: verify the working directory is clean or changes are intentional
 3. Dependency sync: if touching package files, verify lockfile is in sync
@@ -75,6 +80,7 @@ PREFERRED MCPS
 - Conditional: `cursor-ide-browser`, `user-semgrep`, `user-eamodio.gitlens-extension-GitKraken`, `user-duckduckgo`, `user-time`, `user-memory`
 
 CONDITIONAL SUBROUTINES
+- **Cursor CLI first (`/agent-dispatch`):** When the TASK is explicitly **batch vía CLI / headless `agent -p`**, or the agreed plan / scout artifact set **`recommended_cli: yes`**, run **`node …/hooks/agent-dispatch.js`** (see **`commands/agent-dispatch.md`** and **`commands/cli-batch.md`**) **before** heavy in-IDE edits; then continue in-IDE only for remaining work, validation, and review. Prefer **`--mode ask`** or **`plan`** unless the user asked for mutating batch (**`--force`**). Follow **`commands/orquestador.md`** → **Cursor CLI (condicional)** for when **not** to use the CLI.
 - Use `write-unit-tests` when tests are missing or should be expanded.
 - Use `lint-suite` when linting/formatting/static issues are part of the validation surface.
 - Use `run-all-tests-and-fix` when the task requires full-suite stabilization or when multiple test failures appear.
@@ -84,6 +90,7 @@ CONDITIONAL SUBROUTINES
 
 CONSTRAINTS
 - Do not stop after producing a plan.
+- Do not instruct the user to run terminal commands, subagents, or CLI steps you can execute with **Shell** / **Task** / MCP tools.
 - Do not ask for confirmation between obvious implementation steps.
 - Do not claim checks were run if they were not run.
 - Do not claim something is fixed unless the relevant validation was rerun.

@@ -44,6 +44,7 @@ A task is DONE only when ALL of these are true:
 3. No hallucinated commands, paths, or claims remain
 4. Risks and follow-ups are stated explicitly
 5. If something was NOT validated, it is explicitly stated with the reason
+6. Under **`/orquestador`**, **`/scout`**, or **`/build-full`**, executable steps used **Shell**, **Task**, and **MCP** tools where applicable—not a handoff of “you run this in the terminal” unless a real blocker (credentials, destructive confirmation, etc.) applied
 
 ## Red Flags
 
@@ -53,3 +54,4 @@ If any of these are present, the task is NOT done:
 - Referencing commands like `npm run X` where X was not verified
 - Empty validation section in the output
 - "No changes needed" without reading the current state
+- Delegating CLI, subagents, or repo commands to the user when **Shell** / **Task** / MCP could run them under orchestrator/scout/build-full workflows

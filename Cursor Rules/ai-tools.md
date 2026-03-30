@@ -212,6 +212,19 @@ Task-tool types that **do not** have a matching file there (built-in / generic):
 
 ---
 
+## Cursor CLI (headless `agent`)
+
+| Resource | Purpose |
+|----------|---------|
+| Slash **`/cli-batch`** | [cli-batch.md](../Cursor%20Commands/cli-batch.md) — non-interactive batch work with `cursor agent` / `agent -p` and globs. |
+| Slash **`/agent-dispatch`** | [agent-dispatch.md](../Cursor%20Commands/agent-dispatch.md) — Node runner for `agent -p` with retries and JSON logs under `hooks/logs/agent-runs/`. |
+| Runner script | [agent-dispatch.js](../Cursor%20Hooks/user-export/hooks/agent-dispatch.js) in **`Cursor Hooks/user-export/hooks/`** (copy to `%USERPROFILE%\.cursor\hooks\` when restoring). |
+| Example task config | [dispatch-config.example.json](../Cursor%20Hooks/user-export/hooks/dispatch-config.example.json) — optional multi-task JSON for the runner. |
+
+**Orchestration:** [orquestador.md](../Cursor%20Commands/orquestador.md) defines when headless CLI is appropriate vs default in-IDE execution.
+
+---
+
 ## Usage guidelines
 
 - **Use tools proactively** to enrich understanding.
