@@ -13,7 +13,7 @@ Exact UI and paths may vary slightly by Cursor version; prefer **Cursor Settings
 
 ## Files in this folder
 
-These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **33** command files (plus this `README.md`).
+These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a project’s **`.cursor/commands/`** as needed. **42** command files (plus this `README.md`).
 
 | File | Typical use |
 |------|----------------|
@@ -50,6 +50,21 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 | [knowledge-consolidate.md](./knowledge-consolidate.md) | Consolidar conocimiento / memoria de proyecto. |
 | [stats.md](./stats.md) | Métricas o resúmenes de actividad (según tu plantilla). |
 | [project-init.md](./project-init.md) | Inicialización de proyecto / bootstrap en Cursor. |
+| [automations-spec.md](./automations-spec.md) | Especificación de automatizaciones / flujos repetibles. |
+| [cloud-handoff.md](./cloud-handoff.md) | Handoff o checklist cloud / infra. |
+| [parallel.md](./parallel.md) | Trabajo paralelo (subagentes, tareas disjuntas). |
+| [context-reset.md](./context-reset.md) | Reinicio o compactación consciente de contexto. |
+| [tdd.md](./tdd.md) | Disciplina TDD en el flujo de Cursor. |
+| [debug-mode.md](./debug-mode.md) | Modo depuración / triage estructurado. |
+| [update-deps.md](./update-deps.md) | Actualización prudente de dependencias. |
+| [fix-issue.md](./fix-issue.md) | Cerrar un issue concreto (fix acotado). |
+| [pr.md](./pr.md) | Preparar o describir un pull request. |
+
+## Cursor CLI (headless)
+
+- Comando típico: **`cursor agent`** con **`-p`** (“print”) para prompts no interactivos; la UI exacta evoluciona con la versión de Cursor.
+- En este repo: **[agent-dispatch.md](./agent-dispatch.md)** y **[cli-batch.md](./cli-batch.md)** documentan el runner Node **`agent-dispatch.js`** (globs, reintentos, logs). Los scripts viven en [Cursor Hooks / user-export/hooks](../Cursor%20Hooks/user-export/hooks/).
+- Requisito: **`cursor`** en `PATH` y Node para los hooks/runner.
 
 ## Related resources
 
@@ -60,4 +75,4 @@ These mirror **`%USERPROFILE%\.cursor\commands\`** (slash commands). Copy into a
 
 ---
 
-**Last updated:** 2026-03-30 (sync: `robocopy /XO` `*.md` excepto `README.md`; `orquestador.md` = copia byte-a-byte del perfil usuario — reglas **13–14** ejecución autónoma + paralelismo Task/CLI; 33 comandos)
+**Last updated:** 2026-03-30 (sync: copia desde `%USERPROFILE%\.cursor\commands\` de todos los `*.md` salvo conservar este `README.md`; **42** comandos; sección **Cursor CLI**; alineado con hooks `user-export`)

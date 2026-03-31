@@ -21,6 +21,12 @@ Referencia en **español** de servidores MCP, Agent Skills y tipos de subagente 
 | **user-devcontext** | Inicializar contexto de conversación para trabajo multi-paso. |
 | **user-stitch** | Integración Stitch (diseño/UI según tu configuración). |
 | **user-mtg-commander-analyzer** | Análisis Commander MTG (especializado). |
+| **user-playwright** | Automatización y pruebas en navegador (MCP Playwright). |
+| **user-firecrawl** | Rastreo / scraping web (API key). |
+| **user-notion** | Integración con workspace Notion. |
+| **user-fetch** | MCP de peticiones HTTP. |
+| **user-filesystem** | Acceso a filesystem dentro de rutas configuradas. |
+| **user-exa** | Búsqueda / recuperación Exa (API key). |
 | **user-eamodio.gitlens-extension-GitKraken** | GitLens / GitKraken (historial y contexto Git en el IDE). |
 
 Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context Packet cuando uses el Execution Pack.
@@ -65,6 +71,15 @@ Puede haber MCPs adicionales en tu entorno; lista los disponibles en el Context 
 | **self-validate** | Comprobación anti-alucinación antes de declarar hecho. |
 | **phase-handoff** | Artefactos y checklists normalizados entre fases del SDLC (orquestador, execution packs, reanudar). |
 | **repo-discovery** | Reconocimiento solo lectura del repo: stack, archivos, comandos de validación, riesgos (scout / pre-plan). |
+| **auth-best-practices** | Patrones de autenticación y sesión (JWT, OAuth2/OIDC, cookies, CSRF, etc.). |
+| **debugging** | Depuración sistemática antes de parchear. |
+| **finishing-a-development-branch** | Checklist pre-PR / cierre de rama. |
+| **memory-bank** | Scaffold `/memory_bank/` para contexto humano legible del proyecto. |
+| **prd** | PRD / especificación estructurada antes de implementar. |
+| **project-bootstrap** | Inicialización lista para Cursor (AGENTS.md, reglas, memoria). |
+| **test-driven-development** | Disciplina TDD red → green → refactor. |
+| **web-accessibility** | Accesibilidad web orientada a WCAG. |
+| **workflow-state** | `.cursor/plans/workflow_state.md` para seguimiento de fases del orquestador. |
 
 ---
 

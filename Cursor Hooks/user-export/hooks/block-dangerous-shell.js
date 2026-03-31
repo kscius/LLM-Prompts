@@ -1,20 +1,38 @@
 #!/usr/bin/env node
 
 const BLOCKED_PATTERNS = [
+  // Unix/Linux destructive remove
   /rm\s+(-rf?|--recursive)\s+[\/\\]/,
   /rm\s+(-rf?|--recursive)\s+\.\s/,
   /rm\s+(-rf?|--recursive)\s+\*/,
+  // Windows CMD destructive remove
   /del\s+\/[sS]\s+\/[qQ]/,
   /rmdir\s+\/[sS]\s+\/[qQ]/,
   /format\s+[a-zA-Z]:/,
-  />\s*\/dev\/null\s+2>&1.*rm/,
+  // PowerShell destructive remove on root/system paths
+  /Remove-Item\s+.*-Recurse\s+.*-Force\s+[CcDdEe]:[\/\\]/i,
+  /Remove-Item\s+.*-Force\s+.*-Recurse\s+[CcDdEe]:[\/\\]/i,
+  // Git clean (removes all untracked files including .gitignored)
+  /git\s+clean\s+.*-[a-z]*f[a-z]*d[a-z]*x/i,
+  /git\s+clean\s+.*-[a-z]*x[a-z]*f/i,
+  // Git force push to protected branches
+  /git\s+push\s+.*--force\s+.*main/,
+  /git\s+push\s+.*--force\s+.*master/,
+  /git\s+push\s+.*-f\s+.*main/,
+  /git\s+push\s+.*-f\s+.*master/,
+  // Git hard reset
+  /git\s+reset\s+--hard/,
+  // Destructive SQL
   /DROP\s+DATABASE/i,
   /DROP\s+TABLE/i,
   /TRUNCATE\s+TABLE/i,
   /DELETE\s+FROM\s+\w+\s*;?\s*$/i,
-  /git\s+push\s+.*--force\s+.*main/,
-  /git\s+push\s+.*--force\s+.*master/,
-  /git\s+reset\s+--hard\s+.*HEAD~?\d*/,
+  // Cloud storage mass delete
+  /aws\s+s3\s+(rm|delete)\s+.*--recursive/i,
+  /gsutil\s+rm\s+.*-r/i,
+  /az\s+storage\s+(blob|container)\s+delete/i,
+  // Miscellaneous
+  />\s*\/dev\/null\s+2>&1.*rm/,
 ];
 
 const ASK_PATTERNS = [
@@ -26,6 +44,12 @@ const ASK_PATTERNS = [
   /kubectl\s+delete/,
   /terraform\s+apply/,
   /terraform\s+destroy/,
+  // Additional cloud/infra deploy patterns
+  /fly\s+deploy/,
+  /vercel\s+.*--prod/,
+  /heroku\s+push/,
+  /ansible-playbook/,
+  /aws\s+s3\s+(rm|delete)/i,
 ];
 
 async function main() {

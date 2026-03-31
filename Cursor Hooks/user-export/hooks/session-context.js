@@ -146,6 +146,8 @@ async function main() {
 
   const sessionId = payload.session_id || payload.conversation_id || "";
   const composerMode = payload.composer_mode || "agent";
+  const cursorVersion = payload.cursor_version || null;
+  const isBackgroundAgent = payload.is_background_agent || false;
 
   const mcpRecovery = [
     "**Context recovery (run early if this is project work)**",
@@ -164,8 +166,16 @@ async function main() {
     parts.push(`Session id: ${sessionId} (composer_mode: ${composerMode})`);
   }
 
+  const env = {};
+  if (branch) env.GIT_BRANCH = branch;
+  if (stack.length > 0) env.CURSOR_STACK = stack.join(",");
+  env.CURSOR_SESSION_START = new Date().toISOString();
+  if (cursorVersion) env.CURSOR_VERSION = cursorVersion;
+  if (isBackgroundAgent) env.CURSOR_IS_BACKGROUND_AGENT = "1";
+
   const output = {
     additional_context: parts.join("\n\n"),
+    env,
   };
 
   process.stdout.write(JSON.stringify(output) + "\n");

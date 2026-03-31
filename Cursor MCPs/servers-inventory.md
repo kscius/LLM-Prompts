@@ -8,7 +8,7 @@ Servers defined in **`%USERPROFILE%\.cursor\mcp.json`** (logical names → trans
 |------------------------|-------------------------|--------|
 | `cursor-ide-browser` | — | Cursor IDE |
 | `user-Memory` | Memory | User config |
-| `user-Sequential_Thinking` | Sequential Thinking | User config (note: space in key → underscore in folder) |
+| `user-Sequential_Thinking` | Sequential Thinking | User config (space in key → underscore in folder) |
 | `user-Interactive` | Interactive | User config |
 | `user-duckduckgo` | duckduckgo | User config |
 | `user-time` | time | User config |
@@ -19,29 +19,43 @@ Servers defined in **`%USERPROFILE%\.cursor\mcp.json`** (logical names → trans
 | `user-cursor10x-mcp` | cursor10x-mcp | User config |
 | `user-devcontext` | devcontext | User config |
 | `user-stitch` | stitch | User config |
+| `user-playwright` | playwright | User config |
+| `user-firecrawl` | firecrawl | User config |
+| `user-notion` | notion | User config |
+| `user-fetch` | fetch | User config |
+| `user-filesystem` | filesystem | User config |
+| `user-exa` | exa | User config |
 | `user-eamodio.gitlens-extension-GitKraken` | — | GitLens / GitKraken extension |
+
+**Snapshot (2026-03-30):** **20** carpetas bajo `…/mcps/` en el workspace del proyecto (incl. `cursor-ide-browser` y extensiones).
 
 ## Transport and notes (`mcp.json` entries)
 
-Snapshot reflects a typical maintainer setup (keys **omitted**; use env vars locally). **`enabled`** is the default in that `mcp.json` when the field is present.
+Snapshot reflects keys present in the maintainer’s `mcp.json` (**values omitted**; use env vars locally). **`enabled`** is noted when the field exists in config.
 
-| Server key (mcp.json) | Transport | Default `enabled` | Notes |
-|------------------------|-----------|-------------------|--------|
-| Memory | Docker `mcp/memory` | (on) | Host volume for `memory.json` |
-| Sequential Thinking | Docker `mcp/sequentialthinking` | `true` | Can be turned off if unused |
-| Interactive | `npx interactive-mcp` | (on) | `timeout` 300s |
-| duckduckgo | `npx duckduckgo-mcp-server` | (on) | |
-| time | Docker `mcp/time` | `false` | Timezone via `-e` |
-| mtg-commander-analyzer | local `npm run mcp` | `false` | Path-specific cwd |
-| context7 | HTTPS + `CONTEXT7_API_KEY` header | (on) | Prefer env substitution in real config |
-| semgrep | Docker `semgrep/semgrep … mcp` | (on) | |
-| github | HTTPS GitHub Copilot MCP + Bearer | (on) | Scoped token; never commit |
-| cursor10x-mcp | `node` + path to installed package **or** `npx cursor10x-mcp` | `true` | Turso env vars |
-| devcontext | `npx devcontext@latest` | `true` | Turso env vars |
-| stitch | HTTPS Stitch + API key header | `false` | |
+| Server key (mcp.json) | Notes |
+|------------------------|--------|
+| Memory | Docker `mcp/memory` or equivalent; host volume for persistence. |
+| Sequential Thinking | Docker / npx variant; stepwise reasoning. |
+| Interactive | `npx interactive-mcp`; long timeouts possible. |
+| duckduckgo | Web search MCP. |
+| time | Often `enabled: false`; timezone via env. |
+| mtg-commander-analyzer | Local `npm run mcp`; path-specific cwd. |
+| context7 | HTTPS + API key header (`CONTEXT7_API_KEY`). |
+| semgrep | Docker or CLI-wrapped Semgrep MCP. |
+| github | HTTPS GitHub MCP + Bearer; scoped token; never commit. |
+| cursor10x-mcp | `node` / `npx`; Turso-related env when applicable. |
+| devcontext | `npx devcontext@latest` or pinned; Turso env when applicable. |
+| stitch | HTTPS Stitch + API key; often disabled by default. |
+| playwright | Browser automation MCP (project tooling). |
+| firecrawl | Crawl / scrape APIs; API key. |
+| notion | Notion API integration; secrets via env. |
+| fetch | HTTP fetch MCP. |
+| filesystem | Constrained filesystem access per server config. |
+| exa | Neural / web search API; API key. |
 
-**Security:** do not commit real `%USERPROFILE%\.cursor\mcp.json`. Use **[mcp.config.example.json](./mcp.config.example.json)** with placeholders / env vars only.
+**Security:** do not commit real **`%USERPROFILE%\.cursor\mcp.json`**. Use **[mcp.config.example.json](./mcp.config.example.json)** with placeholders / env vars only.
 
 ---
 
-**Last updated:** 2026-03-30 (carpetas bajo `…/mcps/` del proyecto: 14 entradas; sin cambios de lista; no secretos)
+**Last updated:** 2026-03-30 — alineado con claves de `mcp.json` (18 servidores de usuario + extensiones) y carpetas `mcps/` del proyecto (**20** entradas de carpeta).

@@ -25,9 +25,15 @@ Cursor exposes each enabled server under the **project MCP cache**:
 | `user-cursor10x-mcp` | `mcp.json` → `cursor10x-mcp` |
 | `user-devcontext` | `mcp.json` → `devcontext` |
 | `user-stitch` | `mcp.json` → `stitch` |
+| `user-playwright` | `mcp.json` → `playwright` |
+| `user-firecrawl` | `mcp.json` → `firecrawl` |
+| `user-notion` | `mcp.json` → `notion` |
+| `user-fetch` | `mcp.json` → `fetch` |
+| `user-filesystem` | `mcp.json` → `filesystem` |
+| `user-exa` | `mcp.json` → `exa` |
 | `user-eamodio.gitlens-extension-GitKraken` | GitLens / GitKraken extension (not in `mcp.json`) |
 
-If your machine differs, refresh the list by inspecting the `mcps` directory for this repo’s Cursor project, or compare with **Settings → MCP** in Cursor.
+**Count (Mar 2026, this workspace):** **20** carpetas bajo `mcps/`. Si tu máquina difiere, revisa el directorio `mcps` del proyecto en Cursor o **Settings → MCP**.
 
 Cross-references: [Cursor Rules / ai-tools.md](../Cursor%20Rules/ai-tools.md), [tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md) (broader tooling inventory).
 

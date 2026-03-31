@@ -15,4 +15,4 @@ Do **not** commit **`hooks/logs/`** or audit trails from your local machine.
 
 ---
 
-**Last updated:** 2026-03-30 (`hooks.json` alineado con `%USERPROFILE%\.cursor\hooks.json`; scripts sincronizados con `robocopy /XO`; +`agent-dispatch.js`, +`dispatch-config.example.json`; rutas portables `./hooks/…`)
+**Last updated:** 2026-03-30 (`hooks.json` = misma estructura que `%USERPROFILE%\.cursor\hooks.json` con rutas **portables** `node ./hooks/…`; scripts sincronizados con `robocopy /MIR` excl. `logs/`; incluye `session-end.js`, `thought-logger.js`, `subagent-guard.js`, `stop-summary.js`, `tool-failure-tracker.js`, `validate-mcp.js`, etc.)

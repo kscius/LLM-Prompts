@@ -28,9 +28,15 @@ async function main() {
     subagent_type: payload.subagent_type || "unknown",
     status: payload.status || "unknown",
     task: (payload.task || "").substring(0, 200),
+    description: (payload.description || "").substring(0, 200),
+    summary: (payload.summary || "").substring(0, 500),
     duration_ms: payload.duration_ms || 0,
+    message_count: payload.message_count || 0,
     tool_call_count: payload.tool_call_count || 0,
+    loop_count: payload.loop_count || 0,
     modified_files: payload.modified_files || [],
+    agent_transcript_path: payload.agent_transcript_path || null,
+    cursor_version: payload.cursor_version || null,
   };
 
   fs.mkdirSync(LOG_DIR, { recursive: true });

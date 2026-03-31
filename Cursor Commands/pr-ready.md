@@ -1,12 +1,15 @@
-#Prepare changes for pull request with full validation
+#Validate, review, and draft a PR description — without opening the PR
 
-Validate, document, and prepare the current branch for a pull request.
+Deep quality gate before a pull request: run all checks, audit the diff for issues, and produce a ready-to-paste PR description. This command does NOT commit or push.
+
+> **Want to create the PR directly?** Use `/pr` instead — it validates, commits, pushes, and opens the PR in one shot.
+> Use `/pr-ready` when you want a human review of the description and validation results before deciding to open the PR.
 
 TASK:
 {{args}}
 
 MISSION
-Ensure the current branch is PR-ready: all checks pass, changes are documented, and a PR description is drafted.
+Ensure the current branch is PR-ready: all checks pass, the diff is clean, test coverage is adequate, and a PR description is drafted. Produces a READY / NEEDS WORK verdict — the user decides when to open the PR.
 
 OPERATING RULES
 1. Run full validation suite (lint, typecheck, tests, build).
@@ -46,12 +49,13 @@ PREFERRED SUBAGENTS
 - Conditional: `security-auditor` for sensitive changes
 
 PREFERRED MCPS
-- `user-github` for PR creation
-- `user-eamodio.gitlens-extension-GitKraken` for git context
+- `user-eamodio.gitlens-extension-GitKraken` for git context and branch diff
+- `user-github` for repo conventions and existing PR patterns
 
 OUTPUT FORMAT
 - Validation results: [all checks with status]
 - Changes summary: [files changed, insertions, deletions]
-- Issues found: [debug code, missing tests, etc.]
-- PR description: [ready to paste]
+- Issues found: [debug code, missing tests, secrets, etc.]
+- PR description: [ready to paste or pass to `/pr`]
 - PR readiness: READY / NEEDS WORK [with items]
+- Next step: `/pr` to commit, push, and open the PR

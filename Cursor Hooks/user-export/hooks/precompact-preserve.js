@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /**
- * Before context compaction: append structured snapshot to disk for human/agent resume.
+ * preCompact hook: append a structured snapshot to disk before context compaction.
+ * Returns user_message so the user sees when compaction fires and where the snapshot is.
+ * Uses payload fields: context_usage_percent, is_first_compaction, trigger, message_count.
  */
 const fs = require("fs");
 const path = require("path");
@@ -32,43 +34,66 @@ async function main() {
   const roots = (payload.workspace_roots || []).map(normalizeRoot).join(", ");
   const cid = payload.conversation_id || payload.conversationId || "unknown";
   const transcript = payload.transcript_path || payload.transcriptPath || "";
+  const usagePct = payload.context_usage_percent ?? null;
+  const contextTokens = payload.context_tokens ?? null;
+  const contextWindowSize = payload.context_window_size ?? null;
+  const isFirst = payload.is_first_compaction ?? true;
+  const trigger = payload.trigger || "auto";
+  const msgCount = payload.message_count ?? null;
+  const msgsToCompact = payload.messages_to_compact ?? null;
+  const now = new Date().toISOString();
 
-  const block = `
+  const usageStr = usagePct !== null ? `${usagePct}%` : "unknown";
+  const tokenStr =
+    contextTokens !== null && contextWindowSize !== null
+      ? ` (${contextTokens.toLocaleString()} / ${contextWindowSize.toLocaleString()} tokens)`
+      : "";
+  const msgStr = msgCount !== null ? ` across ${msgCount} messages` : "";
+
+  /* On first compaction, include a full resume template; subsequent ones are brief. */
+  const block = isFirst
+    ? `
 ---
 
-## Pre-compact snapshot — ${new Date().toISOString()}
+## Pre-compact snapshot — ${now}
 
 - **Conversation:** ${cid}
+- **Trigger:** ${trigger} (first compaction)
+- **Context usage:** ${usageStr}${tokenStr}${msgStr}${msgsToCompact !== null ? ` (${msgsToCompact} to compact)` : ""}
 - **Workspace roots:** ${roots || "(none)"}
 - **Transcript:** ${transcript || "(none)"}
 
-### Resume template (fill from current thread if known)
+### Resume template
 
 - **Phase:** (e.g. INTAKE / SCOUT / PLAN / BUILD / VERIFY)
 - **Classification:** (SIMPLE / STANDARD / COMPLEX)
-- **Key decisions:** 
-- **Files touched:** 
-- **Outstanding validations:** 
+- **Key decisions:**
+- **Files touched:**
+- **Outstanding validations:**
 
 ### Raw hook payload (truncated)
 
 \`\`\`json
-${JSON.stringify(payload, null, 2).slice(0, 12000)}
+${JSON.stringify(payload, null, 2).slice(0, 8000)}
 \`\`\`
+
+`
+    : `
+---
+
+## Subsequent compact — ${now}
+
+- **Conversation:** ${cid} | **Trigger:** ${trigger} | **Usage:** ${usageStr}${tokenStr}${msgStr}
 
 `;
 
   fs.appendFileSync(OUT, block, "utf8");
 
-  const additional = [
-    "[preCompact] A structured snapshot was appended to:",
-    OUT,
-    "Use it after compaction to recall phase, decisions, files, and pending validations.",
-  ].join("\n");
+  const triggerLabel = trigger === "manual" ? "Manual" : "Auto";
+  const tokenDetail = contextTokens !== null ? ` (${contextTokens.toLocaleString()} tokens)` : "";
+  const userMsg = `[Context compaction] ${triggerLabel} compaction at ${usageStr}${tokenDetail} context usage. Snapshot saved → ${OUT}`;
 
-  process.stdout.write(
-    JSON.stringify({ additional_context: additional }) + "\n"
-  );
+  process.stdout.write(JSON.stringify({ user_message: userMsg }) + "\n");
 }
 
 main().catch(() => process.stdout.write("{}\n"));

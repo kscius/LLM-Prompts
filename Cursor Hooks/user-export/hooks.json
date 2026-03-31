@@ -11,9 +11,26 @@
         "timeout": 5
       }
     ],
+
     "afterAgentResponse": [
       {
         "command": "node ./hooks/after-agent-response.js",
+        "timeout": 8,
+        "matcher": "AgentResponse"
+      }
+    ],
+
+    "afterAgentThought": [
+      {
+        "command": "node ./hooks/thought-logger.js",
+        "timeout": 5,
+        "matcher": "AgentThought"
+      }
+    ],
+
+    "sessionEnd": [
+      {
+        "command": "node ./hooks/session-end.js",
         "timeout": 8
       },
       {
@@ -21,18 +38,14 @@
         "timeout": 5
       }
     ],
-    "sessionEnd": [
-      {
-        "command": "node ./hooks/audit-log.js",
-        "timeout": 5
-      }
-    ],
+
     "beforeSubmitPrompt": [
       {
         "command": "node ./hooks/audit-log.js",
         "timeout": 5
       }
     ],
+
     "beforeShellExecution": [
       {
         "command": "node ./hooks/block-dangerous-shell.js",
@@ -43,27 +56,36 @@
         "matcher": "git"
       },
       {
-        "command": "node ./hooks/audit-log.js",
-        "timeout": 5
-      },
-      {
         "type": "prompt",
-        "prompt": "Is this shell command safe? Only allow if it is a read-only operation, a build/test/lint command, or a standard development operation. Block if it could delete data, push to production, or modify system files. Command: $ARGUMENTS",
-        "timeout": 10
+        "prompt": "Is this deployment, publish, or network-modifying command safe? Only allow if explicitly requested by the user and does not target production without approval. Command: $ARGUMENTS",
+        "timeout": 10,
+        "matcher": "npm publish|npx.*deploy|docker push|kubectl apply|kubectl delete|terraform apply|terraform destroy|fly deploy|vercel.*--prod|heroku push|ansible-playbook|aws s3 rm|aws s3 delete|gsutil rm|az storage"
       }
     ],
+
     "afterShellExecution": [
       {
         "command": "node ./hooks/audit-log.js",
         "timeout": 5
       }
     ],
+
     "beforeReadFile": [
       {
         "command": "node ./hooks/block-secret-reads.js",
-        "timeout": 5
+        "timeout": 5,
+        "failClosed": true
       }
     ],
+
+    "beforeTabFileRead": [
+      {
+        "command": "node ./hooks/block-secret-reads.js",
+        "timeout": 5,
+        "failClosed": true
+      }
+    ],
+
     "afterFileEdit": [
       {
         "command": "node ./hooks/edit-tracker.js",
@@ -92,23 +114,29 @@
         "matcher": "migration|auth|security|config|schema|\\.env"
       }
     ],
+
+    "afterTabFileEdit": [
+      {
+        "command": "node ./hooks/post-edit-quality.js",
+        "timeout": 10
+      }
+    ],
+
     "beforeMCPExecution": [
       {
         "command": "node ./hooks/validate-mcp.js",
         "timeout": 10,
         "failClosed": true
-      },
-      {
-        "command": "node ./hooks/audit-log.js",
-        "timeout": 5
       }
     ],
+
     "afterMCPExecution": [
       {
         "command": "node ./hooks/audit-log.js",
         "timeout": 5
       }
     ],
+
     "preToolUse": [
       {
         "command": "node ./hooks/audit-log.js",
@@ -116,12 +144,21 @@
         "matcher": "Shell|Write|Delete"
       }
     ],
+
     "postToolUse": [
       {
         "command": "node ./hooks/audit-log.js",
         "timeout": 5
       }
     ],
+
+    "postToolUseFailure": [
+      {
+        "command": "node ./hooks/tool-failure-tracker.js",
+        "timeout": 5
+      }
+    ],
+
     "subagentStart": [
       {
         "command": "node ./hooks/subagent-guard.js",
@@ -131,15 +168,17 @@
         "type": "prompt",
         "prompt": "Review this subagent delegation. Is the task well-scoped with clear boundaries? Is delegation justified (specialized expertise, parallelizable, or high-risk)? Does it avoid redundant work the parent could do directly? Delegation: $ARGUMENTS",
         "timeout": 10,
-        "matcher": "auth|security|migration|schema|payment|database"
+        "matcher": "security-auditor|security-engineer|database-administrator|database-optimizer|penetration-tester|compliance-auditor"
       }
     ],
+
     "subagentStop": [
       {
         "command": "node ./hooks/subagent-complete.js",
         "timeout": 5
       }
     ],
+
     "stop": [
       {
         "command": "node ./hooks/stop-summary.js",
@@ -148,7 +187,7 @@
       },
       {
         "command": "node ./hooks/verifier.js",
-        "timeout": 360
+        "timeout": 90
       },
       {
         "command": "node ./hooks/boulder-check.js",
@@ -159,14 +198,11 @@
         "timeout": 5
       }
     ],
+
     "preCompact": [
       {
         "command": "node ./hooks/precompact-preserve.js",
         "timeout": 15
-      },
-      {
-        "command": "node ./hooks/audit-log.js",
-        "timeout": 5
       }
     ]
   }

@@ -21,6 +21,12 @@ This document reflects **User Rules** for MCP tools, knowledge management, and t
 | **user-devcontext** | Initialize conversation context for multi-step work. |
 | **user-stitch** | Stitch integration (design/UI per your setup). |
 | **user-mtg-commander-analyzer** | MTG Commander analysis (specialized). |
+| **user-playwright** | Browser automation and testing (Playwright MCP). |
+| **user-firecrawl** | Web crawl / scrape workflows (API key). |
+| **user-notion** | Notion workspace integration. |
+| **user-fetch** | HTTP fetch helper MCP. |
+| **user-filesystem** | Filesystem access within configured roots. |
+| **user-exa** | Exa search / retrieval (API key). |
 | **user-eamodio.gitlens-extension-GitKraken** | GitLens / GitKraken IDE integration. |
 
 Additional MCPs may be present in your environment. List available MCPs in the Context Packet when using the Execution Pack.
@@ -65,6 +71,15 @@ Additional MCPs may be present in your environment. List available MCPs in the C
 | **self-validate** | Anti-hallucination gate before declaring done. |
 | **phase-handoff** | Normalized artifacts and checklists between SDLC phases (orquestador, execution packs, resume). |
 | **repo-discovery** | Read-only repo recon: stack, files, validation commands, risks (scout / pre-plan). |
+| **auth-best-practices** | Auth and session patterns (JWT, OAuth2/OIDC, cookies, CSRF, etc.). |
+| **debugging** | Structured debugging workflow before patching. |
+| **finishing-a-development-branch** | Pre-PR / branch completion checklist. |
+| **memory-bank** | Scaffold `/memory_bank/` for durable human-readable project context. |
+| **prd** | Structured PRD / spec before implementation. |
+| **project-bootstrap** | Cursor-ready project init (AGENTS.md, rules, memory scaffold). |
+| **test-driven-development** | Red → green → refactor TDD discipline. |
+| **web-accessibility** | WCAG-oriented accessibility for web UI. |
+| **workflow-state** | `.cursor/plans/workflow_state.md` for orchestrator phase tracking. |
 
 ---
 

@@ -29,23 +29,64 @@ node "%USERPROFILE%\.cursor\hooks\agent-dispatch.js" --prompt "YOUR_PROMPT" --cw
 From **workspace root** (or set `--cwd`), run:
 
 ```bash
-node "%USERPROFILE%\.cursor\hooks\agent-dispatch.js" --prompt "YOUR_PROMPT" --files "glob/pattern/**" --model gemini-3-flash --mode ask
+node "%USERPROFILE%\.cursor\hooks\agent-dispatch.js" --prompt "YOUR_PROMPT" --files "glob/pattern/**" --mode ask
 ```
 
 (Unix: replace the path with `"$HOME/.cursor/hooks/agent-dispatch.js"`.)
 
 - **`--prompt`**: plain text or `@relative/or/absolute/path/to/prompt.txt`
 - **`--files`**: glob (repeatable); files are appended to the prompt list
-- **`--model`**: default `gemini-3-flash`
-- **`--mode`**: `ask` | `plan` | omit for default agent behavior
-- **`--force`**: forwarded to `agent`
+- **`--model`**: optional model ID; omit to use the agent's default
+- **`--mode`**: `ask` | `plan` | omit for full agent mode (writes code)
+- **`--force`**: auto-approve all tool confirmations (yolo mode)
+- **`--trust`**: skip workspace trust prompt (headless-safe)
+- **`--stream`**: streaming JSON output (`--output-format stream-json --stream-partial-output`)
+- **`--resume <chatId>`**: resume a specific chat session (stateful multi-step runs)
+- **`--continue`**: continue the most recent session (alias for `--resume=-1`)
 - **`--max-retries`**: default `2` (backoff 1s, 2s, 4s)
 - **`--config`**: JSON array of tasks (see `hooks/dispatch-config.example.json`)
 - **`--cwd`**: working directory for globs and agent
+- **`--workspace <dir>`**: workspace directory passed to the agent (`--workspace` flag); differs from `--cwd` in that it sets the IDE workspace context rather than the glob/shell cwd
+- **`--sandbox <enabled|disabled>`**: enable agent sandboxing — sandboxed agents request approval only when stepping outside the controlled environment, reducing interruptions ~40% vs unsandboxed runs (see [Cursor blog](https://www.cursor.com/blog/agent-sandboxing)); recommended for unattended batch runs
+- **`--approve-mcps`**: automatically approve all configured MCP servers without prompting (`--approve-mcps` CLI flag)
+- **`--cloud`**: start in cloud agent mode (`-c` / `--cloud`); push the conversation to a Cloud Agent and let it run while offline; resume at [cursor.com/agents](https://cursor.com/agents)
 
 **Bypass / skip:** `SKIP_AGENT=1` → exits 0 without calling the CLI (for hooks).
 
 **Timeout:** `CURSOR_AGENT_DISPATCH_TIMEOUT_MS` (default `300000`).
+
+## Stateful multi-step pattern
+
+Use `--resume` + `agent create-chat` for multi-step headless pipelines that preserve context across runs:
+
+```bash
+# Step 1 — create session and capture ID
+CHAT_ID=$(agent create-chat --output-format json | jq -r '.chatId')
+
+# Step 2 — first pass (plan), sandboxed to reduce interruptions
+node "%USERPROFILE%\.cursor\hooks\agent-dispatch.js" --prompt "Analyze the codebase" --resume $CHAT_ID --mode plan --sandbox enabled
+
+# Step 3 — second pass (implement), same session, MCPs pre-approved
+node "%USERPROFILE%\.cursor\hooks\agent-dispatch.js" --prompt "Implement the plan from the previous step" --resume $CHAT_ID --sandbox enabled --approve-mcps
+```
+
+Or use `--continue` to append to the most recent session without managing a chat ID.
+
+## Cloud handoff pattern
+
+Offload long-running tasks to a Cloud Agent that keeps running while you close your terminal:
+
+```bash
+# Start directly in cloud mode
+node "%USERPROFILE%\.cursor\hooks\agent-dispatch.js" --prompt "Refactor the auth module" --cloud --sandbox enabled
+
+# Or resume a local session and hand off to cloud (mid-conversation `&` prefix via CLI)
+# agent "& refactor the auth module"  ← the `&` prefix in interactive mode triggers cloud handoff
+```
+
+## Sandbox best practice
+
+Prefer `--sandbox enabled` for unattended batch runs. Sandboxed agents run freely inside a controlled environment and only request approval when they need to step outside it (e.g., network access). This cuts interruptions ~40% vs unsandboxed runs and reduces approval fatigue.
 
 ## Agent instructions
 

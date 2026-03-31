@@ -111,7 +111,7 @@ Shared reference and templates for Cursor beyond single prompts:
 | Folder | Description |
 |--------|-------------|
 | [Cursor Skills](./Cursor%20Skills/) | Skills: guía + carpetas **exported-cursor-skills** / **exported-agents-skills** + manifest |
-| [Cursor Commands](./Cursor%20Commands/) | Comandos slash (**30** prompts), p. ej. **orquestador**, **intake**, scout, plan, build-full |
+| [Cursor Commands](./Cursor%20Commands/) | Comandos slash (**42** prompts), p. ej. **orquestador**, **intake**, scout, plan, build-full |
 | [Cursor Hooks](./Cursor%20Hooks/) | Documentación + ejemplo + **user-export/** (copia de hooks globales) |
 | [Cursor Subagents](./Cursor%20Subagents/) | Delegación Task; prompts por tipo en **agents/*.md**; enum en **task-subagent-types.md** |
 | [Cursor MCPs](./Cursor%20MCPs/) | Inventario de servidores MCP sin secretos + plantilla **mcp.config.example.json** |

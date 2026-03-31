@@ -1,6 +1,7 @@
 ---
 name: reducing-entropy
-description: Manual-only skill for minimizing total codebase size. Only activate when explicitly requested by user. Measures success by final code amount, not effort. Bias toward deletion.
+description: Minimizes total codebase size by biasing toward deletion. Only use when explicitly requested by the user. Measures success by final code amount, not effort.
+disable-model-invocation: true
 ---
 
 # Reducing Entropy

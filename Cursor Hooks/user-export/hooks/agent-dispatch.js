@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 /**
  * Cross-platform runner for Cursor CLI `agent -p`.
- * Usage: node agent-dispatch.js --prompt "..." [--files glob] [--model M] [--mode ask|plan] [--force] [--max-retries N] [--config tasks.json]
+ * Usage: node agent-dispatch.js --prompt "..." [--files glob] [--model M] [--mode ask|plan]
+ *   [--force] [--trust] [--stream] [--resume <chatId>] [--continue]
+ *   [--sandbox enabled|disabled] [--approve-mcps] [--cloud] [--workspace <dir>]
+ *   [--max-retries N] [--config tasks.json] [--cwd <dir>]
  * Env: CURSOR_AGENT_DISPATCH_TIMEOUT_MS (default 300000), SKIP_AGENT=1 exits 0 without running (for hooks).
  */
 const fs = require("fs");
@@ -21,12 +24,20 @@ function parseArgs(argv) {
   const out = {
     prompt: "",
     files: [],
-    model: "gemini-3-flash",
+    model: "",
     mode: "",
     maxRetries: 2,
     force: false,
+    trust: false,
+    stream: false,
+    resume: "",
+    continue: false,
     config: "",
     cwd: process.cwd(),
+    workspace: "",
+    sandbox: "",
+    approveMcps: false,
+    cloud: false,
     help: false,
   };
   for (let i = 2; i < argv.length; i++) {
@@ -67,6 +78,38 @@ function parseArgs(argv) {
       out.force = true;
       continue;
     }
+    if (a === "--trust") {
+      out.trust = true;
+      continue;
+    }
+    if (a === "--stream") {
+      out.stream = true;
+      continue;
+    }
+    if (a === "--resume" && argv[i + 1]) {
+      out.resume = argv[++i];
+      continue;
+    }
+    if (a === "--continue") {
+      out.continue = true;
+      continue;
+    }
+    if ((a === "--workspace" || a === "-w") && argv[i + 1]) {
+      out.workspace = path.resolve(argv[++i]);
+      continue;
+    }
+    if (a === "--sandbox" && argv[i + 1]) {
+      out.sandbox = argv[++i]; // "enabled" | "disabled"
+      continue;
+    }
+    if (a === "--approve-mcps") {
+      out.approveMcps = true;
+      continue;
+    }
+    if (a === "--cloud" || a === "-c") {
+      out.cloud = true;
+      continue;
+    }
   }
   return out;
 }
@@ -76,14 +119,22 @@ function printHelp() {
 
 Options:
   --prompt <text|@file>   Prompt text, or @path to read prompt from file
-  --files <glob>        Glob pattern (repeatable); merged into prompt list
-  --model <id>          Default: gemini-3-flash
-  --mode <ask|plan>     Optional; omit for full agent mode
-  --force               Pass --force to agent
-  --max-retries <n>     Retries after non-zero exit (default 2)
-  --cwd <dir>           Working directory for glob + agent (default cwd)
-  --config <json>       Run each task from JSON array (batch)
-  --help                This message
+  --files <glob>          Glob pattern (repeatable); merged into prompt list
+  --model <id>            Model to use (omit for agent default)
+  --mode <ask|plan>       Optional; omit for full agent mode
+  --force                 Pass --force to agent (auto-approve all)
+  --trust                 Pass --trust to agent (skip workspace trust prompt)
+  --stream                Stream JSON output (--output-format stream-json)
+  --resume <chatId>       Resume a specific chat session (stateful multi-step)
+  --continue              Continue the most recent session (alias: --resume=-1)
+  --max-retries <n>       Retries after non-zero exit (default 2)
+  --cwd <dir>             Working directory for glob + agent (default cwd)
+  --workspace <dir>       Workspace directory passed to agent (--workspace flag)
+  --sandbox <enabled|disabled>  Sandbox mode; "enabled" cuts interruptions ~40%
+  --approve-mcps          Auto-approve all MCP servers (--approve-mcps)
+  --cloud                 Start in cloud handoff mode (-c / --cloud)
+  --config <json>         Run each task from JSON array (batch)
+  --help                  This message
 
 Env:
   CURSOR_AGENT_DISPATCH_TIMEOUT_MS  Timeout per attempt (default 300000)
@@ -236,10 +287,22 @@ function findAgentBinary() {
 
 function runOnce(agentBin, promptText, opts) {
   const timeout = Number(process.env.CURSOR_AGENT_DISPATCH_TIMEOUT_MS) || 300000;
-  const args = ["-p", "--output-format", "text"];
+  const args = ["-p"];
+  if (opts.stream) {
+    args.push("--output-format", "stream-json", "--stream-partial-output");
+  } else {
+    args.push("--output-format", "text");
+  }
   if (opts.force) args.push("--force");
+  if (opts.trust) args.push("--trust");
   if (opts.model) args.push("--model", opts.model);
   if (opts.mode) args.push("--mode", opts.mode);
+  if (opts.workspace) args.push("--workspace", opts.workspace);
+  if (opts.sandbox) args.push("--sandbox", opts.sandbox);
+  if (opts.approveMcps) args.push("--approve-mcps");
+  if (opts.cloud) args.push("--cloud");
+  if (opts.continue) args.push("--continue");
+  else if (opts.resume) args.push("--resume", opts.resume);
   args.push(promptText);
 
   const started = Date.now();
@@ -314,8 +377,16 @@ function runDispatch(opts) {
   while (attempt < maxAttempts) {
     last = runOnce(agentBin, promptText, {
       force: opts.force,
+      trust: opts.trust,
       model: opts.model,
       mode: opts.mode,
+      stream: opts.stream,
+      resume: opts.resume,
+      continue: opts.continue,
+      workspace: opts.workspace,
+      sandbox: opts.sandbox,
+      approveMcps: opts.approveMcps,
+      cloud: opts.cloud,
       cwd,
     });
     if (last.stdout) process.stdout.write(last.stdout);
@@ -331,9 +402,17 @@ function runDispatch(opts) {
 
   const meta = {
     timestamp: new Date().toISOString(),
-    model: opts.model,
+    model: opts.model || null,
     mode: opts.mode || null,
     force: opts.force,
+    trust: opts.trust,
+    stream: opts.stream,
+    resume: opts.resume || null,
+    continue: opts.continue,
+    workspace: opts.workspace || null,
+    sandbox: opts.sandbox || null,
+    approveMcps: opts.approveMcps,
+    cloud: opts.cloud,
     exitCode: last.status,
     durationMs: last.durationMs,
     prompt: promptText.slice(0, 8000),
@@ -383,11 +462,19 @@ function main() {
       const one = {
         prompt: t.prompt || "",
         files: Array.isArray(t.files) ? t.files : t.files ? [t.files] : [],
-        model: t.model || opts.model,
+        model: t.model != null ? t.model : opts.model,
         mode: t.mode != null ? String(t.mode) : opts.mode,
         maxRetries: t.maxRetries != null ? t.maxRetries : opts.maxRetries,
         force: Boolean(t.force) || opts.force,
+        trust: Boolean(t.trust) || opts.trust,
+        stream: Boolean(t.stream) || opts.stream,
+        resume: t.resume || opts.resume || "",
+        continue: Boolean(t.continue) || opts.continue,
         cwd: t.cwd || opts.cwd,
+        workspace: t.workspace || opts.workspace || "",
+        sandbox: t.sandbox != null ? String(t.sandbox) : opts.sandbox,
+        approveMcps: Boolean(t.approveMcps) || opts.approveMcps,
+        cloud: Boolean(t.cloud) || opts.cloud,
         config: "",
         help: false,
       };
