@@ -153,15 +153,11 @@ This Custom Mode requires the following MCP servers to be installed and configur
 - **Recommended**: Sonnet 4.5 or similar advanced model
 - **Agent Mode**: Must be enabled for MCP tool access
 
-## Related material in this repository
+## Related material (Cursor ecosystem)
 
-After generating `.mdc` rules, you may also want:
+After generating `.mdc` rules, complement your setup from the dedicated orchestrator repo:
 
-- **[Cursor Skills](../Cursor%20Skills/)** — reusable `SKILL.md` playbooks (complement rules with procedural depth)
-- **[Cursor Commands](../Cursor%20Commands/)** — slash commands for repeated workflows (e.g. orchestration)
-- **[Cursor Hooks](../Cursor%20Hooks/)** — automate logging or guardrails around tool use
-- **[Cursor Subagents](../Cursor%20Subagents/)** — delegate heavy analysis via Task / subagent types
-- **[tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md)** and **[ai-tools.md](../Cursor%20Rules/ai-tools.md)** — keep MCP / Skills / Subagents inventory aligned with your Cursor setup
+**[kscius/ks-cursor-orchestrator](https://github.com/kscius/ks-cursor-orchestrator)** — global **Cursor Rules**, **Skills**, **Commands**, **Hooks**, **Subagents**, **MCPs** inventory, **User Rules** / **Requestable Rules** docs, and **ai-tools.md** / **tools-inventory-es.md** inventories.
 
 ## Notes
 

@@ -42,25 +42,13 @@ A specialized AI assistant for optimizing CVs/resumes for software engineering r
 
 ---
 
-### ⚙️ [Cursor Rules](./Cursor%20Rules/)
+### ⚙️ Cursor setup (movido a otro repositorio)
 
-A comprehensive collection of global rules and best practices for Cursor AI. These rules enforce coding standards, development workflows, and quality assurance across projects.
+El material de configuración de Cursor que antes vivía aquí —**Cursor Rules**, **Cursor Skills**, **Cursor Commands**, **Cursor Hooks**, **Cursor Subagents**, **Cursor MCPs**, **Cursor User Rules** y **Cursor Requestable Rules**— se ha trasladado al repositorio dedicado:
 
-**Features:**
-- Plan Mode, Execution Pack, tooling delegation, and Cursor rules management
-- Critical thinking and intellectual rigor framework
-- Development workflow, security/compliance (PCI, GDPR, OWASP), code quality
-- Testing and reliability requirements (≥90% coverage where applicable)
-- Stack-specific rules (React, Next.js, NestJS, etc.) and UI/UX standards
-- **ai-tools.md** (English) and **tools-inventory-es.md** (Spanish) for MCPs, Skills, and Subagents
+**[kscius/ks-cursor-orchestrator](https://github.com/kscius/ks-cursor-orchestrator)**
 
-**Companion folders:** [Cursor Skills](./Cursor%20Skills/) (incl. skills exportados), [Cursor Commands](./Cursor%20Commands/) (comandos slash), [Cursor Hooks](./Cursor%20Hooks/) (incl. `user-export/`), [Cursor Subagents](./Cursor%20Subagents/), [Cursor MCPs](./Cursor%20MCPs/), [Cursor User Rules](./Cursor%20User%20Rules/), [Cursor Requestable Rules](./Cursor%20Requestable%20Rules/).
-
-**Best for:** Development teams using Cursor AI who want to standardize practices and improve code quality.
-
-**Platforms:** Primarily designed for Cursor AI, but can be adapted for other platforms.
-
-[📖 Read More](./Cursor%20Rules/README.md)
+Allí encontrarás reglas globales, inventarios MCP/Skills/Subagents, comandos slash, hooks, subagentes y plantillas alineadas con un único lugar para el ecosistema Cursor.
 
 ---
 
@@ -106,18 +94,7 @@ An intelligent codebase analyst that builds and maintains a persistent, queryabl
 
 ### Cursor IDE ecosystem
 
-Shared reference and templates for Cursor beyond single prompts:
-
-| Folder | Description |
-|--------|-------------|
-| [Cursor Skills](./Cursor%20Skills/) | Skills: guía + carpetas **exported-cursor-skills** / **exported-agents-skills** + manifest |
-| [Cursor Commands](./Cursor%20Commands/) | Comandos slash (**42** prompts), p. ej. **orquestador**, **intake**, scout, plan, build-full |
-| [Cursor Hooks](./Cursor%20Hooks/) | Documentación + ejemplo + **user-export/** (copia de hooks globales) |
-| [Cursor Subagents](./Cursor%20Subagents/) | Delegación Task; prompts por tipo en **agents/*.md**; enum en **task-subagent-types.md** |
-| [Cursor MCPs](./Cursor%20MCPs/) | Inventario de servidores MCP sin secretos + plantilla **mcp.config.example.json** |
-| [Cursor User Rules](./Cursor%20User%20Rules/) | Cómo respaldar User Rules (no subir JSON con datos sensibles) |
-| [Cursor Requestable Rules](./Cursor%20Requestable%20Rules/) | Reglas `.mdc` solicitables (cursor10x, devcontext, orquestación, SDLC) |
-| [Cursor Rules / tools-inventory-es](./Cursor%20Rules/tools-inventory-es.md) | MCP, Skills, Subagents (español); par con **ai-tools.md** |
+Reglas globales, Skills, Commands, Hooks, Subagents, MCPs, User Rules y Requestable Rules viven ahora en **[ks-cursor-orchestrator](https://github.com/kscius/ks-cursor-orchestrator)**. Este repo conserva solo los **Custom Modes** que siguen siendo prompts autocontenidos: **Cursor Rules Maker** y **Cursor Project Analyzer** (más abajo).
 
 ---
 
@@ -257,35 +234,8 @@ LLM-Prompts/
 │   ├── README.md               # Usage instructions
 │   └── Prompt.md               # The prompt content
 │
-├── Cursor Rules/                # Global Cursor AI rules (many .md topics; see README)
-│   ├── README.md               # Index: plan-mode, execution-pack, ai-tools, etc.
-│   ├── ai-tools.md             # MCP, Skills, Subagents (English)
-│   └── tools-inventory-es.md   # Same inventory (Spanish)
-│
-├── Cursor Skills/               # Skills: README + exported-cursor-skills/, exported-agents-skills/
-│   └── README.md
-│
-├── Cursor Commands/             # Slash commands (mirror of ~/.cursor/commands)
-│   ├── README.md
-│   └── *.md                     # orquestador, scout, plan, build-full, etc.
-│
-├── Cursor Hooks/                # hooks docs + user-export/ (global hooks snapshot)
-│   ├── README.md
-│   └── hooks.example.json
-│
-├── Cursor Subagents/            # Delegation: README + task-subagent-types.md + agents/*.md
-│   ├── README.md
-│   ├── task-subagent-types.md
-│   └── agents/                  # <subagent_type>.md (full prompts; see agents/README.md)
-│
-├── Cursor MCPs/                 # MCP inventory (no secrets) + mcp.config.example.json
-│   └── README.md
-│
-├── Cursor User Rules/           # How to backup Cursor User Rules
-│   └── README.md
-│
-├── Cursor Requestable Rules/    # Requestable .mdc rules from environment
-│   └── README.md
+├── (Cursor setup: Rules, Skills, Commands, Hooks, Subagents, MCPs, User/Requestable Rules →
+│   https://github.com/kscius/ks-cursor-orchestrator )
 │
 ├── Cursor Rules Maker/          # Automated rule generator
 │   ├── README.md               # Setup and usage guide
@@ -380,7 +330,7 @@ These prompts are the result of extensive testing and refinement. Special thanks
 
 ---
 
-**Last Updated**: March 2026
+**Last Updated**: April 2026
 
 **Maintained by**: Community contributions welcome
 

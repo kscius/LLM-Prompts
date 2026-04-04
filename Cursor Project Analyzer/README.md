@@ -31,13 +31,9 @@ This prompt leverages MCP servers for enhanced capabilities. **Core (recommended
 
 Enable only what you have installed; missing tools should not block baseline indexing if `memory` + `sequentialthinking` are available.
 
-### Related material in this repository
+### Related material (Cursor ecosystem)
 
-- **[Cursor Skills](../Cursor%20Skills/)** — Agent Skills reference and how they complement Custom Modes
-- **[Cursor Commands](../Cursor%20Commands/)** — slash-command templates (e.g. orchestrator)
-- **[Cursor Hooks](../Cursor%20Hooks/)** — lifecycle hooks (`hooks.json`)
-- **[Cursor Subagents](../Cursor%20Subagents/)** — Task / subagent delegation patterns
-- **[tools-inventory-es.md](../Cursor%20Rules/tools-inventory-es.md)** — MCP / Skills / Subagents (Spanish)
+**[kscius/ks-cursor-orchestrator](https://github.com/kscius/ks-cursor-orchestrator)** — Agent Skills, slash commands, hooks, subagents, MCP inventories, and Spanish/English tooling docs (**tools-inventory-es.md**, **ai-tools.md**) that pair well with this Custom Mode.
 
 ## How to Set Up
 
